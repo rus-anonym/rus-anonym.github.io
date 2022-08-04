@@ -1,5 +1,18 @@
-import { Div, Group, Header, Input, Link, RichCell } from "@vkontakte/vkui";
+import {
+    Button,
+    Div,
+    Group,
+    Header,
+    Input,
+    Link,
+    Snackbar,
+} from "@vkontakte/vkui";
 import React, { useState } from "react";
+
+import base64url from "base64url";
+import router from "../../../TS/store/router";
+import { Icon24Linked } from "@vkontakte/icons";
+import { copyTextToClipboard } from "@vkontakte/vkjs";
 
 interface IRule {
     pattern: string;
@@ -12,9 +25,17 @@ interface IEnding {
 }
 
 interface IFeminitive {
+    type: "feminitive";
     stem: string;
     feminitives: string[];
     endings: string[];
+}
+
+interface IFeminitiveException {
+    type: "exception";
+    word: string;
+    feminitives: string[];
+    description: string;
 }
 
 interface IEndingData {
@@ -23,33 +44,22 @@ interface IEndingData {
 }
 
 class Feminizator {
-    public static readonly words = {
-        без: "без",
-        как: "как",
-        либо: "либо",
-        например: "например",
-        них: "них",
-        под: "под",
-
-        два: "две",
-
-        весь: "вся",
-        всё: "вся",
-
-        чего: "чегой",
-
-        ее: "е_е",
-        её: "е_ё",
-        кто: "котор_ая",
-        каким: "как_ой",
-        "муж.": "жен.",
-        муж: "жена",
-        то: "т_а",
-        того: "т_у",
-        тот: "т_а",
-        мужчина: "женщи_на",
-        мужчины: "женщи_ны",
-    } as const;
+    public static readonly exceptions: IFeminitiveException[] = [
+        {
+            word: "феминист",
+            feminitives: ["профеминист", "союзник"],
+            description:
+                "Мифическое создание, якобы поддерживающее феминизм. В реальности не встречается.",
+        },
+        {
+            word: "жена",
+            feminitives: ["мужерабка", "подстилка патриархата"],
+            description:
+                "Женщина, прогнувшаяся под патриархат и получающая удовольствие от угнетения.",
+        },
+    ].map((x) => {
+        return { ...x, type: "exception" };
+    });
 
     public static readonly endings: IEnding[] = [
         {
@@ -979,9 +989,19 @@ class Feminizator {
         return rules.length > 0 ? rules : undefined;
     }
 
-    public static makeFeminitive(word: string): IFeminitive | string {
+    public static makeFeminitive(
+        word: string
+    ): IFeminitive | IFeminitiveException | string {
         if (word.length < 3) {
             return word;
+        }
+
+        const exception = Feminizator.exceptions.find(
+            (exception) => exception.word === word
+        );
+
+        if (exception) {
+            return exception;
         }
 
         const endingDataParser = (endingData: IEndingData): IFeminitive => {
@@ -1005,6 +1025,7 @@ class Feminizator {
             });
 
             return {
+                type: "feminitive",
                 stem,
                 feminitives,
                 endings: allFeminitiveEndings.split("|"),
@@ -1025,6 +1046,7 @@ class Feminizator {
             const endings: IFeminitive[] = endingData.map(endingDataParser);
 
             return {
+                type: "feminitive",
                 stem: endings[0].stem,
                 endings: ([] as string[]).concat(
                     ...endings.map((x) => x.endings)
@@ -1040,7 +1062,9 @@ class Feminizator {
 }
 
 const Result = ({ word }: { word: string }): JSX.Element => {
-    const feminizedWord = Feminizator.makeFeminitive(word);
+    const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
+
+    const feminizedWord = Feminizator.makeFeminitive(word.toLowerCase());
 
     if (typeof feminizedWord === "string") {
         return (
@@ -1050,32 +1074,63 @@ const Result = ({ word }: { word: string }): JSX.Element => {
         );
     }
 
-    if (feminizedWord.feminitives.length === 1) {
-        return (
-            <Group>
-                <Div>{feminizedWord.feminitives[0]}</Div>
-            </Group>
-        );
-    }
-
     return (
         <Group
-            header={<Header>{feminizedWord.feminitives[0]}</Header>}
+            header={
+                <Header
+                    subtitle={
+                        feminizedWord.type === "exception" &&
+                        feminizedWord.description
+                    }
+                >
+                    {feminizedWord.feminitives[0]}
+                </Header>
+            }
             mode="plain"
         >
-            <RichCell disabled>
-                {feminizedWord.feminitives
-                    .filter((x) => x !== feminizedWord.feminitives[0])
-                    .map((feminitive, index) => {
-                        return <Div key={index}>{feminitive}</Div>;
-                    })}
-            </RichCell>
+            {feminizedWord.feminitives.length > 1 && (
+                <Div>
+                    {feminizedWord.feminitives
+                        .filter((x) => x !== feminizedWord.feminitives[0])
+                        .map((feminitive, index) => {
+                            return <Div key={index}>{feminitive}</Div>;
+                        })}
+                </Div>
+            )}
+
+            <Div>
+                <Button
+                    before={<Icon24Linked />}
+                    stretched
+                    size="m"
+                    appearance="neutral"
+                    onClick={(): void => {
+                        const url =
+                            router.url + "?word=" + base64url.encode(word);
+                        void copyTextToClipboard(url).then(() => {
+                            setSnackbar(
+                                <Snackbar
+                                    onClose={(): void => setSnackbar(null)}
+                                >
+                                    Ссылка скопирована в буфер обмен
+                                </Snackbar>
+                            );
+                        });
+                    }}
+                >
+                    Скопировать
+                </Button>
+            </Div>
+
+            {snackbar !== null && snackbar}
         </Group>
     );
 };
 
 const FeminizatorComponent = (): JSX.Element => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(
+        router.queryParams.word ? base64url.decode(router.queryParams.word) : ""
+    );
 
     const description = (
         <>
@@ -1097,8 +1152,7 @@ const FeminizatorComponent = (): JSX.Element => {
                 <Input
                     value={value}
                     onChange={(event): void => {
-                        setValue(event.target.value);
-                        event.preventDefault();
+                        setValue(event.target.value.trim());
                     }}
                 />
             </Div>
