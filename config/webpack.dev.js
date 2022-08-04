@@ -1,4 +1,6 @@
 const path = require("node:path");
+
+const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
@@ -67,6 +69,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "../public/index.html"),
+        }),
+        new webpack.ProvidePlugin({
+            Buffer: ["buffer", "Buffer"],
         }),
     ],
 };
