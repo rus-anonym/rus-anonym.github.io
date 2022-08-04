@@ -13,61 +13,59 @@ import {
 
 import router from "../../TS/store/router";
 
+const ViewButton = ({
+    path,
+    text,
+    icon,
+}: {
+    path: string;
+    text: string;
+    icon: React.ReactNode;
+}): JSX.Element => {
+    return (
+        <TabbarItem
+            onClick={(): void => {
+                router.activeView = path;
+            }}
+            selected={router.activeView === path}
+            disabled={router.activeView === path && router.activePanel === null}
+            text={text}
+        >
+            {icon}
+        </TabbarItem>
+    );
+};
+
 const MobileTabbar = (): JSX.Element => {
     const { t } = useTranslation("translation", { keyPrefix: "pages" });
 
     return (
         <Tabbar itemsLayout="vertical">
-            <TabbarItem
-                onClick={(): void => {
-                    router.activeView = "prototypes";
-                }}
-                selected={router.activeView === "prototypes"}
-                disabled={router.activeView === "prototypes"}
+            <ViewButton
+                path="prototypes"
                 text={t("prototypes.title")}
-            >
-                <Icon28CubeBoxOutline />
-            </TabbarItem>
-            <TabbarItem
-                onClick={(): void => {
-                    router.activeView = "utils";
-                }}
-                selected={router.activeView === "utils"}
-                disabled={router.activeView === "utils"}
+                icon={<Icon28CubeBoxOutline />}
+            />
+            <ViewButton
+                path="utils"
                 text={t("utils.title")}
-            >
-                <Icon28ServicesOutline />
-            </TabbarItem>
-            <TabbarItem
-                onClick={(): void => {
-                    router.activeView = "";
-                }}
-                selected={router.activeView === ""}
-                disabled={router.activeView === ""}
+                icon={<Icon28ServicesOutline />}
+            />
+            <ViewButton
+                path=""
                 text={t("main.title")}
-            >
-                <Icon28HomeOutline />
-            </TabbarItem>
-            <TabbarItem
-                onClick={(): void => {
-                    router.activeView = "articles";
-                }}
-                selected={router.activeView === "articles"}
-                disabled={router.activeView === "articles"}
+                icon={<Icon28HomeOutline />}
+            />
+            <ViewButton
+                path="articles"
                 text={t("articles.title")}
-            >
-                <Icon28ArticlesOutline />
-            </TabbarItem>
-            <TabbarItem
-                onClick={(): void => {
-                    router.activeView = "about";
-                }}
-                selected={router.activeView === "about"}
-                disabled={router.activeView === "about"}
+                icon={<Icon28ArticlesOutline />}
+            />
+            <ViewButton
+                path="about"
                 text={t("about.title")}
-            >
-                <Icon28UserOutline />
-            </TabbarItem>
+                icon={<Icon28UserOutline />}
+            />
         </Tabbar>
     );
 };

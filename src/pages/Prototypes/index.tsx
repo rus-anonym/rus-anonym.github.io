@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 
 import {
-    Button,
     CellButton,
-    Div,
     Group,
     Header,
     Panel,
@@ -80,25 +78,7 @@ const PrototypesView = ({ id }: { id: string }): JSX.Element => {
     };
 
     const UtilCell = (prototype: IPrototype): JSX.Element => {
-        return (
-            <Panel id={prototype.id}>
-                {prototype.component}
-                <Group>
-                    <Div>
-                        <Button
-                            size="l"
-                            onClick={(): void => {
-                                router.activePanel = null;
-                            }}
-                            stretched
-                            appearance="neutral"
-                        >
-                            {t("close")}
-                        </Button>
-                    </Div>
-                </Group>
-            </Panel>
-        );
+        return <Panel id={prototype.id}>{prototype.component}</Panel>;
     };
 
     if (filteredPrototypes.length === 0) {

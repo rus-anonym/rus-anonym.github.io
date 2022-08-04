@@ -165,23 +165,6 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
         }
     });
 
-    const BackwardButton = (
-        <Group>
-            <Div>
-                <Button
-                    size="m"
-                    onClick={(): void => {
-                        router.activePanel = null;
-                    }}
-                    stretched
-                    appearance="neutral"
-                >
-                    {t("backward")}
-                </Button>
-            </Div>
-        </Group>
-    );
-
     const activeArticles = articlesList
         .filter((x) => (isLanguageFilter ? x.lang === session.language : true))
         .sort(byPublished);
@@ -304,12 +287,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
                 </Group>
             </Panel>
             {articlesList.map((x) => {
-                return (
-                    <Panel id={x.id}>
-                        {x.content}
-                        {BackwardButton}
-                    </Panel>
-                );
+                return <Panel id={x.id}>{x.content}</Panel>;
             })}
         </View>
     );

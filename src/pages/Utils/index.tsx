@@ -3,7 +3,6 @@ import {
     Button,
     Cell,
     CellButton,
-    Div,
     Group,
     MiniInfoCell,
     Panel,
@@ -170,25 +169,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             );
         }
 
-        return (
-            <Panel id={util.id}>
-                {util.component}
-                <Group>
-                    <Div>
-                        <Button
-                            size="l"
-                            onClick={(): void => {
-                                router.activePanel = null;
-                            }}
-                            stretched
-                            appearance="neutral"
-                        >
-                            {t("close")}
-                        </Button>
-                    </Div>
-                </Group>
-            </Panel>
-        );
+        return <Panel id={util.id}>{util.component}</Panel>;
     };
 
     if (filteredUtils.length === 0) {
