@@ -56,9 +56,10 @@ const RolePlayChat = (): JSX.Element => {
 
     useEffect(() => {
         const disposer = autorun(() => {
-            setActiveProfile(profiles.length - 1);
+            if (!isShow) {
+                setActiveProfile(profiles.length - 1);
+            }
         });
-        setActiveProfile(0);
 
         return () => disposer();
     }, []);
@@ -70,7 +71,6 @@ const RolePlayChat = (): JSX.Element => {
                 before={
                     <Dropdown
                         shown={isShow}
-                        onShownChange={setShow}
                         content={
                             <Div>
                                 {profiles.map((x, i) => {
@@ -131,7 +131,10 @@ const RolePlayChat = (): JSX.Element => {
                             </Div>
                         }
                     >
-                        <WriteBarIcon aria-label="Профиль">
+                        <WriteBarIcon
+                            aria-label="Профиль"
+                            onClick={(): void => setShow(!isShow)}
+                        >
                             {profiles[activeProfile].avatar}
                         </WriteBarIcon>
                     </Dropdown>
