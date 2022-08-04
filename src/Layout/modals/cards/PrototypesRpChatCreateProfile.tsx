@@ -6,12 +6,12 @@ import {
     FormLayout,
     FormItem,
     Input,
-    RadioGroup,
     Radio,
     InitialsAvatar,
     File,
     Avatar,
     Spacing,
+    Div,
 } from "@vkontakte/vkui";
 
 import router from "../../../TS/store/router";
@@ -40,8 +40,15 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     };
 
     const InitialsAvatarList = (
-        <>
-            <RadioGroup mode="horizontal">
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+            }}
+        >
+            <Div>
                 <Radio
                     name="radio"
                     defaultChecked
@@ -51,8 +58,21 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                 >
                     <InitialsAvatar size={32} gradientColor="red" />
                 </Radio>
-                {(["pink", "orange", "yellow"] as const).map((color) => {
-                    return (
+            </Div>
+
+            {(
+                [
+                    "pink",
+                    "orange",
+                    "yellow",
+                    "green",
+                    "l-blue",
+                    "blue",
+                    "violet",
+                ] as const
+            ).map((color) => {
+                return (
+                    <Div>
                         <Radio
                             name="radio"
                             onClick={(): void => {
@@ -61,29 +81,10 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                         >
                             <InitialsAvatar size={32} gradientColor={color} />
                         </Radio>
-                    );
-                })}
-            </RadioGroup>
-            <RadioGroup mode="horizontal">
-                {(["green", "l-blue", "blue", "violet"] as const).map(
-                    (color) => {
-                        return (
-                            <Radio
-                                name="radio"
-                                onClick={(): void => {
-                                    setAvatarColor(color);
-                                }}
-                            >
-                                <InitialsAvatar
-                                    size={32}
-                                    gradientColor={color}
-                                />
-                            </Radio>
-                        );
-                    }
-                )}
-            </RadioGroup>
-        </>
+                    </Div>
+                );
+            })}
+        </div>
     );
 
     return (
