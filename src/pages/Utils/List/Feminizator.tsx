@@ -1,13 +1,4 @@
-import {
-    Div,
-    FormItem,
-    FormLayout,
-    Group,
-    Header,
-    Input,
-    Link,
-    RichCell,
-} from "@vkontakte/vkui";
+import { Div, Group, Header, Input, Link, RichCell } from "@vkontakte/vkui";
 import React, { useState } from "react";
 
 interface IRule {
@@ -21,10 +12,14 @@ interface IEnding {
 }
 
 interface IFeminitive {
-    word: string;
     stem: string;
     feminitives: string[];
     endings: string[];
+}
+
+interface IEndingData {
+    ending: IEnding;
+    rule: IRule;
 }
 
 class Feminizator {
@@ -966,19 +961,22 @@ class Feminizator {
         },
     ];
 
-    public static findEnding(
+    public static findEndingData(
         wordEnding: string
-    ): { ending: IEnding; rule: IRule } | undefined {
+    ): IEndingData[] | undefined {
+        const rules: IEndingData[] = [];
+
         for (const ending of Feminizator.endings) {
             const rule = ending.rules.find(({ pattern }) =>
                 new RegExp("^.*" + pattern + "$", "i").test(wordEnding)
             );
 
             if (rule) {
-                return { ending, rule };
+                rules.push({ ending, rule });
             }
         }
-        return undefined;
+
+        return rules.length > 0 ? rules : undefined;
     }
 
     public static makeFeminitive(word: string): IFeminitive | string {
@@ -986,18 +984,8 @@ class Feminizator {
             return word;
         }
 
-        for (const wordEnding of [
-            word.slice(-4),
-            word.slice(-3),
-            word.slice(-2),
-        ]) {
-            const endingRule = Feminizator.findEnding(wordEnding);
-
-            if (!endingRule) {
-                continue;
-            }
-
-            const { ending, rule: wordRule } = endingRule;
+        const endingDataParser = (endingData: IEndingData): IFeminitive => {
+            const { ending, rule: wordRule } = endingData;
 
             const stem =
                 wordRule.removeSymbolsCount === 0
@@ -1019,10 +1007,31 @@ class Feminizator {
             return {
                 stem,
                 feminitives,
-                word: feminitives[
-                    Math.floor(Math.random() * feminitives.length)
-                ],
                 endings: allFeminitiveEndings.split("|"),
+            };
+        };
+
+        for (const wordEnding of [
+            word.slice(-4),
+            word.slice(-3),
+            word.slice(-2),
+        ]) {
+            const endingData = Feminizator.findEndingData(wordEnding);
+
+            if (!endingData) {
+                continue;
+            }
+
+            const endings: IFeminitive[] = endingData.map(endingDataParser);
+
+            return {
+                stem: endings[0].stem,
+                endings: ([] as string[]).concat(
+                    ...endings.map((x) => x.endings)
+                ),
+                feminitives: ([] as string[]).concat(
+                    ...endings.map((x) => x.feminitives)
+                ),
             };
         }
 
@@ -1044,16 +1053,19 @@ const Result = ({ word }: { word: string }): JSX.Element => {
     if (feminizedWord.feminitives.length === 1) {
         return (
             <Group>
-                <Div>{feminizedWord.word}</Div>
+                <Div>{feminizedWord.feminitives[0]}</Div>
             </Group>
         );
     }
 
     return (
-        <Group header={<Header>{feminizedWord.word}</Header>} mode="plain">
+        <Group
+            header={<Header>{feminizedWord.feminitives[0]}</Header>}
+            mode="plain"
+        >
             <RichCell disabled>
                 {feminizedWord.feminitives
-                    .filter((x) => x !== feminizedWord.word)
+                    .filter((x) => x !== feminizedWord.feminitives[0])
                     .map((feminitive, index) => {
                         return <Div key={index}>{feminitive}</Div>;
                     })}
@@ -1081,14 +1093,16 @@ const FeminizatorComponent = (): JSX.Element => {
 
     return (
         <Group description={description}>
-            <FormLayout>
-                <FormItem>
-                    <Input
-                        value={value}
-                        onChange={(event): void => setValue(event.target.value)}
-                    />
-                </FormItem>
-            </FormLayout>
+            <Div>
+                <Input
+                    value={value}
+                    onChange={(event): void => {
+                        setValue(event.target.value);
+                        event.preventDefault();
+                    }}
+                />
+            </Div>
+
             {value !== "" && <Result word={value} />}
         </Group>
     );
