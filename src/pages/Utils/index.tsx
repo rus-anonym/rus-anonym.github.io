@@ -68,6 +68,22 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             isDesktop: true,
             component: lazyLoad(() => import("./List/Speedtype")),
         },
+        {
+            id: "speedtype",
+            title: "Speedtype",
+            description: t("list.speedtype.description"),
+            isMobile: false,
+            isDesktop: true,
+            component: lazyLoad(() => import("./List/Speedtype")),
+        },
+        {
+            id: "feminizator",
+            title: "Feminizator",
+            description: "",
+            isMobile: true,
+            isDesktop: true,
+            component: lazyLoad(() => import("./List/Feminizator")),
+        },
     ];
 
     const filteredUtils = utils.filter(
