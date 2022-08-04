@@ -1,0 +1,13 @@
+# Dist
+/dist/
+
+# Node modules
+/node_modules/
+
+# Lock files
+yarn.lock
+yarn-error.log
+package-lock.json
+
+# VS Code
+.vscode

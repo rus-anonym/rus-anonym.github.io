@@ -1,0 +1,135 @@
+{
+    "languages": {
+        "ru": "Russian",
+        "en": "English"
+    },
+    "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "System"
+    },
+    "pages": {
+        "main": {
+            "title": "Main",
+            "socials": {
+                "npm": {
+                    "utils": "Personal set of utilities from RusAnonym",
+                    "scheduler": "Task scheduling package"
+                },
+                "contactMe": "Contact me",
+                "alsoExist": "I also exist here",
+                "occasionallyLook": "I occasionally look in",
+                "mlbb": {
+                    "mainAcc": "Main account",
+                    "secondAcc": "Second account",
+                    "copyID": "Copy ID",
+                    "copied": "Copied",
+                    "team": "Team",
+                    "group": "Group"
+                }
+            },
+            "donateToMe": "Donate to me :)"
+        },
+        "articles": {
+            "title": "Articles",
+            "backward": "Go back",
+            "open": "Open article",
+            "language": "Article language",
+            "stillOpen": "Still open the article",
+            "published": "Published by",
+            "notFound": "No articles in your language were found",
+            "warning": "Warning",
+            "explicitWarning": "This article may contain inappropriate content",
+            "showOtherArticles": "Show articles in other languages",
+            "hideOtherArticles": "Hide articles in other languages",
+            "loading": "Loading"
+        },
+        "utils": {
+            "title": "Utils",
+            "start": "Start",
+            "close": "Close",
+            "notAvailable": "The app is not available",
+            "onlyMobile": "Only available on mobile devices",
+            "onlyDesktop": "Only available on computers",
+            "multiplatform": "Available on computers and mobile devices",
+            "list": {
+                "cat": {
+                    "description": "Infinite cat scroll"
+                },
+                "qr": {
+                    "rescan": "Rescan",
+                    "requestCamera": "Request access to the camera",
+                    "initializeCamera": "Initializing the camera",
+                    "errorCameraInitialize": "Camera initialization error",
+                    "result": {
+                        "text": "Text",
+                        "created": "Created"
+                    },
+                    "notDetect": "Not detected",
+                    "perhapsYouMeant": "Perhaps you meant",
+                    "choosePhoto": "Choose a photo",
+                    "selectFile": "Select a file",
+                    "selectScanFormats": "Select formats for scanning",
+                    "emptyFormats": "It looks like you have selected all the formats",
+                    "scan": "Scan",
+                    "selectCamera": "Switch to the camera"
+                },
+                "speedtype": {
+                    "description": "Check your typing speed",
+                    "continue": "Continue",
+                    "switchLayout": "Please change your keyboard layout to English",
+                    "text": "Type this text and find out your typing speed",
+                    "results": "Results",
+                    "cpm": "Characters per minute",
+                    "errors": "Number of errors",
+                    "restart": "Take the test again",
+                    "history": "History",
+                    "clearHistory": "Clear history",
+                    "bestResult": "Best result",
+                    "worstResult": "Worst result",
+                    "total": "Total",
+                    "formula": "The result is calculated by the formula"
+                }
+            }
+        },
+        "prototypes": {
+            "title": "Prototypes",
+            "start": "Watch",
+            "close": "Close"
+        },
+        "about": {
+            "title": "About me",
+            "fullName": "Alexander Andreevich Semin",
+            "specialty": "Cybersecurity specialist",
+            "place": "Place of residence",
+            "place_value": "Russia, Moscow",
+            "relocation": "Relocation is not possible",
+            "birthday": "Date of birth",
+            "years_zero": "years old",
+            "years_one": "year old",
+            "years_two": "years old",
+            "years_few": "years old",
+            "years_many": "years old",
+            "years_other": "years old",
+            "phone": "Phone number",
+            "email": "E-Mail",
+            "salary": "Desired salary",
+            "salary_value": "Not specified",
+            "willingessToBusinessTrip": "Willingness to business trip",
+            "willingessToBusinessTrip_value": "No",
+            "employment": "Employment",
+            "employment_value": "Internship",
+            "sсheduleOfWork": "Schedule of work",
+            "sсheduleOfWork_value": "Flexible schedule",
+            "citizenship": "Citizenship",
+            "citizenship_value": "Russia 🇷🇺",
+            "languages": "Languages",
+            "languages_value": "Russian (native), English (A2)"
+        }
+    },
+    "utils": {
+        "changeTheme": "Change theme",
+        "changeLanguage": "Русский",
+        "feature": "There's something coming up soon :)"
+    }
+}

@@ -1,0 +1,84 @@
+{
+    "root": true,
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 13,
+        "project": ["./tsconfig.json"]
+    },
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            { "SwitchCase": 1, "ignoredNodes": ["ConditionalExpression"] }
+        ],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+            "error",
+            {
+                "accessibility": "explicit",
+                "overrides": {
+                    "accessors": "explicit",
+                    "constructors": "off",
+                    "methods": "explicit",
+                    "properties": "explicit",
+                    "parameterProperties": "explicit"
+                }
+            }
+        ],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "class",
+                "format": ["StrictPascalCase", "PascalCase"]
+            },
+            {
+                "selector": "variable",
+                "modifiers": ["const"],
+                "format": ["PascalCase", "camelCase", "UPPER_CASE"]
+            },
+            {
+                "selector": "variableLike",
+                "format": ["camelCase"],
+                "filter": {
+                    "regex": "_",
+                    "match": false
+                }
+            },
+            {
+                "selector": "memberLike",
+                "modifiers": ["private"],
+                "format": ["camelCase"],
+                "leadingUnderscore": "require"
+            },
+            {
+                "selector": "interface",
+                "format": ["PascalCase"],
+                "custom": {
+                    "regex": "^I[A-Z]",
+                    "match": true
+                }
+            },
+            {
+                "selector": "typeAlias",
+                "format": ["PascalCase"],
+                "custom": {
+                    "regex": "^T[A-Z]",
+                    "match": true
+                }
+            }
+        ]
+    }
+}
