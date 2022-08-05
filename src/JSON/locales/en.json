@@ -37,11 +37,14 @@
             "language": "Article language",
             "stillOpen": "Still open the article",
             "published": "Published by",
-            "notFound": "No articles in your language were found",
+            "filters": {
+                "title": "Filters",
+                "anotherLanguage": "Show articles in another language",
+                "explicit": "Show articles with explicit content"
+            },
+            "notFound": "No articles by the selected filters were found",
             "warning": "Warning",
             "explicitWarning": "This article may contain inappropriate content",
-            "showOtherArticles": "Show articles in other languages",
-            "hideOtherArticles": "Hide articles in other languages",
             "loading": "Loading"
         },
         "utils": {

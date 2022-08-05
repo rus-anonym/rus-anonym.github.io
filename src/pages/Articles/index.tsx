@@ -4,14 +4,17 @@ import moment from "moment";
 
 import {
     Alert,
-    Button,
     CellButton,
+    Checkbox,
     Div,
+    FormItem,
     Group,
     Header,
+    IconButton,
     MiniInfoCell,
     Panel,
     Placeholder,
+    Spacing,
     useAdaptivity,
     View,
     ViewWidth,
@@ -20,6 +23,7 @@ import {
 import {
     Icon20CalendarOutline,
     Icon20GlobeOutline,
+    Icon24Filter,
     Icon56ArticleOutline,
 } from "@vkontakte/icons";
 
@@ -28,12 +32,13 @@ import { useTranslation } from "react-i18next";
 import session from "../../TS/store/session";
 import { observer } from "mobx-react";
 import lazyLoad from "../../utils/lazyLoad";
+import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 
 interface IArticle {
     id: string;
     title: string;
     content: React.ReactNode;
-    lang: "en" | "ru";
+    lang: typeof session.language;
     published: Date;
     explicit: boolean;
 }
@@ -156,6 +161,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     const [isLanguageFilter, setLanguageFilter] = useState(true);
+    const [isExplicitFilter, setExplicitFilter] = useState(true);
 
     useEffect(() => {
         if (
@@ -166,7 +172,11 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
     });
 
     const activeArticles = articlesList
-        .filter((x) => (isLanguageFilter ? x.lang === session.language : true))
+        .filter(
+            (x) =>
+                (isLanguageFilter ? x.lang === session.language : true) &&
+                (isExplicitFilter ? !x.explicit : true)
+        )
         .sort(byPublished);
 
     const ExplicitArticleButton = ({
@@ -208,81 +218,91 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
         );
     };
 
+    const ArticlePreview = (article: IArticle): JSX.Element => {
+        moment.locale(session.language);
+        return (
+            <Group
+                mode="plain"
+                header={
+                    <Header mode="primary" multiline>
+                        {article.title}
+                    </Header>
+                }
+            >
+                <MiniInfoCell before={<Icon20CalendarOutline />}>
+                    {`${t("published")}: ${moment(article.published).format(
+                        "DD.MM.YYYY, HH:mm:ss"
+                    )}`}
+                </MiniInfoCell>
+                {!isLanguageFilter && (
+                    <MiniInfoCell before={<Icon20GlobeOutline />}>
+                        {`${t("language")}: ${
+                            i18n.t(
+                                "languages." + article.lang
+                            ) as unknown as string
+                        }`}
+                    </MiniInfoCell>
+                )}
+                {article.explicit ? (
+                    <ExplicitArticleButton article={article} />
+                ) : (
+                    <CellButton
+                        onClick={(): void => {
+                            router.activePanel = article.id;
+                        }}
+                    >
+                        {t("open")}
+                    </CellButton>
+                )}
+            </Group>
+        );
+    };
+
     return (
         <View id={id} activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group>
-                    {activeArticles.length > 0 ? (
-                        activeArticles.map((x) => {
-                            moment.locale(session.language);
-                            return (
-                                <Group
-                                    header={
-                                        <Header mode="primary" multiline>
-                                            {x.title}
-                                        </Header>
-                                    }
-                                >
-                                    <MiniInfoCell
-                                        before={<Icon20CalendarOutline />}
+                    <Dropdown
+                        action={isDesktop ? "hover" : "click"}
+                        content={
+                            <Div>
+                                <Header>{t("filters.title")}</Header>
+                                <FormItem>
+                                    <Checkbox
+                                        checked={!isLanguageFilter}
+                                        onClick={(): void => {
+                                            setLanguageFilter(
+                                                !isLanguageFilter
+                                            );
+                                        }}
                                     >
-                                        {`${t("published")}: ${moment(
-                                            x.published
-                                        ).format("DD.MM.YYYY, HH:mm:ss")}`}
-                                    </MiniInfoCell>
-                                    {!isLanguageFilter && (
-                                        <MiniInfoCell
-                                            before={<Icon20GlobeOutline />}
-                                        >
-                                            {`${t("language")}: ${
-                                                i18n.t(
-                                                    "languages." + x.lang
-                                                ) as unknown as string
-                                            }`}
-                                        </MiniInfoCell>
-                                    )}
-                                    {x.explicit ? (
-                                        <ExplicitArticleButton article={x} />
-                                    ) : (
-                                        <CellButton
-                                            onClick={(): void => {
-                                                router.activePanel = x.id;
-                                            }}
-                                        >
-                                            {t("open")}
-                                        </CellButton>
-                                    )}
-                                </Group>
-                            );
-                        })
+                                        {t("filters.anotherLanguage")}
+                                    </Checkbox>
+                                    <Checkbox
+                                        checked={!isExplicitFilter}
+                                        onClick={(): void => {
+                                            setExplicitFilter(
+                                                !isExplicitFilter
+                                            );
+                                        }}
+                                    >
+                                        {t("filters.explicit")}
+                                    </Checkbox>
+                                </FormItem>
+                            </Div>
+                        }
+                    >
+                        <IconButton disabled={isDesktop}>
+                            <Icon24Filter />
+                        </IconButton>
+                    </Dropdown>
+                    {isDesktop && <Spacing />}
+                    {activeArticles.length > 0 ? (
+                        activeArticles.map(ArticlePreview)
                     ) : (
                         <Placeholder icon={<Icon56ArticleOutline />}>
                             {t("notFound")}
                         </Placeholder>
-                    )}
-
-                    {(activeArticles.length < articlesList.length ||
-                        !isLanguageFilter) && (
-                        <Div
-                            style={{
-                                display: "flex",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Button
-                                size="l"
-                                stretched={!isDesktop}
-                                onClick={(): void =>
-                                    setLanguageFilter(!isLanguageFilter)
-                                }
-                            >
-                                {t(
-                                    isLanguageFilter
-                                        ? "showOtherArticles"
-                                        : "hideOtherArticles"
-                                )}
-                            </Button>
-                        </Div>
                     )}
                 </Group>
             </Panel>
