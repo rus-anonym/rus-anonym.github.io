@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 
 import {
     Button,
     ButtonGroup,
     Div,
+    FixedLayout,
     Group,
     RichCell,
     Spacing,
@@ -20,7 +21,6 @@ import tempStorage, {
 } from "../../../TS/store/tempStorage";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { observer } from "mobx-react";
-import { autorun } from "mobx";
 
 const Message = ({
     text,
@@ -54,18 +54,9 @@ const RolePlayChat = (): JSX.Element => {
 
     const profiles = tempStorage.prototypes.rpchat.profiles;
 
-    useEffect(() => {
-        const disposer = autorun(() => {
-            if (!isShow) {
-                setActiveProfile(profiles.length - 1);
-            }
-        });
-
-        return () => disposer();
-    }, []);
-
     return (
-        <Group>
+        <FixedLayout vertical="bottom" filled>
+            <Group mode="plain" style={{ height: "100vh" }} />
             <Group mode="plain">{messages.map(Message)}</Group>
             <WriteBar
                 before={
@@ -176,7 +167,7 @@ const RolePlayChat = (): JSX.Element => {
                 }}
                 placeholder="Write a message..."
             />
-        </Group>
+        </FixedLayout>
     );
 };
 
