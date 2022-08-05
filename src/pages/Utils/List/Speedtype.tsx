@@ -152,7 +152,7 @@ const Speedtype = (): JSX.Element => {
 
     const Result = (element: IHistoryElement): JSX.Element => {
         return (
-            <Card mode="outline">
+            <Card mode="outline" style={{ textAlign: "center" }}>
                 <RichCell
                     disabled
                     text={
@@ -294,151 +294,145 @@ const Speedtype = (): JSX.Element => {
     }, [cpm, startDate, errors, history, progressValue, isStarted]);
 
     return (
-        <>
-            <Group>
-                {letters.length > 0 && (
+        <Group>
+            {letters.length > 0 && (
+                <Div
+                    onClick={(): void => {
+                        document.getElementById("input")?.focus();
+                    }}
+                >
+                    <Progress value={progressValue} />
+                    <Spacing size={28} />
+                    <div style={{ textAlign: "center" }}>
+                        {letters.map(Word)}
+                    </div>
+                </Div>
+            )}
+            <Group mode="plain" header={<Header>{t("results")}</Header>}>
+                <MiniInfoCell
+                    before={
+                        cpm < 200 ? (
+                            <Icon28SpeedometerStartOutline />
+                        ) : cpm < 400 ? (
+                            <Icon28SpeedometerMiddleOutline />
+                        ) : (
+                            <Icon28SpeedometerMaxOutline />
+                        )
+                    }
+                    textWrap="short"
+                >
+                    {t("cpm")}: {cpm}
+                </MiniInfoCell>
+                <MiniInfoCell
+                    before={
+                        <Icon28ErrorCircleOutline
+                            fill={`rgb(${150 + errors}, ${
+                                162 - errors * 8.1
+                            }, ${173 - errors * 8.65})`}
+                        />
+                    }
+                    textWrap="short"
+                >
+                    {t("errors")}: {errors}
+                </MiniInfoCell>
+                {letters.length === 0 && (
                     <Div
-                        onClick={(): void => {
-                            document.getElementById("input")?.focus();
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
                         }}
                     >
-                        <Progress value={progressValue} />
-                        <Spacing size={28} />
-                        <div style={{ textAlign: "center" }}>
-                            {letters.map(Word)}
-                        </div>
+                        <Button
+                            appearance="positive"
+                            stretched
+                            size="l"
+                            onClick={reset}
+                        >
+                            {t("restart")}
+                        </Button>
                     </Div>
                 )}
-                <Group mode="plain" header={<Header>{t("results")}</Header>}>
-                    <MiniInfoCell
-                        before={
-                            cpm < 200 ? (
-                                <Icon28SpeedometerStartOutline />
-                            ) : cpm < 400 ? (
-                                <Icon28SpeedometerMiddleOutline />
-                            ) : (
-                                <Icon28SpeedometerMaxOutline />
-                            )
-                        }
-                        textWrap="short"
+            </Group>
+            {history.length > 0 && (
+                <Group mode="plain">
+                    <Group
+                        separator="hide"
+                        mode="plain"
+                        style={{ textAlign: "center" }}
+                        description={`${t("formula")}: ${t("cpm")} / ${t(
+                            "errors"
+                        )}`}
                     >
-                        {t("cpm")}: {cpm}
-                    </MiniInfoCell>
-                    <MiniInfoCell
-                        before={
-                            <Icon28ErrorCircleOutline
-                                fill={`rgb(${150 + errors}, ${
-                                    162 - errors * 8.1
-                                }, ${173 - errors * 8.65})`}
-                            />
-                        }
-                        textWrap="short"
-                    >
-                        {t("errors")}: {errors}
-                    </MiniInfoCell>
-                    {letters.length === 0 && (
-                        <Div
+                        <div
                             style={{
                                 display: "flex",
+                                alignItems: "baseline",
                                 justifyContent: "center",
                             }}
                         >
-                            <Button
-                                appearance="positive"
-                                stretched
-                                size="l"
-                                onClick={reset}
-                            >
-                                {t("restart")}
-                            </Button>
-                        </Div>
-                    )}
-                </Group>
-                {history.length > 0 && (
-                    <Group mode="plain">
-                        <Group
-                            separator="hide"
-                            mode="plain"
-                            style={{ textAlign: "center" }}
-                            description={`${t("formula")}: ${t("cpm")} / ${t(
-                                "errors"
-                            )}`}
-                        >
-                            <div
+                            <Group
                                 style={{
-                                    display: "flex",
-                                    alignItems: "baseline",
-                                    justifyContent: "center",
+                                    marginRight:
+                                        history.length > 1 ? "5px" : undefined,
                                 }}
+                                separator="hide"
+                                mode="plain"
                             >
+                                <Header>{t("bestResult")}</Header>
+                                {Result(history.sort(resultSort)[0])}
+                            </Group>
+                            {history.length > 1 && (
                                 <Group
-                                    style={{
-                                        marginRight:
-                                            history.length > 1
-                                                ? "5px"
-                                                : undefined,
-                                    }}
+                                    style={{ marginLeft: "5px" }}
                                     separator="hide"
                                     mode="plain"
                                 >
-                                    <Header>{t("bestResult")}</Header>
-                                    {Result(history.sort(resultSort)[0])}
+                                    <Header>{t("worstResult")}</Header>
+                                    {Result(
+                                        history.sort(resultSort)[
+                                            history.length - 1
+                                        ]
+                                    )}
                                 </Group>
-                                {history.length > 1 && (
-                                    <Group
-                                        style={{ marginLeft: "5px" }}
-                                        separator="hide"
-                                        mode="plain"
-                                    >
-                                        <Header>{t("worstResult")}</Header>
-                                        {Result(
-                                            history.sort(resultSort)[
-                                                history.length - 1
-                                            ]
-                                        )}
-                                    </Group>
-                                )}
-                            </div>
-                        </Group>
-
-                        <Spacing />
-
-                        <Group
-                            mode="plain"
-                            header={
-                                <Header
-                                    aside={`${t("total")}: ${history.length}`}
-                                >
-                                    {t("history")}
-                                </Header>
-                            }
-                        >
-                            <CardScroll>
-                                {history.sort(dateSort).map(Result)}
-                            </CardScroll>
-                        </Group>
-
-                        <Spacing />
-
-                        <Separator />
-
-                        <SimpleCell disabled>
-                            <Button
-                                size="m"
-                                mode="destructive"
-                                onClick={(): void => {
-                                    setHistory([]);
-                                    History.save([]);
-                                    reset();
-                                }}
-                            >
-                                {t("clearHistory")}
-                            </Button>
-                        </SimpleCell>
+                            )}
+                        </div>
                     </Group>
-                )}
-            </Group>
-        </>
+
+                    <Spacing />
+
+                    <Group
+                        mode="plain"
+                        header={
+                            <Header aside={`${t("total")}: ${history.length}`}>
+                                {t("history")}
+                            </Header>
+                        }
+                    >
+                        <CardScroll>
+                            {history.sort(dateSort).map(Result)}
+                        </CardScroll>
+                    </Group>
+
+                    <Spacing />
+
+                    <Separator />
+
+                    <SimpleCell disabled>
+                        <Button
+                            size="m"
+                            mode="destructive"
+                            onClick={(): void => {
+                                setHistory([]);
+                                History.save([]);
+                                reset();
+                            }}
+                        >
+                            {t("clearHistory")}
+                        </Button>
+                    </SimpleCell>
+                </Group>
+            )}
+        </Group>
     );
 };
 
