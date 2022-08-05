@@ -14,6 +14,7 @@ import {
     MiniInfoCell,
     Panel,
     Placeholder,
+    Search,
     Spacing,
     useAdaptivity,
     View,
@@ -40,7 +41,7 @@ interface IArticle {
     content: React.ReactNode;
     lang: typeof session.language;
     published: Date;
-    explicit: boolean;
+    isExplicit: boolean;
 }
 
 const ArticleFallback = ({ title }: { title: string }): JSX.Element => {
@@ -82,7 +83,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "ru",
         published: new Date("2022-03-03T23:42:14"),
-        explicit: true,
+        isExplicit: true,
     },
     {
         id: "nometa",
@@ -95,7 +96,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "ru",
         published: new Date("2022-03-07T00:14:54"),
-        explicit: false,
+        isExplicit: false,
     },
     {
         id: "nohello",
@@ -108,7 +109,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "en",
         published: new Date("2022-03-07T00:23:27"),
-        explicit: false,
+        isExplicit: false,
     },
     {
         id: "howtocommunicateru",
@@ -123,7 +124,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "ru",
         published: new Date("2022-03-07T02:11:44"),
-        explicit: true,
+        isExplicit: true,
     },
     {
         id: "davidov-retake",
@@ -138,7 +139,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "ru",
         published: new Date("2021-10-20T22:11:34"),
-        explicit: true,
+        isExplicit: true,
     },
 ];
 
@@ -162,6 +163,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
 
     const [isLanguageFilter, setLanguageFilter] = useState(true);
     const [isExplicitFilter, setExplicitFilter] = useState(true);
+    const [searchFilter, setSearchFilter] = useState("");
 
     useEffect(() => {
         if (
@@ -171,12 +173,27 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
         }
     });
 
+    const filterCallback = (article: IArticle): boolean => {
+        if (isLanguageFilter && article.lang !== session.language) {
+            return false;
+        }
+
+        if (isExplicitFilter && article.isExplicit) {
+            return false;
+        }
+
+        if (
+            searchFilter !== "" &&
+            !article.title.toLowerCase().includes(searchFilter.toLowerCase())
+        ) {
+            return false;
+        }
+
+        return true;
+    };
+
     const activeArticles = articlesList
-        .filter(
-            (x) =>
-                (isLanguageFilter ? x.lang === session.language : true) &&
-                (isExplicitFilter ? !x.explicit : true)
-        )
+        .filter(filterCallback)
         .sort(byPublished);
 
     const ExplicitArticleButton = ({
@@ -243,7 +260,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
                         }`}
                     </MiniInfoCell>
                 )}
-                {article.explicit ? (
+                {article.isExplicit ? (
                     <ExplicitArticleButton article={article} />
                 ) : (
                     <CellButton
@@ -262,40 +279,50 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
         <View id={id} activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group>
-                    <Dropdown
-                        action={isDesktop ? "hover" : "click"}
-                        content={
-                            <Div>
-                                <Header>{t("filters.title")}</Header>
-                                <FormItem>
-                                    <Checkbox
-                                        checked={!isLanguageFilter}
-                                        onClick={(): void => {
-                                            setLanguageFilter(
-                                                !isLanguageFilter
-                                            );
-                                        }}
-                                    >
-                                        {t("filters.anotherLanguage")}
-                                    </Checkbox>
-                                    <Checkbox
-                                        checked={!isExplicitFilter}
-                                        onClick={(): void => {
-                                            setExplicitFilter(
-                                                !isExplicitFilter
-                                            );
-                                        }}
-                                    >
-                                        {t("filters.explicit")}
-                                    </Checkbox>
-                                </FormItem>
-                            </Div>
+                    <Search
+                        placeholder={t("filters.search")}
+                        value={searchFilter}
+                        onChange={(event): void => {
+                            setSearchFilter(event.target.value);
+                        }}
+                        icon={
+                            <Dropdown
+                                action={isDesktop ? "hover" : "click"}
+                                content={
+                                    <Div>
+                                        <Header>{t("filters.title")}</Header>
+                                        <FormItem>
+                                            <Checkbox
+                                                checked={!isLanguageFilter}
+                                                onClick={(): void => {
+                                                    setLanguageFilter(
+                                                        !isLanguageFilter
+                                                    );
+                                                }}
+                                            >
+                                                {t("filters.anotherLanguage")}
+                                            </Checkbox>
+                                            <Checkbox
+                                                checked={!isExplicitFilter}
+                                                onClick={(): void => {
+                                                    setExplicitFilter(
+                                                        !isExplicitFilter
+                                                    );
+                                                }}
+                                            >
+                                                {t("filters.explicit")}
+                                            </Checkbox>
+                                        </FormItem>
+                                    </Div>
+                                }
+                            >
+                                <IconButton disabled={isDesktop}>
+                                    <Icon24Filter />
+                                </IconButton>
+                            </Dropdown>
                         }
-                    >
-                        <IconButton disabled={isDesktop}>
-                            <Icon24Filter />
-                        </IconButton>
-                    </Dropdown>
+                    />
+
                     {isDesktop && <Spacing />}
                     {activeArticles.length > 0 ? (
                         activeArticles.map(ArticlePreview)

@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Cell,
     CellButton,
+    Checkbox,
+    Div,
+    FormItem,
     Group,
+    Header,
+    IconButton,
     MiniInfoCell,
     Panel,
     Placeholder,
+    Search,
     useAdaptivity,
     View,
     ViewWidth,
@@ -17,13 +23,15 @@ import {
     Icon28ComputerSmartphoneOutline,
     Icon56ComputerOutline,
     Icon56SmartphoneOutline,
+    Icon24Filter,
 } from "@vkontakte/icons";
 
 import router from "../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react";
-import { TextTooltip } from "@vkontakte/vkui/dist/unstable";
+import { Dropdown, TextTooltip } from "@vkontakte/vkui/dist/unstable";
 import lazyLoad from "../../utils/lazyLoad";
+import session from "../../TS/store/session";
 
 interface IUtil {
     id: string;
@@ -32,11 +40,15 @@ interface IUtil {
     isMobile: boolean;
     isDesktop: boolean;
     component: React.ReactNode;
+    languages: typeof session.language[];
 }
 
 const UtilsView = ({ id }: { id: string }): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
+
+    const [isLanguageFilter, setLanguageFilter] = useState(true);
+    const [searchFilter, setSearchFilter] = useState("");
 
     const { t, i18n } = useTranslation("translation", {
         keyPrefix: "pages.utils",
@@ -50,6 +62,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             isMobile: true,
             isDesktop: false,
             component: lazyLoad(() => import("./List/QR")),
+            languages: ["en", "ru"],
         },
         {
             id: "cat",
@@ -58,6 +71,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             isMobile: true,
             isDesktop: true,
             component: lazyLoad(() => import("./List/Cat")),
+            languages: ["en", "ru"],
         },
         {
             id: "speedtype",
@@ -66,6 +80,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             isMobile: false,
             isDesktop: true,
             component: lazyLoad(() => import("./List/Speedtype")),
+            languages: ["en", "ru"],
         },
         {
             id: "feminizator",
@@ -74,12 +89,30 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             isMobile: true,
             isDesktop: true,
             component: lazyLoad(() => import("./List/Feminizator")),
+            languages: ["ru"],
         },
     ];
 
-    const filteredUtils = utils.filter(
-        (x) => x.isDesktop === isDesktop || x.isMobile === !isDesktop
-    );
+    const filter = (util: IUtil): boolean => {
+        if (util.isDesktop !== isDesktop && util.isMobile !== !isDesktop) {
+            return false;
+        }
+
+        if (isLanguageFilter && !util.languages.includes(session.language)) {
+            return false;
+        }
+
+        if (
+            searchFilter !== "" &&
+            !util.title.toLowerCase().includes(searchFilter.toLowerCase())
+        ) {
+            return false;
+        }
+
+        return true;
+    };
+
+    const filteredUtils = utils.filter(filter);
 
     useEffect(() => {
         if (!utils.some((util) => util.id === router.activePanel)) {
@@ -89,7 +122,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
 
     const UtilNavBlock = (util: IUtil): JSX.Element => {
         return (
-            <Group>
+            <Group mode="plain">
                 <Cell
                     disabled
                     description={util.description}
@@ -205,6 +238,39 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                         </>
                     }
                 >
+                    <Search
+                        placeholder={t("filters.search")}
+                        value={searchFilter}
+                        onChange={(event): void => {
+                            setSearchFilter(event.target.value);
+                        }}
+                        icon={
+                            <Dropdown
+                                action={isDesktop ? "hover" : "click"}
+                                content={
+                                    <Div>
+                                        <Header>{t("filters.title")}</Header>
+                                        <FormItem>
+                                            <Checkbox
+                                                checked={!isLanguageFilter}
+                                                onClick={(): void => {
+                                                    setLanguageFilter(
+                                                        !isLanguageFilter
+                                                    );
+                                                }}
+                                            >
+                                                {t("filters.anotherLanguage")}
+                                            </Checkbox>
+                                        </FormItem>
+                                    </Div>
+                                }
+                            >
+                                <IconButton disabled={isDesktop}>
+                                    <Icon24Filter />
+                                </IconButton>
+                            </Dropdown>
+                        }
+                    />
                     {filteredUtils.map(UtilNavBlock)}
                 </Group>
             </Panel>

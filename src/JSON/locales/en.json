@@ -39,6 +39,7 @@
             "published": "Published by",
             "filters": {
                 "title": "Filters",
+                "search": "Search",
                 "anotherLanguage": "Show articles in another language",
                 "explicit": "Show articles with explicit content"
             },
@@ -55,6 +56,11 @@
             "onlyMobile": "Only available on mobile devices",
             "onlyDesktop": "Only available on computers",
             "multiplatform": "Available on computers and mobile devices",
+            "filters": {
+                "title": "Filters",
+                "search": "Search",
+                "anotherLanguage": "Show utilities that do not support the current language"
+            },
             "list": {
                 "cat": {
                     "description": "Infinite cat scroll"
