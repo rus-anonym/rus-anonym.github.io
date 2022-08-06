@@ -17,7 +17,6 @@ import {
 import router from "../../../TS/store/router";
 import { observer } from "mobx-react";
 
-import tempStorage from "../../../TS/store/tempStorage";
 import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
 import { Icon24Camera } from "@vkontakte/icons";
 
@@ -91,7 +90,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
         <ModalCard
             id={id}
             onClose={(): void => {
-                router.activeModal = null;
+                router.modals.reject();
             }}
             header="Создание профиля"
             actions={
@@ -100,8 +99,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                     mode="primary"
                     disabled={name === "" && name.length <= 20}
                     onClick={(): void => {
-                        router.activeModal = null;
-                        tempStorage.prototypes.rpchat.profiles.push({
+                        router.modals.resolve({
                             name,
                             avatar:
                                 customAvatarSrc === undefined ? (

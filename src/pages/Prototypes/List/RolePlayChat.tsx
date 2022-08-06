@@ -112,8 +112,17 @@ const RolePlayChat = (): JSX.Element => {
                                         stretched
                                         onClick={(): void => {
                                             setShow(false);
-                                            router.activeModal =
-                                                "prototypes-rpchat-createProfile";
+                                            void (async (): Promise<void> => {
+                                                const user =
+                                                    (await router.modals.open(
+                                                        "prototypes-rpchat-createProfile"
+                                                    )) as IPrototypesRpChatProfile;
+
+                                                profiles.push(user);
+                                                setActiveProfile(
+                                                    profiles.length - 1
+                                                );
+                                            })();
                                         }}
                                     >
                                         Create user

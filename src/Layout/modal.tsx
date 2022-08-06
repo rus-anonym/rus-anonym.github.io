@@ -7,12 +7,7 @@ import PrototypesRpChatCreateProfile from "./modals/cards/PrototypesRpChatCreate
 
 const ModalRootComponent = (): JSX.Element => {
     return (
-        <ModalRoot
-            activeModal={router.activeModal}
-            onClose={(): void => {
-                router.activeModal = null;
-            }}
-        >
+        <ModalRoot activeModal={router.modals.active}>
             <PrototypesRpChatCreateProfile id="prototypes-rpchat-createProfile" />
         </ModalRoot>
     );
