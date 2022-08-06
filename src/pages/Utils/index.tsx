@@ -5,7 +5,6 @@ import {
     CellButton,
     Checkbox,
     Div,
-    FormItem,
     Group,
     Header,
     IconButton,
@@ -85,10 +84,19 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
         {
             id: "feminizator",
             title: "Feminizator",
-            description: "",
+            description: "Феминизатор слов",
             isMobile: true,
             isDesktop: true,
             component: lazyLoad(() => import("./List/Feminizator")),
+            languages: ["ru"],
+        },
+        {
+            id: "vk-stickers",
+            title: "VK Stickers",
+            description: "Приложение для просмотра всех стикеров ВКонтакте",
+            isMobile: true,
+            isDesktop: true,
+            component: lazyLoad(() => import("./List/VKStickers")),
             languages: ["ru"],
         },
     ];
@@ -250,18 +258,16 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                                 content={
                                     <Div>
                                         <Header>{t("filters.title")}</Header>
-                                        <FormItem>
-                                            <Checkbox
-                                                checked={!isLanguageFilter}
-                                                onClick={(): void => {
-                                                    setLanguageFilter(
-                                                        !isLanguageFilter
-                                                    );
-                                                }}
-                                            >
-                                                {t("filters.anotherLanguage")}
-                                            </Checkbox>
-                                        </FormItem>
+                                        <Checkbox
+                                            checked={!isLanguageFilter}
+                                            onClick={(): void => {
+                                                setLanguageFilter(
+                                                    !isLanguageFilter
+                                                );
+                                            }}
+                                        >
+                                            {t("filters.anotherLanguage")}
+                                        </Checkbox>
                                     </Div>
                                 }
                             >
