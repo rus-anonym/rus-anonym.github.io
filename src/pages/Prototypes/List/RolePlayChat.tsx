@@ -18,7 +18,7 @@ import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 import router from "../../../TS/store/router";
 import tempStorage, {
     IPrototypesRpChatProfile,
-} from "../../../TS/store/tempStorage";
+} from "../../../TS/store/storage";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { observer } from "mobx-react";
 
@@ -112,17 +112,8 @@ const RolePlayChat = (): JSX.Element => {
                                         stretched
                                         onClick={(): void => {
                                             setShow(false);
-                                            void (async (): Promise<void> => {
-                                                const user =
-                                                    (await router.modals.open(
-                                                        "prototypes-rpchat-createProfile"
-                                                    )) as IPrototypesRpChatProfile;
-
-                                                profiles.push(user);
-                                                setActiveProfile(
-                                                    profiles.length - 1
-                                                );
-                                            })();
+                                            router.activeModal =
+                                                "prototypes-rpchat-createProfile";
                                         }}
                                     >
                                         Create user

@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import session from "../../TS/store/session";
 import { observer } from "mobx-react";
 import lazyLoad from "../../utils/lazyLoad";
+import storage from "../../TS/store/storage";
 
 interface IArticle {
     id: string;
@@ -157,9 +158,9 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
-    const [isLanguageFilter, setLanguageFilter] = useState(true);
-    const [isExplicitFilter, setExplicitFilter] = useState(true);
     const [searchFilter, setSearchFilter] = useState("");
+
+    const { isLanguageFilter, isExplicitFilter } = storage.articles.filters;
 
     useEffect(() => {
         if (
@@ -284,26 +285,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
                         icon={
                             <IconButton
                                 onClick={(): void => {
-                                    void (async (): Promise<void> => {
-                                        const filters =
-                                            (await router.modals.open(
-                                                "articles-filter",
-                                                {
-                                                    isLanguageFilter,
-                                                    isExplicitFilter,
-                                                }
-                                            )) as {
-                                                isLanguageFilter: boolean;
-                                                isExplicitFilter: boolean;
-                                            };
-
-                                        setLanguageFilter(
-                                            filters.isLanguageFilter
-                                        );
-                                        setExplicitFilter(
-                                            filters.isExplicitFilter
-                                        );
-                                    })();
+                                    router.activeModal = "articles-filter";
                                 }}
                             >
                                 <Icon24Filter />

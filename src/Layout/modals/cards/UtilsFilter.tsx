@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 import storage from "../../../TS/store/storage";
 import { observer } from "mobx-react";
 
-const ArticlesFilter = ({ id }: { id: string }): JSX.Element => {
+const UtilsFilter = ({ id }: { id: string }): JSX.Element => {
     const { t } = useTranslation("translation", {
-        keyPrefix: "pages.articles",
+        keyPrefix: "pages.utils",
     });
 
-    const filters = storage.articles.filters;
+    const filters = storage.utils.filters;
 
     return (
         <ModalCard id={id} header={t("filters.title")}>
@@ -29,23 +29,8 @@ const ArticlesFilter = ({ id }: { id: string }): JSX.Element => {
             >
                 {t("filters.anotherLanguage")}
             </SimpleCell>
-            <SimpleCell
-                disabled
-                multiline
-                after={
-                    <Switch
-                        checked={!filters.isExplicitFilter}
-                        onChange={(): void => {
-                            filters.isExplicitFilter =
-                                !filters.isExplicitFilter;
-                        }}
-                    />
-                }
-            >
-                {t("filters.explicit")}
-            </SimpleCell>
         </ModalCard>
     );
 };
 
-export default observer(ArticlesFilter);
+export default observer(UtilsFilter);

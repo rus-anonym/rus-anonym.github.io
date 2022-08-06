@@ -4,66 +4,9 @@ import queryString from "query-string";
 interface IRouterProps {
     activeView: string;
     activePanel: string | null;
-    modals: Modals;
+    activeModal: string | null;
     isGlobalLoading: boolean;
     popout: React.ReactNode | null;
-}
-
-class Modals {
-    public active: string | null = null;
-
-    private _resolve: ((value: unknown) => void) | null = null;
-    private _reject: ((reason: unknown) => void) | null = null;
-
-    public params: Record<string, unknown> | null = null;
-
-    private _reset(): void {
-        this.active = null;
-        this._resolve = null;
-        this._reject = null;
-        this.params = null;
-    }
-
-    constructor() {
-        this._reset();
-
-        makeAutoObservable(this);
-    }
-
-    public async open(
-        modalId: string,
-        params?: Record<string, unknown>
-    ): Promise<unknown> {
-        if (this.active !== null) {
-            throw new Error("Modal is already open");
-        }
-
-        this.active = modalId;
-        if (params) {
-            this.params = params;
-        }
-
-        const promise = new Promise((resolve, reject) => {
-            this._resolve = resolve;
-            this._reject = reject;
-        });
-
-        return promise;
-    }
-
-    public resolve(value?: unknown): void {
-        if (this._resolve) {
-            this._resolve(value);
-            this._reset();
-        }
-    }
-
-    public reject(value?: unknown): void {
-        if (this._reject) {
-            this._reject(value);
-            this._reset();
-        }
-    }
 }
 
 class Router implements IRouterProps {
@@ -79,7 +22,7 @@ class Router implements IRouterProps {
         return new Router({
             activeView,
             activePanel: activePanel || null,
-            modals: new Modals(),
+            activeModal: null,
             isGlobalLoading: true,
             popout: null,
         });
@@ -89,7 +32,7 @@ class Router implements IRouterProps {
         return {
             activeView: "",
             activePanel: null,
-            modals: new Modals(),
+            activeModal: null,
             isGlobalLoading: true,
             popout: null,
         };
@@ -97,17 +40,17 @@ class Router implements IRouterProps {
 
     private _activeView: string;
     private _activePanel: string | null;
+    public activeModal: string | null;
 
-    public modals: Modals;
     public isGlobalLoading: boolean;
     public popout: React.ReactNode | null;
 
     private constructor(params: IRouterProps = Router._createDefaultSession()) {
         this._activeView = params.activeView;
         this._activePanel = params.activePanel;
+        this.activeModal = params.activeModal;
         this.isGlobalLoading = params.isGlobalLoading;
         this.popout = params.popout;
-        this.modals = params.modals;
 
         makeAutoObservable(this);
     }

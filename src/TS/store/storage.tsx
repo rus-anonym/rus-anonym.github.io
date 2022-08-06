@@ -8,7 +8,18 @@ export interface IPrototypesRpChatProfile {
     avatar: JSX.Element;
 }
 
-export interface ITempStorage {
+export interface IStorage {
+    articles: {
+        filters: {
+            isLanguageFilter: boolean;
+            isExplicitFilter: boolean;
+        };
+    };
+    utils: {
+        filters: {
+            isLanguageFilter: boolean;
+        };
+    };
     prototypes: {
         rpchat: {
             profiles: IPrototypesRpChatProfile[];
@@ -16,7 +27,15 @@ export interface ITempStorage {
     };
 }
 
-class TempStorage implements ITempStorage {
+class Storage implements IStorage {
+    public articles = {
+        filters: { isLanguageFilter: true, isExplicitFilter: true },
+    };
+
+    public utils = {
+        filters: { isLanguageFilter: true },
+    };
+
     public prototypes = {
         rpchat: {
             profiles: [
@@ -53,4 +72,4 @@ class TempStorage implements ITempStorage {
     }
 }
 
-export default new TempStorage();
+export default new Storage();

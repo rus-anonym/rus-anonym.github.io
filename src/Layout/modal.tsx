@@ -5,12 +5,19 @@ import { observer } from "mobx-react";
 
 import PrototypesRpChatCreateProfile from "./modals/cards/PrototypesRpChatCreateProfile";
 import ArticlesFilter from "./modals/cards/ArticlesFilter";
+import UtilsFilter from "./modals/cards/UtilsFilter";
 
 const ModalRootComponent = (): JSX.Element => {
     return (
-        <ModalRoot activeModal={router.modals.active}>
+        <ModalRoot
+            activeModal={router.activeModal}
+            onClose={(): void => {
+                router.activeModal = null;
+            }}
+        >
             <PrototypesRpChatCreateProfile id="prototypes-rpchat-createProfile" />
             <ArticlesFilter id="articles-filter" />
+            <UtilsFilter id="utils-filter" />
         </ModalRoot>
     );
 };

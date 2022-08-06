@@ -14,11 +14,11 @@ import {
     Div,
 } from "@vkontakte/vkui";
 
-import router from "../../../TS/store/router";
 import { observer } from "mobx-react";
 
 import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
 import { Icon24Camera } from "@vkontakte/icons";
+import storage from "../../../TS/store/storage";
 
 const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     const [name, setName] = useState("");
@@ -89,9 +89,6 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     return (
         <ModalCard
             id={id}
-            onClose={(): void => {
-                router.modals.reject();
-            }}
             header="Создание профиля"
             actions={
                 <Button
@@ -99,7 +96,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                     mode="primary"
                     disabled={name === "" && name.length <= 20}
                     onClick={(): void => {
-                        router.modals.resolve({
+                        storage.prototypes.rpchat.profiles.push({
                             name,
                             avatar:
                                 customAvatarSrc === undefined ? (

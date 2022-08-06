@@ -3,10 +3,7 @@ import {
     Button,
     Cell,
     CellButton,
-    Checkbox,
-    Div,
     Group,
-    Header,
     IconButton,
     MiniInfoCell,
     Panel,
@@ -28,9 +25,10 @@ import {
 import router from "../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react";
-import { Dropdown, TextTooltip } from "@vkontakte/vkui/dist/unstable";
+import { TextTooltip } from "@vkontakte/vkui/dist/unstable";
 import lazyLoad from "../../utils/lazyLoad";
 import session from "../../TS/store/session";
+import storage from "../../TS/store/storage";
 
 interface IUtil {
     id: string;
@@ -46,12 +44,13 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
-    const [isLanguageFilter, setLanguageFilter] = useState(true);
     const [searchFilter, setSearchFilter] = useState("");
 
     const { t, i18n } = useTranslation("translation", {
         keyPrefix: "pages.utils",
     });
+
+    const { isLanguageFilter } = storage.utils.filters;
 
     const utils: IUtil[] = [
         {
@@ -253,28 +252,13 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                             setSearchFilter(event.target.value);
                         }}
                         icon={
-                            <Dropdown
-                                action={isDesktop ? "hover" : "click"}
-                                content={
-                                    <Div>
-                                        <Header>{t("filters.title")}</Header>
-                                        <Checkbox
-                                            checked={!isLanguageFilter}
-                                            onClick={(): void => {
-                                                setLanguageFilter(
-                                                    !isLanguageFilter
-                                                );
-                                            }}
-                                        >
-                                            {t("filters.anotherLanguage")}
-                                        </Checkbox>
-                                    </Div>
-                                }
+                            <IconButton
+                                onClick={(): void => {
+                                    router.activeModal = "utils-filter";
+                                }}
                             >
-                                <IconButton disabled={isDesktop}>
-                                    <Icon24Filter />
-                                </IconButton>
-                            </Dropdown>
+                                <Icon24Filter />
+                            </IconButton>
                         }
                     />
                     {filteredUtils.map(UtilNavBlock)}
