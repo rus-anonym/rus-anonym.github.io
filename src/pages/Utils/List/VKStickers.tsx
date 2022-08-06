@@ -72,8 +72,19 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
                             <Dropdown
                                 action={isDesktop ? "hover" : "click"}
                                 content={
-                                    <Div>
-                                        <ButtonGroup mode="vertical">
+                                    <Div style={{ width: "20vw" }}>
+                                        <ButtonGroup mode="vertical" stretched>
+                                            <img
+                                                width="100%"
+                                                src={`https://rus-anonym.github.io/vk-stickers-storage/${
+                                                    pack.id
+                                                }/stickers/${sticker.id}/${
+                                                    sticker.images[
+                                                        sticker.images.length -
+                                                            1
+                                                    ]
+                                                }.png`}
+                                            />
                                             {sticker.images.map((image) => {
                                                 return (
                                                     <Link
