@@ -46,7 +46,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
 
     const [searchFilter, setSearchFilter] = useState("");
 
-    const { t, i18n } = useTranslation("translation", {
+    const { t } = useTranslation("translation", {
         keyPrefix: "pages.utils",
     });
 
@@ -204,20 +204,6 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
         return <Panel id={util.id}>{util.component}</Panel>;
     };
 
-    if (filteredUtils.length === 0) {
-        return (
-            <View id={id} activePanel="default">
-                <Panel id="default">
-                    <Group>
-                        <Placeholder>
-                            {i18n.t("utils.feature") as unknown as string}
-                        </Placeholder>
-                    </Group>
-                </Panel>
-            </View>
-        );
-    }
-
     return (
         <View id={id} activePanel={router.activePanel || "default"}>
             <Panel id="default">
@@ -261,7 +247,13 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                             </IconButton>
                         }
                     />
-                    {filteredUtils.map(UtilNavBlock)}
+                    {filteredUtils.length > 0 ? (
+                        filteredUtils.map(UtilNavBlock)
+                    ) : (
+                        <Placeholder>
+                            {t("notFound") as unknown as string}
+                        </Placeholder>
+                    )}
                 </Group>
             </Panel>
             {utils.map(UtilCell)}

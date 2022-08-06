@@ -61,6 +61,7 @@
                 "search": "Search",
                 "anotherLanguage": "Show utilities that do not support the current language"
             },
+            "notFound": "No utils by the selected filters were found",
             "list": {
                 "cat": {
                     "description": "Infinite cat scroll"

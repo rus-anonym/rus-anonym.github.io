@@ -1,10 +1,29 @@
 import { makeAutoObservable } from "mobx";
 import queryString from "query-string";
 
+import EventsEmitter from "eventemitter3";
+
+const MODAL_EVENTS = [
+    "onModalOpen",
+    "onModalOpened",
+    "onModalClose",
+    "onModalClosed",
+] as const;
+
+interface IEvents {
+    on(event: typeof MODAL_EVENTS[number], fn: (modalId: string) => void): this;
+    once(
+        event: typeof MODAL_EVENTS[number],
+        fn: (modalId: string) => void
+    ): this;
+    emit(event: typeof MODAL_EVENTS[number], modalId: string): boolean;
+}
+
 interface IRouterProps {
     activeView: string;
     activePanel: string | null;
     activeModal: string | null;
+    events: IEvents & EventsEmitter;
     isGlobalLoading: boolean;
     popout: React.ReactNode | null;
 }
@@ -25,6 +44,7 @@ class Router implements IRouterProps {
             activeModal: null,
             isGlobalLoading: true,
             popout: null,
+            events: new EventsEmitter(),
         });
     }
 
@@ -35,6 +55,7 @@ class Router implements IRouterProps {
             activeModal: null,
             isGlobalLoading: true,
             popout: null,
+            events: new EventsEmitter(),
         };
     }
 
@@ -44,6 +65,7 @@ class Router implements IRouterProps {
 
     public isGlobalLoading: boolean;
     public popout: React.ReactNode | null;
+    public events: EventsEmitter & IEvents;
 
     private constructor(params: IRouterProps = Router._createDefaultSession()) {
         this._activeView = params.activeView;
@@ -51,6 +73,7 @@ class Router implements IRouterProps {
         this.activeModal = params.activeModal;
         this.isGlobalLoading = params.isGlobalLoading;
         this.popout = params.popout;
+        this.events = params.events;
 
         makeAutoObservable(this);
     }

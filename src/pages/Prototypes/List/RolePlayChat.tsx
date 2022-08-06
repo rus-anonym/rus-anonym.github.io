@@ -95,6 +95,7 @@ const RolePlayChat = (): JSX.Element => {
                                                                 i,
                                                                 1
                                                             );
+                                                            setActiveProfile(0);
                                                         }}
                                                     >
                                                         <Icon24DeleteOutline />
@@ -112,8 +113,23 @@ const RolePlayChat = (): JSX.Element => {
                                         stretched
                                         onClick={(): void => {
                                             setShow(false);
+                                            const profileLength =
+                                                profiles.length;
                                             router.activeModal =
                                                 "prototypes-rpchat-createProfile";
+                                            router.events.once(
+                                                "onModalClosed",
+                                                () => {
+                                                    if (
+                                                        profileLength !==
+                                                        profiles.length
+                                                    ) {
+                                                        setActiveProfile(
+                                                            profiles.length - 1
+                                                        );
+                                                    }
+                                                }
+                                            );
                                         }}
                                     >
                                         Create user

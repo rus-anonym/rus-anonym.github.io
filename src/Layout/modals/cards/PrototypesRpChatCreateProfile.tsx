@@ -19,6 +19,7 @@ import { observer } from "mobx-react";
 import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
 import { Icon24Camera } from "@vkontakte/icons";
 import storage from "../../../TS/store/storage";
+import router from "../../../TS/store/router";
 
 const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     const [name, setName] = useState("");
@@ -114,6 +115,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                                     <Avatar size={32} src={customAvatarSrc} />
                                 ),
                         });
+                        router.activeModal = null;
                     }}
                 >
                     Добавить

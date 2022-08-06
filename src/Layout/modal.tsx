@@ -11,8 +11,18 @@ const ModalRootComponent = (): JSX.Element => {
     return (
         <ModalRoot
             activeModal={router.activeModal}
-            onClose={(): void => {
+            onClose={(modalId): void => {
                 router.activeModal = null;
+                router.events.emit("onModalClose", modalId);
+            }}
+            onClosed={(modalId): void => {
+                router.events.emit("onModalClosed", modalId);
+            }}
+            onOpen={(modalId): void => {
+                router.events.emit("onModalOpen", modalId);
+            }}
+            onOpened={(modalId): void => {
+                router.events.emit("onModalOpened", modalId);
             }}
         >
             <PrototypesRpChatCreateProfile id="prototypes-rpchat-createProfile" />
