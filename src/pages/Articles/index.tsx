@@ -5,9 +5,6 @@ import moment from "moment";
 import {
     Alert,
     CellButton,
-    Checkbox,
-    Div,
-    FormItem,
     Group,
     Header,
     IconButton,
@@ -33,7 +30,6 @@ import { useTranslation } from "react-i18next";
 import session from "../../TS/store/session";
 import { observer } from "mobx-react";
 import lazyLoad from "../../utils/lazyLoad";
-import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 
 interface IArticle {
     id: string;
@@ -286,40 +282,32 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
                             setSearchFilter(event.target.value);
                         }}
                         icon={
-                            <Dropdown
-                                action={isDesktop ? "hover" : "click"}
-                                content={
-                                    <Div>
-                                        <Header>{t("filters.title")}</Header>
-                                        <FormItem>
-                                            <Checkbox
-                                                checked={!isLanguageFilter}
-                                                onClick={(): void => {
-                                                    setLanguageFilter(
-                                                        !isLanguageFilter
-                                                    );
-                                                }}
-                                            >
-                                                {t("filters.anotherLanguage")}
-                                            </Checkbox>
-                                            <Checkbox
-                                                checked={!isExplicitFilter}
-                                                onClick={(): void => {
-                                                    setExplicitFilter(
-                                                        !isExplicitFilter
-                                                    );
-                                                }}
-                                            >
-                                                {t("filters.explicit")}
-                                            </Checkbox>
-                                        </FormItem>
-                                    </Div>
-                                }
+                            <IconButton
+                                onClick={(): void => {
+                                    void (async (): Promise<void> => {
+                                        const filters =
+                                            (await router.modals.open(
+                                                "articles-filter",
+                                                {
+                                                    isLanguageFilter,
+                                                    isExplicitFilter,
+                                                }
+                                            )) as {
+                                                isLanguageFilter: boolean;
+                                                isExplicitFilter: boolean;
+                                            };
+
+                                        setLanguageFilter(
+                                            filters.isLanguageFilter
+                                        );
+                                        setExplicitFilter(
+                                            filters.isExplicitFilter
+                                        );
+                                    })();
+                                }}
                             >
-                                <IconButton disabled={isDesktop}>
-                                    <Icon24Filter />
-                                </IconButton>
-                            </Dropdown>
+                                <Icon24Filter />
+                            </IconButton>
                         }
                     />
 

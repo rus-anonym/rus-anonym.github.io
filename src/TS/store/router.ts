@@ -15,10 +15,13 @@ class Modals {
     private _resolve: ((value: unknown) => void) | null = null;
     private _reject: ((reason: unknown) => void) | null = null;
 
+    public params: Record<string, unknown> | null = null;
+
     private _reset(): void {
         this.active = null;
         this._resolve = null;
         this._reject = null;
+        this.params = null;
     }
 
     constructor() {
@@ -27,12 +30,18 @@ class Modals {
         makeAutoObservable(this);
     }
 
-    public async open(modalId: string): Promise<unknown> {
+    public async open(
+        modalId: string,
+        params?: Record<string, unknown>
+    ): Promise<unknown> {
         if (this.active !== null) {
             throw new Error("Modal is already open");
         }
 
         this.active = modalId;
+        if (params) {
+            this.params = params;
+        }
 
         const promise = new Promise((resolve, reject) => {
             this._resolve = resolve;
