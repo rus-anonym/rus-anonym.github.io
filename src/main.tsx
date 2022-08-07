@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import "./CSS/disableScrollBar.css";
 import "@vkontakte/vkui/dist/vkui.css";
 import "@vkontakte/vkui/dist/unstable.css";
 import "@vkontakte/vkui/dist/fonts.css";
