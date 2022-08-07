@@ -83,7 +83,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
         {
             id: "feminizator",
             title: "Feminizator",
-            description: "Феминизатор слов",
+            description: "Феминизаторка словесс",
             isMobile: true,
             isDesktop: true,
             component: lazyLoad(() => import("./List/Feminizator")),

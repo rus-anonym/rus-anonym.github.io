@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 
 import {
@@ -11,6 +11,7 @@ import {
     HorizontalScroll,
     IconButton,
     Link,
+    Pagination,
     Placeholder,
     RichCell,
     Search,
@@ -261,6 +262,19 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
         return true;
     });
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const filteredPacksChunk = useMemo(() => {
+        setCurrentPage(1);
+
+        const response: TPack[][] = [];
+
+        for (let i = 0; i < filteredPacks.length; i += 25) {
+            response.push(filteredPacks.slice(i, i + 25));
+        }
+
+        return response;
+    }, [searchFilter, isSimpleFilter, isAnimatedFilter]);
+
     useEffect(() => {
         const packId = parseInt(router.queryParams.pack);
         if (!isNaN(packId)) {
@@ -316,6 +330,11 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                     </Dropdown>
                 }
             />
+            <Pagination
+                currentPage={currentPage}
+                onChange={(page): void => setCurrentPage(page)}
+                totalPages={filteredPacksChunk.length}
+            />
 
             {filteredPacks.length === 0 ? (
                 <Placeholder
@@ -334,7 +353,7 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                     По выбранным фильтрам ничего не найдено
                 </Placeholder>
             ) : (
-                filteredPacks.map((pack) => (
+                filteredPacksChunk[currentPage - 1].map((pack) => (
                     <PackPreview
                         pack={pack}
                         enter={(): void => setActivePack(pack)}
