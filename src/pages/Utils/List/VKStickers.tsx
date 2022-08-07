@@ -55,62 +55,78 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
+    const stickersChunk = useMemo(() => {
+        const response: ISticker[][] = [];
+
+        for (let i = 0; i < pack.stickers.length; i += 8) {
+            response.push(pack.stickers.slice(i, i + 8));
+        }
+
+        return response;
+    }, []);
+
     return (
-        <>
-            <HorizontalScroll
-                showArrows
-                getScrollToLeft={(i): number => i - 120}
-                getScrollToRight={(i): number => i + 120}
-            >
-                <div
-                    style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                    }}
-                >
-                    {pack.stickers.map((sticker) => {
-                        return (
-                            <Dropdown
-                                action={isDesktop ? "hover" : "click"}
-                                content={
-                                    <Div style={{ width: "20vw" }}>
-                                        <ButtonGroup mode="vertical" stretched>
-                                            <img
-                                                width="100%"
-                                                src={`https://rus-anonym.github.io/vk-stickers-storage/${
-                                                    pack.id
-                                                }/stickers/${sticker.id}/${
-                                                    sticker.images[
-                                                        sticker.images.length -
-                                                            1
-                                                    ]
-                                                }.png`}
-                                            />
-                                            {sticker.images.map((image) => {
-                                                return (
-                                                    <Link
-                                                        target="_blank"
-                                                        href={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${image}.png`}
-                                                    >
-                                                        {image}.png
-                                                    </Link>
-                                                );
-                                            })}
-                                        </ButtonGroup>
-                                    </Div>
-                                }
-                            >
-                                <img
-                                    width={56}
-                                    src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${sticker.images[0]}.png`}
-                                />
-                            </Dropdown>
-                        );
-                    })}
-                </div>
-            </HorizontalScroll>
-        </>
+        <Div>
+            {stickersChunk.map((chunk) => {
+                return (
+                    <HorizontalScroll>
+                        <div style={{ display: "flex" }}>
+                            {chunk.map((sticker) => {
+                                return (
+                                    <Dropdown
+                                        action={isDesktop ? "hover" : "click"}
+                                        content={
+                                            <Div
+                                                style={{
+                                                    width: "20vw",
+                                                }}
+                                            >
+                                                <ButtonGroup
+                                                    mode="vertical"
+                                                    stretched
+                                                >
+                                                    <img
+                                                        width="100%"
+                                                        src={`https://rus-anonym.github.io/vk-stickers-storage/${
+                                                            pack.id
+                                                        }/stickers/${
+                                                            sticker.id
+                                                        }/${
+                                                            sticker.images[
+                                                                sticker.images
+                                                                    .length - 1
+                                                            ]
+                                                        }.png`}
+                                                    />
+                                                    {sticker.images.map(
+                                                        (image) => {
+                                                            return (
+                                                                <Link
+                                                                    target="_blank"
+                                                                    href={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${image}.png`}
+                                                                >
+                                                                    {image}
+                                                                    .png
+                                                                </Link>
+                                                            );
+                                                        }
+                                                    )}
+                                                </ButtonGroup>
+                                            </Div>
+                                        }
+                                    >
+                                        <img
+                                            width={56}
+                                            src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${sticker.images[0]}.png`}
+                                        />
+                                    </Dropdown>
+                                );
+                            })}
+                        </div>
+                    </HorizontalScroll>
+                );
+            })}
+        </Div>
     );
 };
 
@@ -130,20 +146,96 @@ const Pack = ({
     exit: () => void;
 }): JSX.Element => {
     const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
+    const { viewWidth } = useAdaptivity();
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
+    useEffect(() => {
+        router.addQueryParam("id", pack.id.toString());
+    }, []);
 
     return (
-        <Group header={<Header>{pack.title}</Header>}>
-            <img
-                style={{
-                    width: "100%",
-                    borderRadius: "10px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                }}
-                src={`https://rus-anonym.github.io/vk-stickers-storage/${
-                    pack.id
-                }/previews/${pack.previews[pack.previews.length - 1]}.jpeg`}
-            />
+        <Group>
+            <div
+                style={
+                    isDesktop
+                        ? { display: "flex", flexDirection: "row" }
+                        : undefined
+                }
+            >
+                <img
+                    style={{
+                        display: "block",
+                        float: isDesktop ? "left" : undefined,
+                        maxWidth: isDesktop ? "20vw" : "90%",
+                        width: "auto",
+                        height: "auto",
+                        borderRadius: "10px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                    }}
+                    src={`https://rus-anonym.github.io/vk-stickers-storage/${
+                        pack.id
+                    }/previews/${pack.previews[pack.previews.length - 1]}.jpeg`}
+                />
+                <Div>
+                    <RichCell
+                        subhead={
+                            pack.type === "simple" ? "Обычный" : "Анимированный"
+                        }
+                        text={pack.description}
+                        caption={pack.author}
+                        after="Pack ID"
+                        afterCaption={pack.id}
+                        multiline
+                        disabled
+                        actions={
+                            <ButtonGroup mode="vertical" stretched>
+                                <Button
+                                    size="m"
+                                    onClick={(): void => {
+                                        const url = `${router.url}?id=${pack.id}`;
+                                        void copyTextToClipboard(url).then(
+                                            () => {
+                                                setSnackbar(
+                                                    <Snackbar
+                                                        onClose={(): void =>
+                                                            setSnackbar(null)
+                                                        }
+                                                    >
+                                                        Ссылка скопирована в
+                                                        буфер обмен
+                                                    </Snackbar>
+                                                );
+                                            }
+                                        );
+                                    }}
+                                    stretched
+                                    appearance="accent"
+                                >
+                                    Скопировать ссылку на страницу
+                                </Button>
+                                <Button
+                                    size="m"
+                                    onClick={(): void => {
+                                        const element =
+                                            document.createElement("a");
+                                        element.href = pack.url;
+                                        element.target = "_blank";
+                                        element.click();
+                                    }}
+                                    stretched
+                                    appearance="neutral"
+                                >
+                                    Открыть пак в ВКонтакте
+                                </Button>
+                            </ButtonGroup>
+                        }
+                    >
+                        {pack.title}
+                    </RichCell>
+                </Div>
+            </div>
+
             {pack.type === "simple" ? (
                 <SimplePack pack={pack} />
             ) : (
@@ -155,25 +247,9 @@ const Pack = ({
                     <Button
                         size="m"
                         onClick={(): void => {
-                            const url = `${router.url}?pack=${pack.id}`;
-                            void copyTextToClipboard(url).then(() => {
-                                setSnackbar(
-                                    <Snackbar
-                                        onClose={(): void => setSnackbar(null)}
-                                    >
-                                        Ссылка скопирована в буфер обмен
-                                    </Snackbar>
-                                );
-                            });
+                            router.clearQueryParams();
+                            exit();
                         }}
-                        stretched
-                        appearance="neutral"
-                    >
-                        Скопировать ссылку на пак
-                    </Button>
-                    <Button
-                        size="m"
-                        onClick={exit}
                         stretched
                         appearance="neutral"
                     >
@@ -187,17 +263,22 @@ const Pack = ({
 };
 
 const PackPreview = ({
-    pack: { id, author, description, title, type, url },
+    pack: { id, author, description, title, type, url, previews },
     enter,
 }: {
     pack: TPack;
     enter: () => void;
 }): JSX.Element => {
+    const previewSize = useMemo(() => {
+        return previews.find((x) => x >= 140) || previews[0];
+    }, []);
+
     return (
         <RichCell
             before={
                 <img
-                    src={`https://rus-anonym.github.io/vk-stickers-storage/${id}/previews/140.jpeg`}
+                    width={"140px"}
+                    src={`https://rus-anonym.github.io/vk-stickers-storage/${id}/previews/${previewSize}.jpeg`}
                 />
             }
             disabled
@@ -277,7 +358,7 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
     }, [searchFilter, isSimpleFilter, isAnimatedFilter]);
 
     useEffect(() => {
-        const packId = parseInt(router.queryParams.pack);
+        const packId = parseInt(router.queryParams.id);
         if (!isNaN(packId)) {
             const pack = meta.find((x) => x.id === packId);
             if (pack) {

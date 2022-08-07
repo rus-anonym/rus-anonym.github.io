@@ -118,6 +118,25 @@ class Router implements IRouterProps {
         const params = window.location.href.split("?")[1];
         return queryString.parse(params) as Record<string, string>;
     }
+
+    public addQueryParam(key: string, value: string): void {
+        const [url, queryParams] = window.location.href.split("?");
+        const params = new URLSearchParams(queryParams);
+        params.set(key, value);
+        window.location.href = `${url}?${params.toString()}`;
+    }
+
+    public rempveQueryParam(key: string): void {
+        const [url, queryParams] = window.location.href.split("?");
+        const params = new URLSearchParams(queryParams);
+        params.delete(key);
+        window.location.href = `${url}?${params.toString()}`;
+    }
+
+    public clearQueryParams(): void {
+        const url = window.location.href.split("?")[0];
+        window.location.href = url;
+    }
 }
 
 export default Router.load();
