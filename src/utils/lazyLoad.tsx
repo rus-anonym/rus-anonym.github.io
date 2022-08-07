@@ -13,7 +13,7 @@ interface ILazyLoadParams {
 const defaultLazyLoadParams: ILazyLoadParams = {
     withFallback: true,
     fallback: (
-        <Group>
+        <Group mode="plain">
             <Placeholder>
                 <Spinner size="large" />
             </Placeholder>
