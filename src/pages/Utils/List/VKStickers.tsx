@@ -4,7 +4,6 @@ import axios from "axios";
 import {
     Button,
     ButtonGroup,
-    Checkbox,
     Div,
     Group,
     Header,
@@ -15,9 +14,11 @@ import {
     Placeholder,
     RichCell,
     Search,
+    SimpleCell,
     Snackbar,
     Spacing,
     Spinner,
+    Switch,
     useAdaptivity,
     ViewWidth,
 } from "@vkontakte/vkui";
@@ -305,22 +306,38 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                         content={
                             <Div>
                                 <Header>Фильтры</Header>
-                                <Checkbox
-                                    checked={isSimpleFilter}
-                                    onClick={(): void => {
-                                        setSimpleFilter(!isSimpleFilter);
-                                    }}
+                                <SimpleCell
+                                    disabled
+                                    multiline
+                                    after={
+                                        <Switch
+                                            checked={isSimpleFilter}
+                                            onChange={(): void => {
+                                                setSimpleFilter(
+                                                    !isSimpleFilter
+                                                );
+                                            }}
+                                        />
+                                    }
                                 >
                                     Обычные
-                                </Checkbox>
-                                <Checkbox
-                                    checked={isAnimatedFilter}
-                                    onClick={(): void => {
-                                        setAnimatedFilter(!isAnimatedFilter);
-                                    }}
+                                </SimpleCell>
+                                <SimpleCell
+                                    disabled
+                                    multiline
+                                    after={
+                                        <Switch
+                                            checked={isAnimatedFilter}
+                                            onChange={(): void => {
+                                                setAnimatedFilter(
+                                                    !isAnimatedFilter
+                                                );
+                                            }}
+                                        />
+                                    }
                                 >
                                     Анимированные
-                                </Checkbox>
+                                </SimpleCell>
                             </Div>
                         }
                     >
@@ -330,13 +347,8 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                     </Dropdown>
                 }
             />
-            <Pagination
-                currentPage={currentPage}
-                onChange={(page): void => setCurrentPage(page)}
-                totalPages={filteredPacksChunk.length}
-            />
 
-            {filteredPacks.length === 0 ? (
+            {filteredPacksChunk.length === 0 ? (
                 <Placeholder
                     action={
                         <Button
@@ -353,13 +365,22 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                     По выбранным фильтрам ничего не найдено
                 </Placeholder>
             ) : (
-                filteredPacksChunk[currentPage - 1].map((pack) => (
-                    <PackPreview
-                        pack={pack}
-                        enter={(): void => setActivePack(pack)}
-                        key={pack.id}
-                    />
-                ))
+                <>
+                    {filteredPacksChunk[currentPage - 1].map((pack) => (
+                        <PackPreview
+                            pack={pack}
+                            enter={(): void => setActivePack(pack)}
+                            key={pack.id}
+                        />
+                    ))}
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Pagination
+                            currentPage={currentPage}
+                            onChange={(page): void => setCurrentPage(page)}
+                            totalPages={filteredPacksChunk.length}
+                        />
+                    </div>
+                </>
             )}
         </Group>
     );
