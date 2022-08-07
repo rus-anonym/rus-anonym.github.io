@@ -184,7 +184,7 @@ const Pack = ({
                         }
                         text={pack.description}
                         caption={pack.author}
-                        after="Pack ID"
+                        after="Идентификатор пака"
                         afterCaption={pack.id}
                         multiline
                         disabled
