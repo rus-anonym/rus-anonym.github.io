@@ -34,6 +34,14 @@ const prototypes: IPrototype[] = [
         isDesktop: true,
         component: lazyLoad(() => import("./List/RolePlayChat")),
     },
+    {
+        id: "MPT",
+        title: "MPT Assistant",
+        description: "MPT Assistant prototype",
+        isMobile: true,
+        isDesktop: true,
+        component: lazyLoad(() => import("./List/MPT")),
+    },
 ];
 
 const PrototypesView = ({ id }: { id: string }): JSX.Element => {
