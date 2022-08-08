@@ -29,7 +29,7 @@ import router from "../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import session from "../../TS/store/session";
 import { observer } from "mobx-react";
-import lazyLoad from "../../utils/lazyLoad";
+import LazyLoadComponent from "../../utils/LazyLoad";
 import storage from "../../TS/store/storage";
 
 interface IArticle {
@@ -70,13 +70,15 @@ const articlesList: IArticle[] = [
     {
         id: "ebatmeta",
         title: "NoMeta для настоящих пацанов",
-        content: lazyLoad(
-            {
-                fallback: (
-                    <ArticleFallback title="NoMeta для настоящих пацанов" />
-                ),
-            },
-            () => import("./List/EbatMeta")
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: (
+                        <ArticleFallback title="NoMeta для настоящих пацанов" />
+                    ),
+                }}
+                callbacks={[() => import("./List/EbatMeta")]}
+            />
         ),
         lang: "ru",
         published: new Date("2022-03-03T23:42:14"),
@@ -85,11 +87,13 @@ const articlesList: IArticle[] = [
     {
         id: "nometa",
         title: "NoMeta",
-        content: lazyLoad(
-            {
-                fallback: <ArticleFallback title="NoMeta" />,
-            },
-            () => import("./List/NoMeta")
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: <ArticleFallback title="NoMeta" />,
+                }}
+                callbacks={[() => import("./List/NoMeta")]}
+            />
         ),
         lang: "ru",
         published: new Date("2022-03-07T00:14:54"),
@@ -98,11 +102,13 @@ const articlesList: IArticle[] = [
     {
         id: "nohello",
         title: "NoHello",
-        content: lazyLoad(
-            {
-                fallback: <ArticleFallback title="NoHello" />,
-            },
-            () => import("./List/NoHello")
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: <ArticleFallback title="NoHello" />,
+                }}
+                callbacks={[() => import("./List/NoHello")]}
+            />
         ),
         lang: "en",
         published: new Date("2022-03-07T00:23:27"),
@@ -111,13 +117,15 @@ const articlesList: IArticle[] = [
     {
         id: "howtocommunicateru",
         title: "Как разговаривать в интернете",
-        content: lazyLoad(
-            {
-                fallback: (
-                    <ArticleFallback title="Как разговаривать в интернете" />
-                ),
-            },
-            () => import("./List/HowToCommunicateRU")
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: (
+                        <ArticleFallback title="Как разговаривать в интернете" />
+                    ),
+                }}
+                callbacks={[() => import("./List/HowToCommunicateRU")]}
+            />
         ),
         lang: "ru",
         published: new Date("2022-03-07T02:11:44"),
@@ -126,13 +134,15 @@ const articlesList: IArticle[] = [
     {
         id: "davidov-retake",
         title: "Сказ о том как Давидов пересдачу закрывал",
-        content: lazyLoad(
-            {
-                fallback: (
-                    <ArticleFallback title="Сказ о том как Давидов пересдачу закрывал" />
-                ),
-            },
-            () => import("./List/DavidovRetake")
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: (
+                        <ArticleFallback title="Сказ о том как Давидов пересдачу закрывал" />
+                    ),
+                }}
+                callbacks={[() => import("./List/DavidovRetake")]}
+            />
         ),
         lang: "ru",
         published: new Date("2021-10-20T22:11:34"),

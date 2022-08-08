@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo } from "react";
 import { Group, Placeholder, Spinner } from "@vkontakte/vkui";
 
 type TLazyImportCallback = () => Promise<{
@@ -6,11 +6,13 @@ type TLazyImportCallback = () => Promise<{
 }>;
 
 interface ILazyLoadParams {
+    useCache: boolean;
     withFallback: boolean;
     fallback: React.ReactNode;
 }
 
 const defaultLazyLoadParams: ILazyLoadParams = {
+    useCache: true,
     withFallback: true,
     fallback: (
         <Group mode="plain">
@@ -21,23 +23,23 @@ const defaultLazyLoadParams: ILazyLoadParams = {
     ),
 };
 
-const lazyLoad = (
-    paramsOrImportCallback: Partial<ILazyLoadParams> | TLazyImportCallback,
-    ...callbacks: TLazyImportCallback[]
-): JSX.Element => {
-    let params: ILazyLoadParams;
+const LazyLoadComponent = ({
+    params,
+    callbacks,
+}: {
+    params?: Partial<ILazyLoadParams>;
+    callbacks: TLazyImportCallback[];
+}): JSX.Element => {
+    const options: ILazyLoadParams = params
+        ? { ...defaultLazyLoadParams, ...params }
+        : defaultLazyLoadParams;
 
-    if (typeof paramsOrImportCallback !== "object") {
-        callbacks.splice(0, 0, paramsOrImportCallback);
-        params = defaultLazyLoadParams;
-    } else {
-        params = { ...defaultLazyLoadParams, ...paramsOrImportCallback };
-    }
-
-    const elements = callbacks.map((callback) => React.lazy(callback));
+    const elements = options.useCache
+        ? useMemo(() => callbacks.map((callback) => React.lazy(callback)), [])
+        : callbacks.map((callback) => React.lazy(callback));
 
     return (
-        <Suspense fallback={params.withFallback && params.fallback}>
+        <Suspense fallback={options.withFallback && options.fallback}>
             {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
             {elements.map((Component) => {
                 return <Component />;
@@ -46,4 +48,4 @@ const lazyLoad = (
     );
 };
 
-export default lazyLoad;
+export default LazyLoadComponent;

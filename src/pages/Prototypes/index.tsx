@@ -14,7 +14,7 @@ import {
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
 import { observer } from "mobx-react";
-import lazyLoad from "../../utils/lazyLoad";
+import LazyLoadComponent from "../../utils/LazyLoad";
 
 interface IPrototype {
     id: string;
@@ -32,7 +32,11 @@ const prototypes: IPrototype[] = [
         description: "",
         isMobile: true,
         isDesktop: true,
-        component: lazyLoad(() => import("./List/RolePlayChat")),
+        component: (
+            <LazyLoadComponent
+                callbacks={[() => import("./List/RolePlayChat")]}
+            />
+        ),
     },
     {
         id: "MPT",
@@ -40,7 +44,9 @@ const prototypes: IPrototype[] = [
         description: "MPT Assistant prototype",
         isMobile: true,
         isDesktop: true,
-        component: lazyLoad(() => import("./List/MPT")),
+        component: (
+            <LazyLoadComponent callbacks={[() => import("./List/MPT")]} />
+        ),
     },
 ];
 

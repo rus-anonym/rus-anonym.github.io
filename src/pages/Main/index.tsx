@@ -3,7 +3,7 @@ import { Group, Panel, View } from "@vkontakte/vkui";
 
 import router from "../../TS/store/router";
 
-import lazyLoad from "../../utils/lazyLoad";
+import LazyLoadComponent from "../../utils/LazyLoad";
 
 const MainPage = ({ id }: { id: string }): JSX.Element => {
     useEffect(() => {
@@ -14,10 +14,12 @@ const MainPage = ({ id }: { id: string }): JSX.Element => {
         <View id={id} activePanel="default">
             <Panel id="default">
                 <Group>
-                    {lazyLoad(
-                        () => import("./components/socials"),
-                        () => import("./components/donates")
-                    )}
+                    <LazyLoadComponent
+                        callbacks={[
+                            () => import("./components/socials"),
+                            () => import("./components/donates"),
+                        ]}
+                    />
                 </Group>
             </Panel>
         </View>

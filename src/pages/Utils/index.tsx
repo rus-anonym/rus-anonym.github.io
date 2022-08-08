@@ -26,7 +26,7 @@ import router from "../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react";
 import { TextTooltip } from "@vkontakte/vkui/dist/unstable";
-import lazyLoad from "../../utils/lazyLoad";
+import LazyLoadComponent from "../../utils/LazyLoad";
 import session from "../../TS/store/session";
 import storage from "../../TS/store/storage";
 
@@ -59,7 +59,9 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: "Simple QR scanner",
             isMobile: true,
             isDesktop: false,
-            component: lazyLoad(() => import("./List/QR")),
+            component: (
+                <LazyLoadComponent callbacks={[() => import("./List/QR")]} />
+            ),
             languages: ["en", "ru"],
         },
         {
@@ -68,7 +70,9 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: t("list.cat.description"),
             isMobile: true,
             isDesktop: true,
-            component: lazyLoad(() => import("./List/Cat")),
+            component: (
+                <LazyLoadComponent callbacks={[() => import("./List/Cat")]} />
+            ),
             languages: ["en", "ru"],
         },
         {
@@ -77,7 +81,11 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: t("list.speedtype.description"),
             isMobile: false,
             isDesktop: true,
-            component: lazyLoad(() => import("./List/Speedtype")),
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/Speedtype")]}
+                />
+            ),
             languages: ["en", "ru"],
         },
         {
@@ -86,7 +94,11 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: "Феминизаторка словесс",
             isMobile: true,
             isDesktop: true,
-            component: lazyLoad(() => import("./List/Feminizator")),
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/Feminizator")]}
+                />
+            ),
             languages: ["ru"],
         },
         {
@@ -95,7 +107,11 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: "Приложение для просмотра всех стикеров ВКонтакте",
             isMobile: true,
             isDesktop: true,
-            component: lazyLoad(() => import("./List/VKStickers")),
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/VKStickers")]}
+                />
+            ),
             languages: ["ru"],
         },
         {
@@ -104,7 +120,11 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             description: "Предварительная версия",
             isMobile: true,
             isDesktop: true,
-            component: lazyLoad(() => import("./List/WinRateCalculator")),
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/WinRateCalculator")]}
+                />
+            ),
             languages: ["ru"],
         },
     ];
