@@ -98,6 +98,15 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             component: lazyLoad(() => import("./List/VKStickers")),
             languages: ["ru"],
         },
+        {
+            id: "winrate-calculator",
+            title: "Winrate Calculator",
+            description: "Предварительная версия",
+            isMobile: true,
+            isDesktop: true,
+            component: lazyLoad(() => import("./List/WinRateCalculator")),
+            languages: ["ru"],
+        },
     ];
 
     const filter = (util: IUtil): boolean => {
