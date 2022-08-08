@@ -25,11 +25,13 @@ const Result = ({
     desiredWinrate: number;
 }): JSX.Element => {
     if (result.type === "default") {
-        return <Text>default</Text>;
+        return <Text>Желаемый процент побед равен текущему</Text>;
     }
 
     if (result.count === Infinity) {
-        return <Text>count is infinity</Text>;
+        return (
+            <Text>Достигнуть процента побед {desiredWinrate}% невозможно</Text>
+        );
     }
 
     return (
