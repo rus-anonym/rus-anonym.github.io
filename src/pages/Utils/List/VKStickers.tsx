@@ -82,6 +82,7 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
                         }}
                     >
                         <img
+                            width="128px"
                             src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${stickerSize}.png`}
                         />
                         <RichCell disabled>ID: {sticker.id}</RichCell>
@@ -318,11 +319,28 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
     const [activePack, setActivePack] = useState<TPack | null>(null);
 
     const filteredPacks = meta.filter((pack: TPack): boolean => {
-        if (
-            searchFilter !== "" &&
-            !pack.title.toLowerCase().includes(searchFilter.toLowerCase())
-        ) {
-            return false;
+        if (searchFilter !== "") {
+            const packId = /^(pack|sticker)=(\d+)$/.exec(searchFilter);
+            if (packId === null) {
+                return false;
+            } else if (
+                packId[1] === "sticker" &&
+                pack.stickers.some((x) =>
+                    typeof x === "object"
+                        ? x.id === Number(packId[2])
+                        : x === Number(packId[2])
+                )
+            ) {
+                return true;
+            } else if (packId[1] === "pack" && pack.id === Number(packId[2])) {
+                return true;
+            }
+
+            if (
+                !pack.title.toLowerCase().includes(searchFilter.toLowerCase())
+            ) {
+                return false;
+            }
         }
 
         if (isSimpleFilter && isAnimatedFilter) {
@@ -454,6 +472,11 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                     }
                 >
                     По выбранным фильтрам ничего не найдено
+                    <Spacing />
+                    Для дополнительной фильтрации в поиске можно использовать
+                    аргументы pack и sticker
+                    <Spacing />
+                    Например: pack=1 или sticker=100
                 </Placeholder>
             ) : (
                 <>
