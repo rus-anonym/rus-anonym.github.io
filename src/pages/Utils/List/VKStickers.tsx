@@ -4,10 +4,11 @@ import axios from "axios";
 import {
     Button,
     ButtonGroup,
+    Card,
+    CardScroll,
     Div,
     Group,
     Header,
-    HorizontalScroll,
     IconButton,
     Link,
     Pagination,
@@ -65,67 +66,68 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
         return response;
     }, []);
 
-    return (
-        <Div>
-            {stickersChunk.map((chunk) => {
-                return (
-                    <HorizontalScroll>
-                        <div style={{ display: "flex" }}>
-                            {chunk.map((sticker) => {
+    const sticker = (sticker: ISticker): JSX.Element => {
+        const stickerSize = useMemo(() => {
+            return sticker.images.find((x) => x >= 128) || sticker.images[0];
+        }, []);
+
+        return (
+            <Dropdown
+                action={isDesktop ? "hover" : "click"}
+                content={
+                    <Div
+                        style={{
+                            width: "128px",
+                            textAlign: "center",
+                        }}
+                    >
+                        <img
+                            src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${stickerSize}.png`}
+                        />
+                        <RichCell disabled>ID: {sticker.id}</RichCell>
+                        <ButtonGroup mode="vertical" stretched>
+                            {sticker.images.map((image) => {
                                 return (
-                                    <Dropdown
-                                        action={isDesktop ? "hover" : "click"}
-                                        content={
-                                            <Div
-                                                style={{
-                                                    width: "20vw",
-                                                }}
-                                            >
-                                                <ButtonGroup
-                                                    mode="vertical"
-                                                    stretched
-                                                >
-                                                    <img
-                                                        width="100%"
-                                                        src={`https://rus-anonym.github.io/vk-stickers-storage/${
-                                                            pack.id
-                                                        }/stickers/${
-                                                            sticker.id
-                                                        }/${
-                                                            sticker.images[
-                                                                sticker.images
-                                                                    .length - 1
-                                                            ]
-                                                        }.png`}
-                                                    />
-                                                    {sticker.images.map(
-                                                        (image) => {
-                                                            return (
-                                                                <Link
-                                                                    target="_blank"
-                                                                    href={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${image}.png`}
-                                                                >
-                                                                    {image}
-                                                                    .png
-                                                                </Link>
-                                                            );
-                                                        }
-                                                    )}
-                                                </ButtonGroup>
-                                            </Div>
-                                        }
+                                    <Link
+                                        target="_blank"
+                                        href={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${image}.png`}
                                     >
-                                        <img
-                                            width={56}
-                                            src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${sticker.images[0]}.png`}
-                                        />
-                                    </Dropdown>
+                                        {image}
+                                        .png
+                                    </Link>
                                 );
                             })}
-                        </div>
-                    </HorizontalScroll>
-                );
-            })}
+                        </ButtonGroup>
+                    </Div>
+                }
+            >
+                <img
+                    width={56}
+                    src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${sticker.images[0]}.png`}
+                />
+            </Dropdown>
+        );
+    };
+
+    return (
+        <Div>
+            <CardScroll size="l">
+                {stickersChunk.map((chunk) => {
+                    return (
+                        <Card>
+                            <Div
+                                style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "repeat(4, 25%)",
+                                    justifyItems: "center",
+                                }}
+                            >
+                                {chunk.map(sticker)}
+                            </Div>
+                        </Card>
+                    );
+                })}
+            </CardScroll>
         </Div>
     );
 };
@@ -166,9 +168,7 @@ const Pack = ({
                     style={{
                         display: "block",
                         float: isDesktop ? "left" : undefined,
-                        maxWidth: isDesktop ? "20vw" : "90%",
-                        width: "auto",
-                        height: "auto",
+                        width: isDesktop ? "20vw" : "90%",
                         borderRadius: "10px",
                         marginLeft: "auto",
                         marginRight: "auto",
@@ -373,6 +373,16 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
         );
     }
 
+    const pagination = (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+            <Pagination
+                currentPage={currentPage}
+                onChange={(page): void => setCurrentPage(page)}
+                totalPages={filteredPacksChunk.length}
+            />
+        </div>
+    );
+
     return (
         <Group>
             <Search
@@ -447,6 +457,7 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                 </Placeholder>
             ) : (
                 <>
+                    {pagination}
                     {filteredPacksChunk[currentPage - 1].map((pack) => (
                         <PackPreview
                             pack={pack}
@@ -454,13 +465,7 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                             key={pack.id}
                         />
                     ))}
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Pagination
-                            currentPage={currentPage}
-                            onChange={(page): void => setCurrentPage(page)}
-                            totalPages={filteredPacksChunk.length}
-                        />
-                    </div>
+                    {pagination}
                 </>
             )}
         </Group>
