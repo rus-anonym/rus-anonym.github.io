@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from "axios";
 
 import {
@@ -27,6 +27,7 @@ import { Icon24Filter } from "@vkontakte/icons";
 import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 import router from "../../../TS/store/router";
 import { copyTextToClipboard } from "@vkontakte/vkjs";
+import lottie, { AnimationItem } from "lottie-web";
 
 interface ISticker {
     id: number;
@@ -133,11 +134,111 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
     );
 };
 
-const AnimatedPack = (): JSX.Element => {
+const AnimatedPack = ({ pack }: { pack: IAnimatedPack }): JSX.Element => {
+    const { viewWidth } = useAdaptivity();
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
+    const stickersChunk = useMemo(() => {
+        const response: number[][] = [];
+
+        for (let i = 0; i < pack.stickers.length; i += 8) {
+            response.push(pack.stickers.slice(i, i + 8));
+        }
+
+        return response;
+    }, []);
+
+    const Sticker = ({ id }: { id: number }): JSX.Element => {
+        const containerRef = useRef<HTMLDivElement | null>(null);
+
+        const animationUrl = `https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${id}.json`;
+        const [animation, setAnimation] = useState<AnimationItem | null>(null);
+
+        const container = (
+            <div
+                onMouseEnter={() => isDesktop && animation?.play()}
+                onMouseLeave={() => isDesktop && animation?.stop()}
+                ref={containerRef}
+            >
+                {animation === null && <Spinner />}
+            </div>
+        );
+
+        useEffect(() => {
+            void (async (): Promise<void> => {
+                const response = await axios({
+                    method: "GET",
+                    url: animationUrl,
+                });
+
+                const animation = lottie.loadAnimation({
+                    animationData: response.data as string,
+                    container: containerRef.current as Element,
+                    renderer: "svg",
+                    loop: true,
+                });
+                animation.stop();
+
+                setAnimation(animation);
+            })();
+
+            return () => {
+                animation?.destroy();
+            };
+        }, []);
+
+        return (
+            <Dropdown
+                onShownChange={() =>
+                    !isDesktop &&
+                    (animation?.isPaused
+                        ? animation?.play()
+                        : animation?.stop())
+                }
+                action={isDesktop ? "hover" : "click"}
+                content={
+                    <Div
+                        style={{
+                            width: "128px",
+                            textAlign: "center",
+                        }}
+                    >
+                        <RichCell disabled>ID: {id}</RichCell>
+                        <ButtonGroup mode="vertical" stretched>
+                            <Link target="_blank" href={animationUrl}>
+                                animation.json
+                            </Link>
+                        </ButtonGroup>
+                    </Div>
+                }
+            >
+                <div style={{ width: "64px", height: "64px" }}>{container}</div>
+            </Dropdown>
+        );
+    };
+
     return (
-        <Group mode="plain" separator="hide">
-            <Placeholder>Анимированные паки в разработке</Placeholder>
-        </Group>
+        <Div>
+            <CardScroll size="l">
+                {stickersChunk.map((chunk) => {
+                    return (
+                        <Card>
+                            <Div
+                                style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "repeat(4, 25%)",
+                                    justifyItems: "center",
+                                }}
+                            >
+                                {chunk.map((id) => (
+                                    <Sticker id={id} />
+                                ))}
+                            </Div>
+                        </Card>
+                    );
+                })}
+            </CardScroll>
+        </Div>
     );
 };
 
@@ -240,7 +341,7 @@ const Pack = ({
             {pack.type === "simple" ? (
                 <SimplePack pack={pack} />
             ) : (
-                <AnimatedPack />
+                <AnimatedPack pack={pack} />
             )}
             <Spacing />
             <Group mode="plain">
