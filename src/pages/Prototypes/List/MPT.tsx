@@ -5,6 +5,7 @@ import {
     List,
     Placeholder,
     RichCell,
+    Separator,
     Spinner,
     Tabs,
     TabsItem,
@@ -44,9 +45,10 @@ const Lesson = ({ lesson }: { lesson: ILesson }): JSX.Element => {
             disabled
             multiline
             text={lesson.teacher}
+            before={`${lesson.num}.`}
             after="08:30:00 - 10:00:00"
         >
-            {lesson.num}. {lesson.name}
+            {lesson.name}
         </RichCell>
     );
 };
@@ -109,8 +111,13 @@ const Schedule = (): JSX.Element => {
             </div>
             <Group>
                 <List>
-                    {schedule.schedule.lessons.map((x) => (
-                        <Lesson lesson={x} />
+                    {schedule.schedule.lessons.map((lesson, index) => (
+                        <>
+                            <Lesson lesson={lesson} />
+                            {index !== schedule.schedule.lessons.length - 1 && (
+                                <Separator />
+                            )}
+                        </>
                     ))}
                 </List>
             </Group>
