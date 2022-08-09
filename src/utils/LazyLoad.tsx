@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { Suspense, useMemo } from "react";
 import { Group, Placeholder, Spinner } from "@vkontakte/vkui";
 
@@ -6,12 +7,14 @@ type TLazyImportCallback = () => Promise<{
 }>;
 
 interface ILazyLoadParams {
+    delay: number;
     useCache: boolean;
     withFallback: boolean;
     fallback: React.ReactNode;
 }
 
 const defaultLazyLoadParams: ILazyLoadParams = {
+    delay: 0,
     useCache: true,
     withFallback: true,
     fallback: (
@@ -33,6 +36,20 @@ const LazyLoadComponent = ({
     const options: ILazyLoadParams = params
         ? { ...defaultLazyLoadParams, ...params }
         : defaultLazyLoadParams;
+
+    if (options.delay > 0) {
+        callbacks = callbacks.map((callback) => {
+            return async () => {
+                const [moduleExports] = await Promise.all([
+                    callback(),
+                    new Promise((resolve) =>
+                        setTimeout(resolve, options.delay)
+                    ),
+                ]);
+                return moduleExports;
+            };
+        });
+    }
 
     const elements = options.useCache
         ? useMemo(() => callbacks.map((callback) => React.lazy(callback)), [])
