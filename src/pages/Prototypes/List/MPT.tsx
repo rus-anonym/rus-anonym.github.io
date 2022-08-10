@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+    Footer,
     Group,
     List,
     Placeholder,
@@ -121,6 +122,7 @@ const Schedule = (): JSX.Element => {
                     ))}
                 </List>
             </Group>
+            <Footer>{schedule.schedule.lessons.length} пары</Footer>
         </>
     );
 };
