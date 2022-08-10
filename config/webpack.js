@@ -3,6 +3,7 @@ const webpack = require(`webpack`);
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -77,6 +78,18 @@ module.exports = {
                 terserOptions: {
                     format: {
                         comments: false,
+                    },
+                },
+            }),
+            new ImageMinimizerPlugin({
+                minimizer: {
+                    implementation: ImageMinimizerPlugin.imageminMinify,
+                    options: {
+                        plugins: [
+                            "imagemin-mozjpeg",
+                            "imagemin-pngquant",
+                            "imagemin-svgo",
+                        ],
                     },
                 },
             }),
