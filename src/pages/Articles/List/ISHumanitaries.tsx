@@ -238,6 +238,7 @@ const ISHumanitaries = (): JSX.Element => {
                     гуманитариев рабочего класса
                 </Title>
             </Div>
+            <Spacing size={20} />
             <Group mode="plain">
                 {concepts.map((x) => (
                     <Concept concept={x} />
