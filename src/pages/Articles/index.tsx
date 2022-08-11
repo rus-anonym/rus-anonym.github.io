@@ -148,6 +148,23 @@ const articlesList: IArticle[] = [
         published: new Date("2021-10-20T22:11:34"),
         isExplicit: true,
     },
+    {
+        id: "information-security-concepts-for-humanitarians",
+        title: "Основные понятия информационной безопасности для гуманитариев",
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: (
+                        <ArticleFallback title="Основные понятия информационной безопасности для гуманитариев" />
+                    ),
+                }}
+                callbacks={[() => import("./List/ISHumanitaries")]}
+            />
+        ),
+        lang: "ru",
+        published: new Date("2022-08-11T23:42:34"),
+        isExplicit: true,
+    },
 ];
 
 const byPublished = (a: IArticle, b: IArticle): 1 | 0 | -1 => {
