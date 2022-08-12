@@ -4,6 +4,7 @@ const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -18,7 +19,7 @@ module.exports = {
                     presets: [
                         "@babel/env",
                         "@babel/preset-react",
-                        "@babel/typescript",
+                        "@babel/preset-typescript",
                     ],
                     plugins: [
                         "@babel/proposal-class-properties",
@@ -69,6 +70,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             Buffer: ["buffer", "Buffer"],
         }),
+        new ForkTsCheckerWebpackPlugin(),
     ],
     optimization: {
         minimize: true,
