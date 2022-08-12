@@ -48,6 +48,18 @@ const prototypes: IPrototype[] = [
             <LazyLoadComponent callbacks={[() => import("./List/MPT")]} />
         ),
     },
+    {
+        id: "love-meme-generator",
+        title: "Love Meme generator",
+        description: "",
+        isMobile: true,
+        isDesktop: true,
+        component: (
+            <LazyLoadComponent
+                callbacks={[() => import("./List/LoveMemeGenerator")]}
+            />
+        ),
+    },
 ];
 
 const PrototypesView = ({ id }: { id: string }): JSX.Element => {
