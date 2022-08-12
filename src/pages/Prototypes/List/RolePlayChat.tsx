@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import {
+    Avatar,
     Button,
     ButtonGroup,
     Div,
     FixedLayout,
     Group,
+    InitialsAvatar,
     RichCell,
     Spacing,
     WriteBar,
@@ -16,11 +18,9 @@ import {
 import moment from "moment";
 import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 import router from "../../../TS/store/router";
-import tempStorage, {
-    IPrototypesRpChatProfile,
-} from "../../../TS/store/storage";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { observer } from "mobx-react";
+import session from "../../../TS/store/session";
 
 const Message = ({
     text,
@@ -44,6 +44,11 @@ const Message = ({
     );
 };
 
+interface IPrototypesRpChatProfile {
+    name: string;
+    avatar: JSX.Element;
+}
+
 const RolePlayChat = (): JSX.Element => {
     const [text, setText] = useState("");
     const [messages, setMessages] = useState<
@@ -51,8 +56,70 @@ const RolePlayChat = (): JSX.Element => {
     >([]);
     const [activeProfile, setActiveProfile] = useState<number>(0);
     const [isShow, setShow] = useState(false);
+    const [profiles, setProfiles] = useState<IPrototypesRpChatProfile[]>([
+        {
+            name: "Profile I",
+            avatar: (
+                <InitialsAvatar size={32} gradientColor="blue">
+                    1
+                </InitialsAvatar>
+            ),
+        },
+        {
+            name: "Profile II",
+            avatar: (
+                <InitialsAvatar size={32} gradientColor="red">
+                    2
+                </InitialsAvatar>
+            ),
+        },
+        {
+            name: "Profile III",
+            avatar: (
+                <InitialsAvatar size={32} gradientColor="yellow">
+                    3
+                </InitialsAvatar>
+            ),
+        },
+    ]);
 
-    const profiles = tempStorage.prototypes.rpchat.profiles;
+    useEffect(() => {
+        session.events.on("prototypes.rpchat.addUser", (user) => {
+            console.log(user);
+            if (user.type === "custom") {
+                setProfiles([
+                    ...profiles,
+                    {
+                        name: user.name,
+                        avatar: <Avatar size={32} src={user.avatar} />,
+                    },
+                ]);
+            } else {
+                setProfiles([
+                    ...profiles,
+                    {
+                        name: user.name,
+                        avatar: (
+                            <InitialsAvatar
+                                size={32}
+                                gradientColor={user.avatar}
+                            >
+                                {user.name
+                                    .split(" ")
+                                    .slice(0, 2)
+                                    .map((x) => x.split("")[0])
+                                    .join("")}
+                            </InitialsAvatar>
+                        ),
+                    },
+                ]);
+            }
+        });
+
+        return () => {
+            session.events.removeAllListeners("prototypes.rpchat.addUser");
+        };
+    }, []);
 
     return (
         <FixedLayout vertical="bottom" filled>

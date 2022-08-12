@@ -25,17 +25,11 @@ import { observer } from "mobx-react";
 import router from "../../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
+import storage from "../../../TS/store/storage";
 
 interface IWord {
     value: string;
     status: "current" | "valid" | "invalid" | "default";
-}
-
-interface IHistoryElement {
-    lang: typeof session.language;
-    cpm: number;
-    errors: number;
-    date: number;
 }
 
 const styles = {
@@ -91,10 +85,12 @@ const filters = {
     en: /^[a-zA-Z\s]/,
 } as const;
 
-const dateSort = (a: IHistoryElement, b: IHistoryElement): number =>
+type THistoryElement = typeof storage.utils.storage.speedtype.history[number];
+
+const dateSort = (a: THistoryElement, b: THistoryElement): number =>
     a.date < b.date ? 1 : -1;
 
-const resultSort = (a: IHistoryElement, b: IHistoryElement): number => {
+const resultSort = (a: THistoryElement, b: THistoryElement): number => {
     const [aFactor, bFactor] = [a.cpm / a.errors, b.cpm / b.errors];
 
     if (aFactor > bFactor) {
@@ -111,26 +107,18 @@ const resultSort = (a: IHistoryElement, b: IHistoryElement): number => {
 };
 
 class History {
-    public static load(): IHistoryElement[] {
-        const history = localStorage.getItem("utils-speeedtype-history");
-
-        const historyJSON = history
-            ? (JSON.parse(history) as IHistoryElement[])
-            : [];
-
-        return historyJSON;
+    public static load(): THistoryElement[] {
+        return storage.utils.storage.speedtype.history.slice();
     }
 
-    public static save(history: IHistoryElement[]): void {
+    public static save(history: THistoryElement[]): void {
         if (history.length > 100) {
             history.sort(dateSort);
             history = history.slice(0, 100);
         }
 
-        return localStorage.setItem(
-            "utils-speeedtype-history",
-            JSON.stringify(history)
-        );
+        storage.utils.storage.speedtype.history = history;
+        return;
     }
 }
 
@@ -141,7 +129,7 @@ const Speedtype = (): JSX.Element => {
     const [progressValue, setProgressValue] = useState(0);
     const [isStarted, setIsStarted] = useState(false);
 
-    const [history, setHistory] = useState<IHistoryElement[]>(History.load());
+    const [history, setHistory] = useState<THistoryElement[]>(History.load());
 
     const { t, i18n } = useTranslation("translation", {
         keyPrefix: "pages.utils.list.speedtype",
@@ -150,7 +138,7 @@ const Speedtype = (): JSX.Element => {
     const text = t("text");
     const [letters, setLetters] = useState<IWord[]>(generateLetters(text));
 
-    const Result = (element: IHistoryElement): JSX.Element => {
+    const Result = (element: THistoryElement): JSX.Element => {
         return (
             <Card mode="outline" style={{ textAlign: "center" }}>
                 <RichCell

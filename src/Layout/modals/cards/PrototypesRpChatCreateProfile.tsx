@@ -18,8 +18,8 @@ import { observer } from "mobx-react";
 
 import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
 import { Icon24Camera } from "@vkontakte/icons";
-import storage from "../../../TS/store/storage";
 import router from "../../../TS/store/router";
+import session from "../../../TS/store/session";
 
 const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     const [name, setName] = useState("");
@@ -97,24 +97,12 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                     mode="primary"
                     disabled={name === "" && name.length <= 20}
                     onClick={(): void => {
-                        storage.prototypes.rpchat.profiles.push({
+                        session.events.emit("prototypes.rpchat.addUser", {
+                            type: customAvatarSrc ? "custom" : "default",
                             name,
-                            avatar:
-                                customAvatarSrc === undefined ? (
-                                    <InitialsAvatar
-                                        size={32}
-                                        gradientColor={avatarColor}
-                                    >
-                                        {name
-                                            .split(" ")
-                                            .slice(0, 2)
-                                            .map((x) => x.split("")[0])
-                                            .join("")}
-                                    </InitialsAvatar>
-                                ) : (
-                                    <Avatar size={32} src={customAvatarSrc} />
-                                ),
+                            avatar: customAvatarSrc || avatarColor,
                         });
+
                         router.activeModal = null;
                     }}
                 >

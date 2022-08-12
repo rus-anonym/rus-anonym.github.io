@@ -1,5 +1,38 @@
 import { makeAutoObservable } from "mobx";
 import i18n from "../i18n";
+import EventsEmitter from "eventemitter3";
+import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
+
+interface IPrototypesRpChatProfile {
+    name: string;
+    type: "custom";
+    avatar: string;
+}
+
+interface IPrototypesRpChatProfileCustom {
+    name: string;
+    type: "default";
+    avatar: InitialsAvatarTextGradients;
+}
+
+type TPrototypeRpChatProfile =
+    | IPrototypesRpChatProfile
+    | IPrototypesRpChatProfileCustom;
+
+interface IEvents {
+    on(
+        event: "prototypes.rpchat.addUser",
+        fn: (user: TPrototypeRpChatProfile) => void
+    ): this;
+    once(
+        event: "prototypes.rpchat.addUser",
+        fn: (user: TPrototypeRpChatProfile) => void
+    ): this;
+    emit(
+        event: "prototypes.rpchat.addUser",
+        user: TPrototypeRpChatProfile
+    ): boolean;
+}
 
 interface ISession {
     theme: "light" | "dark" | "auto";
@@ -48,7 +81,10 @@ class Session {
 
         makeAutoObservable(this);
         this.save();
+        this.events = new EventsEmitter();
     }
+
+    public events: IEvents & EventsEmitter;
 
     private _theme: "light" | "dark" | "auto";
     private _language: "en" | "ru";
