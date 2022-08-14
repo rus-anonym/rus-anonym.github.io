@@ -163,7 +163,7 @@ const articlesList: IArticle[] = [
         ),
         lang: "ru",
         published: new Date("2022-08-11T23:42:34"),
-        isExplicit: true,
+        isExplicit: false,
     },
 ];
 
