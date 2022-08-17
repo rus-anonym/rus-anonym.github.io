@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 
 import {
-    Alert,
     CellButton,
     Group,
     Header,
@@ -220,45 +219,6 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
         .filter(filterCallback)
         .sort(byPublished);
 
-    const ExplicitArticleButton = ({
-        article,
-    }: {
-        article: IArticle;
-    }): JSX.Element => {
-        return (
-            <CellButton
-                onClick={(): void => {
-                    router.popout = (
-                        <Alert
-                            onClose={(): void => {
-                                router.popout = null;
-                            }}
-                            actions={[
-                                {
-                                    title: t("stillOpen"),
-                                    mode: "destructive",
-                                    autoclose: true,
-                                    action: (): void => {
-                                        router.activePanel = article.id;
-                                    },
-                                },
-                                {
-                                    title: t("backward"),
-                                    autoclose: true,
-                                    mode: "cancel",
-                                },
-                            ]}
-                            header={t("warning")}
-                            text={t("explicitWarning")}
-                        />
-                    );
-                }}
-            >
-                {t("open")}
-            </CellButton>
-        );
-    };
-
     const ArticlePreview = (article: IArticle): JSX.Element => {
         moment.locale(session.language);
         return (
@@ -284,17 +244,13 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
                         }`}
                     </MiniInfoCell>
                 )}
-                {article.isExplicit ? (
-                    <ExplicitArticleButton article={article} />
-                ) : (
-                    <CellButton
-                        onClick={(): void => {
-                            router.activePanel = article.id;
-                        }}
-                    >
-                        {t("open")}
-                    </CellButton>
-                )}
+                <CellButton
+                    onClick={(): void => {
+                        router.activePanel = article.id;
+                    }}
+                >
+                    {t("open")}
+                </CellButton>
             </Group>
         );
     };
