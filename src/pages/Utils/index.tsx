@@ -127,6 +127,19 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
             ),
             languages: ["ru"],
         },
+        {
+            id: "demotivator",
+            title: "Demotivator",
+            description: "",
+            isMobile: true,
+            isDesktop: true,
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/Demotivator")]}
+                />
+            ),
+            languages: ["ru"],
+        },
     ];
 
     const filter = (util: IUtil): boolean => {
