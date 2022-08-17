@@ -13,7 +13,7 @@ import {
     Link,
     Textarea,
 } from "@vkontakte/vkui";
-import { Icon24Camera } from "@vkontakte/icons";
+import { Icon24Camera, Icon24WarningTriangleOutline } from "@vkontakte/icons";
 import { copyImageToClipboard } from "copy-image-clipboard";
 
 const Demotivator = (): JSX.Element => {
@@ -56,13 +56,17 @@ const Demotivator = (): JSX.Element => {
         const titleSpacing = textSpacing + titleTextSize;
         const lowerTextSpacing = textSpacing / 1.7 + lowerTextSize;
 
-        const getWrappedText = (options: {
+        const getWrappedText = ({
+            ctx,
+            text,
+            maxWidth,
+            font,
+        }: {
             ctx: CanvasRenderingContext2D;
             text: string;
             maxWidth: number;
             font: string;
         }): string[] => {
-            const { ctx, text, maxWidth, font } = options;
             const words = text.split(" ");
             const lines = [];
             let currentLine = words[0];
@@ -193,6 +197,15 @@ const Demotivator = (): JSX.Element => {
                     };
                     reader.readAsDataURL(blob);
                 }
+            } else {
+                setSnackbar(
+                    <Snackbar
+                        before={<Icon24WarningTriangleOutline role="alert" />}
+                        onClose={(): void => setSnackbar(null)}
+                    >
+                        Изображение не найдено в буфере обмена
+                    </Snackbar>
+                );
             }
         }
     };
