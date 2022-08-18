@@ -99,6 +99,19 @@
                     "worstResult": "Worst result",
                     "total": "Total",
                     "formula": "The result is calculated by the formula"
+                },
+                "demotivator": {
+                    "title": "Title",
+                    "subtitle": "Subtitle",
+                    "fontSize": "Font size",
+                    "uploadImage": "Upload image",
+                    "openGallery": "Open gallery",
+                    "basedOn": "Based on",
+                    "author": "author",
+                    "copy": "Copy",
+                    "notFoundClipboardImage": "Image not found on the clipboard",
+                    "copiedToClipboard": "Demotivator copied to the clipboard",
+                    "savedOnDevice": "The demotivator is saved on the device"
                 }
             }
         },

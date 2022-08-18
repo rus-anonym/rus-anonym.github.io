@@ -138,7 +138,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                     callbacks={[() => import("./List/Demotivator")]}
                 />
             ),
-            languages: ["ru"],
+            languages: ["ru", "en"],
         },
     ];
 

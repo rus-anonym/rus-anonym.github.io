@@ -15,6 +15,7 @@ import {
 } from "@vkontakte/vkui";
 import { Icon24Camera, Icon24WarningTriangleOutline } from "@vkontakte/icons";
 import { copyImageToClipboard } from "copy-image-clipboard";
+import { useTranslation } from "react-i18next";
 
 const Demotivator = (): JSX.Element => {
     const [titleText, setTitleText] = useState("");
@@ -27,6 +28,10 @@ const Demotivator = (): JSX.Element => {
     const [imagePreviewSrc, setImagePreviewSrc] = useState<string | null>(null);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages.utils.list.demotivator",
+    });
 
     const isDemotivatorRendered = useMemo(() => {
         const noText = titleText === "" && lowerText === "";
@@ -203,7 +208,7 @@ const Demotivator = (): JSX.Element => {
                         before={<Icon24WarningTriangleOutline role="alert" />}
                         onClose={(): void => setSnackbar(null)}
                     >
-                        Изображение не найдено в буфере обмена
+                        {t("notFoundClipboardImage")}
                     </Snackbar>
                 );
             }
@@ -229,14 +234,14 @@ const Demotivator = (): JSX.Element => {
         <Group
             description={
                 <>
-                    Основано на{" "}
+                    {`${t("basedOn")} `}
                     <Link
                         target="_blank"
                         href="https://github.com/jarvis394/cubebot"
                     >
                         cubebot
                     </Link>{" "}
-                    (автор{" "}
+                    ({`${t("author")} `}
                     <Link target="_blank" href="https://github.com/jarvis394">
                         jarvis394
                     </Link>
@@ -246,7 +251,7 @@ const Demotivator = (): JSX.Element => {
         >
             <FormLayout>
                 <FormLayoutGroup mode="horizontal">
-                    <FormItem top="Заголовок">
+                    <FormItem top={t("title")}>
                         <Input
                             multiple
                             value={titleText}
@@ -255,7 +260,7 @@ const Demotivator = (): JSX.Element => {
                             }
                         />
                     </FormItem>
-                    <FormItem top="Размер букв" bottom={`${titleTextSize}px`}>
+                    <FormItem top={t("fontSize")} bottom={`${titleTextSize}px`}>
                         <Slider
                             min={24}
                             max={128}
@@ -267,7 +272,7 @@ const Demotivator = (): JSX.Element => {
                 </FormLayoutGroup>
 
                 <FormLayoutGroup mode="horizontal">
-                    <FormItem top="Подпись">
+                    <FormItem top={t("subtitle")}>
                         <Textarea
                             value={lowerText}
                             onChange={(event) =>
@@ -275,7 +280,7 @@ const Demotivator = (): JSX.Element => {
                             }
                         />
                     </FormItem>
-                    <FormItem top="Размер букв" bottom={`${lowerTextSize}px`}>
+                    <FormItem top={t("fontSize")} bottom={`${lowerTextSize}px`}>
                         <Slider
                             min={12}
                             max={64}
@@ -287,7 +292,7 @@ const Demotivator = (): JSX.Element => {
                 </FormLayoutGroup>
 
                 {imageSrc === null && (
-                    <FormItem top="Загрузить картинку">
+                    <FormItem top={t("uploadImage")}>
                         <File
                             before={<Icon24Camera role="presentation" />}
                             size="m"
@@ -308,7 +313,7 @@ const Demotivator = (): JSX.Element => {
                                 setImagePreviewSrc(url);
                             }}
                         >
-                            Открыть галерею
+                            {t("openGallery")}
                         </File>
                     </FormItem>
                 )}
@@ -328,8 +333,7 @@ const Demotivator = (): JSX.Element => {
                                                     setSnackbar(null)
                                                 }
                                             >
-                                                Демотиватор скопирован в буфер
-                                                обмена
+                                                {t("copiedToClipboard")}
                                             </Snackbar>
                                         );
                                     })
@@ -347,7 +351,7 @@ const Demotivator = (): JSX.Element => {
                                                     setSnackbar(null)
                                                 }
                                             >
-                                                Скриншот сохранён на устройство
+                                                {t("savedOnDevice")}
                                             </Snackbar>
                                         );
                                     });
@@ -355,7 +359,7 @@ const Demotivator = (): JSX.Element => {
                             stretched
                             appearance="accent"
                         >
-                            Скопировать
+                            {t("copy")}
                         </Button>
                     </Div>
                 )}
