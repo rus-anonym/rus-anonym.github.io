@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {useEffect, useMemo, useState } from "react";
 import {
     FormItem,
     Input,
@@ -22,12 +22,10 @@ const Demotivator = (): JSX.Element => {
     const [lowerText, setLowerText] = useState("");
     const [titleTextSize, setTitleTextSize] = useState(64);
     const [lowerTextSize, setLowerTextSize] = useState(32);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
-    const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [imagePreviewSrc, setImagePreviewSrc] = useState<string | null>(null);
-
-    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const { t } = useTranslation("translation", {
         keyPrefix: "pages.utils.list.demotivator",
@@ -44,12 +42,14 @@ const Demotivator = (): JSX.Element => {
     }, [titleText, lowerText, imageSrc]);
 
     const render = (): void => {
-        const ctx = canvasRef.current?.getContext("2d", { alpha: false });
-        if (!ctx || !isDemotivatorRendered) {
+        if (!isDemotivatorRendered) {
             return;
         }
 
-        const canvas = ctx.canvas;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d", {
+            alpha: false,
+        }) as CanvasRenderingContext2D;
         canvas.height = 10000;
         canvas.width = 1000;
 
@@ -187,6 +187,8 @@ const Demotivator = (): JSX.Element => {
             return;
         }
 
+        let imageFound = false;
+
         for (const index in items) {
             const item = items[index];
             if (item.kind === "file") {
@@ -201,17 +203,20 @@ const Demotivator = (): JSX.Element => {
                         }
                     };
                     reader.readAsDataURL(blob);
+                    imageFound = true;
                 }
-            } else {
-                setSnackbar(
-                    <Snackbar
-                        before={<Icon24WarningTriangleOutline role="alert" />}
-                        onClose={(): void => setSnackbar(null)}
-                    >
-                        {t("notFoundClipboardImage")}
-                    </Snackbar>
-                );
             }
+        }
+
+        if (!imageFound) {
+            setSnackbar(
+                <Snackbar
+                    before={<Icon24WarningTriangleOutline role="alert" />}
+                    onClose={(): void => setSnackbar(null)}
+                >
+                    {t("notFoundClipboardImage")}
+                </Snackbar>
+            );
         }
     };
 
@@ -380,12 +385,6 @@ const Demotivator = (): JSX.Element => {
                     />
                 </Div>
             )}
-            <canvas
-                style={{
-                    display: "none",
-                }}
-                ref={canvasRef}
-            />
             {snackbar !== null && snackbar}
         </Group>
     );

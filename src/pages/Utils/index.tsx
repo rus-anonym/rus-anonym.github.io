@@ -137,7 +137,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                 <LazyLoadComponent
                     callbacks={[() => import("./List/Demotivator")]}
                 />
-            ),
+            ),  
             languages: ["ru", "en"],
         },
     ];
