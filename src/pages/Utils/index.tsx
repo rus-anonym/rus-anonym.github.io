@@ -137,8 +137,21 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
                 <LazyLoadComponent
                     callbacks={[() => import("./List/Demotivator")]}
                 />
-            ),  
+            ),
             languages: ["ru", "en"],
+        },
+        {
+            id: "vk-conversations",
+            title: "VK Conversations",
+            description: "",
+            isMobile: true,
+            isDesktop: true,
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/VKConversations")]}
+                />
+            ),
+            languages: ["ru"],
         },
     ];
 
