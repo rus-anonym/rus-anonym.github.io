@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     FormItem,
     Input,
@@ -12,8 +12,14 @@ import {
     Snackbar,
     Link,
     Textarea,
+    ButtonGroup,
 } from "@vkontakte/vkui";
-import { Icon24Camera, Icon24WarningTriangleOutline } from "@vkontakte/icons";
+import {
+    Icon24Camera,
+    Icon24WarningTriangleOutline,
+    Icon24RefreshOutline,
+    Icon24Copy,
+} from "@vkontakte/icons";
 import { copyImageToClipboard } from "copy-image-clipboard";
 import { useTranslation } from "react-i18next";
 
@@ -325,47 +331,63 @@ const Demotivator = (): JSX.Element => {
 
                 {isDemotivatorRendered && (
                     <Div>
-                        <Button
-                            size="l"
-                            onClick={(): void => {
-                                void copyImageToClipboard(
-                                    imagePreviewSrc as string
-                                )
-                                    .then(() => {
-                                        setSnackbar(
-                                            <Snackbar
-                                                onClose={(): void =>
-                                                    setSnackbar(null)
-                                                }
-                                            >
-                                                {t("copiedToClipboard")}
-                                            </Snackbar>
-                                        );
-                                    })
-                                    .catch(() => {
-                                        const link =
-                                            document.createElement("a");
-                                        link.download = "demotivator.jpeg";
-                                        link.href = imagePreviewSrc as string;
-                                        link.click();
-                                        link.remove();
+                        <ButtonGroup stretched>
+                            <Button
+                                before={<Icon24Copy />}
+                                size="l"
+                                onClick={(): void => {
+                                    void copyImageToClipboard(
+                                        imagePreviewSrc as string
+                                    )
+                                        .then(() => {
+                                            setSnackbar(
+                                                <Snackbar
+                                                    onClose={(): void =>
+                                                        setSnackbar(null)
+                                                    }
+                                                >
+                                                    {t("copiedToClipboard")}
+                                                </Snackbar>
+                                            );
+                                        })
+                                        .catch(() => {
+                                            const link =
+                                                document.createElement("a");
+                                            link.download = "demotivator.jpeg";
+                                            link.href =
+                                                imagePreviewSrc as string;
+                                            link.click();
+                                            link.remove();
 
-                                        setSnackbar(
-                                            <Snackbar
-                                                onClose={(): void =>
-                                                    setSnackbar(null)
-                                                }
-                                            >
-                                                {t("savedOnDevice")}
-                                            </Snackbar>
-                                        );
-                                    });
-                            }}
-                            stretched
-                            appearance="accent"
-                        >
-                            {t("copy")}
-                        </Button>
+                                            setSnackbar(
+                                                <Snackbar
+                                                    onClose={(): void =>
+                                                        setSnackbar(null)
+                                                    }
+                                                >
+                                                    {t("savedOnDevice")}
+                                                </Snackbar>
+                                            );
+                                        });
+                                }}
+                                stretched
+                                appearance="accent"
+                            >
+                                {t("copy")}
+                            </Button>
+                            <Button
+                                before={<Icon24RefreshOutline />}
+                                size="l"
+                                onClick={(): void => {
+                                    setImageSrc(null);
+                                    setImagePreviewSrc(null);
+                                }}
+                                stretched
+                                appearance="neutral"
+                            >
+                                {t("reset")}
+                            </Button>
+                        </ButtonGroup>
                     </Div>
                 )}
             </FormLayout>
