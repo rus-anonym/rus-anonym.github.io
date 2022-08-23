@@ -64,8 +64,10 @@ const getConversations = async (
 const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
     const [isCopied, setIsCopied] = useState(false);
 
-    const avatar =
-        chat.photo === null ? (
+    let avatar: JSX.Element;
+
+    const generateInitialsAvatar = (): JSX.Element => {
+        return (
             <InitialsAvatar
                 size={36}
                 gradientColor={calcInitialsAvatarColor(chat.dateOfPublication)}
@@ -76,9 +78,25 @@ const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
                     .slice(0, 2)
                     .join("")}
             </InitialsAvatar>
-        ) : (
-            <Avatar size={36} src={chat.photo.photo_200} />
         );
+    };
+
+    if (chat.photo === null) {
+        avatar = generateInitialsAvatar();
+    } else {
+        const { photo } = chat;
+        const img =
+            photo.photo_200 ??
+            photo.photo_100 ??
+            photo.photo_50 ??
+            "userapi.com";
+
+        if (img.includes("userapi.com")) {
+            avatar = <Avatar size={36} src={img} />;
+        } else {
+            avatar = generateInitialsAvatar();
+        }
+    }
 
     return (
         <RichCell
@@ -195,6 +213,7 @@ const VKConversations = (): JSX.Element => {
                 value={searchFilter}
                 onChange={(event): void => {
                     setSearchFilter(event.target.value);
+                    setCurrentPage(1);
                 }}
             />
             {isLoad ? (
