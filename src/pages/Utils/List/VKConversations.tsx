@@ -16,6 +16,7 @@ import {
     Search,
     Spinner,
 } from "@vkontakte/vkui";
+import { copyTextToClipboard } from "@vkontakte/vkjs";
 
 interface IChat {
     photo: null | {
@@ -61,6 +62,8 @@ const getConversations = async (
 };
 
 const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
+    const [isCopied, setIsCopied] = useState(false);
+
     const avatar =
         chat.photo === null ? (
             <InitialsAvatar
@@ -95,11 +98,32 @@ const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
             afterCaption={`${chat.numberOfParticipants} участников`}
             actions={
                 <ButtonGroup mode="horizontal" gap="s" stretched>
-                    <Button mode="primary" size="s">
+                    <Button
+                        mode="primary"
+                        size="s"
+                        onClick={(): void => {
+                            const element = document.createElement("a");
+                            element.href = `https://vk.me/join/${chat.key}`;
+                            element.target = "_blank";
+                            element.click();
+                        }}
+                    >
                         Открыть
                     </Button>
-                    <Button mode="secondary" size="s">
-                        Скопировать ссылку
+                    <Button
+                        disabled={isCopied}
+                        mode="secondary"
+                        size="s"
+                        onClick={() => {
+                            void copyTextToClipboard(
+                                `https://vk.me/join/${chat.key}`
+                            ).then(() => {
+                                setIsCopied(true);
+                                setTimeout(() => setIsCopied(false), 2000);
+                            });
+                        }}
+                    >
+                        {isCopied ? "Скопировано" : "Скопировать ссылку"}
                     </Button>
                 </ButtonGroup>
             }
