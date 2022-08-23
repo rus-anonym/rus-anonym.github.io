@@ -551,7 +551,10 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                             </Div>
                         }
                     >
-                        <IconButton disabled={isDesktop}>
+                        <IconButton
+                            hasActive={!isDesktop}
+                            hasHover={!isDesktop}
+                        >
                             <Icon24Filter />
                         </IconButton>
                     </Dropdown>
