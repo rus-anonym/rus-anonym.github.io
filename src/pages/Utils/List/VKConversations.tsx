@@ -7,16 +7,27 @@ import {
     Button,
     ButtonGroup,
     calcInitialsAvatarColor,
+    Div,
+    FormItem,
     Group,
+    Header,
+    IconButton,
     InitialsAvatar,
     Link,
     Pagination,
     Placeholder,
     RichCell,
     Search,
+    SegmentedControl,
+    SimpleCell,
     Spinner,
+    Switch,
+    useAdaptivity,
+    ViewWidth,
 } from "@vkontakte/vkui";
 import { copyTextToClipboard } from "@vkontakte/vkjs";
+import { Dropdown } from "@vkontakte/vkui/dist/unstable";
+import { Icon24Sort } from "@vkontakte/icons";
 
 interface IChat {
     photo: null | {
@@ -24,6 +35,11 @@ interface IChat {
         photo_100: string;
         photo_200: string;
         is_default_photo: false;
+    };
+    creator: null | {
+        id: number;
+        first_name: string;
+        last_name: string;
     };
     dateOfPublication: number;
     numberOfParticipants: number;
@@ -34,8 +50,8 @@ interface IChat {
 
 interface IAPIParams {
     sort: {
-        dateOfPublication: -1 | 1;
-        numberOfParticipants: -1 | 1;
+        dateOfPublication?: -1 | 1;
+        numberOfParticipants?: -1 | 1;
     };
     limit: number;
     offset: number;
@@ -102,6 +118,20 @@ const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
         <RichCell
             before={avatar}
             disabled
+            multiline
+            text={
+                chat.creator === null ? undefined : (
+                    <>
+                        Создатель{": "}
+                        <Link
+                            target="_blank"
+                            href={`https://vk.com/id${chat.creator.id}`}
+                        >
+                            {`${chat.creator.first_name} ${chat.creator.last_name}`}
+                        </Link>
+                    </>
+                )
+            }
             caption={
                 <div>
                     {`Добавлена: ${moment(chat.dateOfPublication).format(
@@ -152,9 +182,16 @@ const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
 };
 
 const VKConversations = (): JSX.Element => {
+    const { viewWidth } = useAdaptivity();
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
     const [isLoad, setIsLoad] = useState(true);
     const [searchFilter, setSearchFilter] = useState("");
     const deferredSearchFilter = useDeferredValue(searchFilter);
+    const [sort, setSort] = useState<
+        "dateOfPublication" | "numberOfParticipants"
+    >("dateOfPublication");
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
     const [currentPage, setCurrentPage] = useState(1);
     const [response, setResponse] = useState<IAPIResponse | null>();
 
@@ -185,16 +222,28 @@ const VKConversations = (): JSX.Element => {
         );
     }, [response]);
 
+    const sortParams = useMemo<
+        { dateOfPublication: 1 | -1 } | { numberOfParticipants: 1 | -1 }
+    >(() => {
+        if (sort === "dateOfPublication") {
+            return { dateOfPublication: sortOrder === "asc" ? 1 : -1 };
+        } else {
+            return { numberOfParticipants: sortOrder === "asc" ? 1 : -1 };
+        }
+    }, [sort, sortOrder]);
+
     useEffect(() => {
         setIsLoad(true);
+
         void getConversations({
             offset: (currentPage - 1) * 25,
             title: deferredSearchFilter,
+            sort: sortParams,
         }).then((res) => {
             setResponse(res);
             setIsLoad(false);
         });
-    }, [currentPage, deferredSearchFilter]);
+    }, [currentPage, deferredSearchFilter, sortParams]);
 
     const content = (
         <>
@@ -215,6 +264,73 @@ const VKConversations = (): JSX.Element => {
                     setSearchFilter(event.target.value);
                     setCurrentPage(1);
                 }}
+                icon={
+                    <Dropdown
+                        action={isDesktop ? "hover" : "click"}
+                        content={
+                            <Div>
+                                <Header>Сортировка по</Header>
+                                <SimpleCell
+                                    disabled
+                                    multiline
+                                    after={
+                                        <Switch
+                                            checked={
+                                                sort === "dateOfPublication"
+                                            }
+                                            onChange={(): void => {
+                                                setSort("dateOfPublication");
+                                            }}
+                                        />
+                                    }
+                                >
+                                    Дате публикации
+                                </SimpleCell>
+                                <SimpleCell
+                                    disabled
+                                    multiline
+                                    after={
+                                        <Switch
+                                            checked={
+                                                sort === "numberOfParticipants"
+                                            }
+                                            onChange={(): void => {
+                                                setSort("numberOfParticipants");
+                                            }}
+                                        />
+                                    }
+                                >
+                                    Количеству участников
+                                </SimpleCell>
+                                <FormItem top="Сортировать по">
+                                    <SegmentedControl
+                                        value={sortOrder}
+                                        options={[
+                                            {
+                                                label: "Возрастанию",
+                                                value: "asc",
+                                            },
+                                            {
+                                                label: "Убыванию",
+                                                value: "desc",
+                                            },
+                                        ]}
+                                        onChange={(val) => {
+                                            setSortOrder(val as "asc" | "desc");
+                                        }}
+                                    />
+                                </FormItem>
+                            </Div>
+                        }
+                    >
+                        <IconButton
+                            hasActive={!isDesktop}
+                            hasHover={!isDesktop}
+                        >
+                            <Icon24Sort />
+                        </IconButton>
+                    </Dropdown>
+                }
             />
             {isLoad ? (
                 <Placeholder>
