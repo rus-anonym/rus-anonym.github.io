@@ -67,12 +67,15 @@ interface IAPIResponse {
 const getConversations = async (
     params?: Partial<IAPIParams>
 ): Promise<IAPIResponse> => {
-    const response = await axios.get("https://search-for-chats-of-vk.ru/", {
-        params: {
-            limit: 25,
-            ...params,
-        },
-    });
+    const response = await axios.get(
+        "https://search-for-chats-of-vk.ru/api/chats",
+        {
+            params: {
+                limit: 25,
+                ...params,
+            },
+        }
+    );
 
     return response.data as IAPIResponse;
 };
@@ -205,6 +208,20 @@ const VKConversations = (): JSX.Element => {
             (автор{" "}
             <Link target="_blank" href="https://vk.com/id378585349">
                 Александр Стояк
+            </Link>
+            )
+            <br />
+            <Link target="_blank" href="https://vk.com/app51408389">
+                VK Miniapp
+            </Link>{" "}
+            разработана командой{" «"}
+            <Link target="_blank" href="https://github.com/Non-Coders">
+                NonCoders
+            </Link>
+            {"» "}
+            (при поддержке{" "}
+            <Link target="_blank" href="https://vk.com/club209683412">
+                RusAnonym Team
             </Link>
             )
         </>
