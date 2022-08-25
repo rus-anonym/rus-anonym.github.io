@@ -149,6 +149,9 @@
             "citizenship_value": "Russia 🇷🇺",
             "languages": "Languages",
             "languages_value": "Russian (native), English (A2)"
+        },
+        "aboutSite": {
+            "title": "About Site"
         }
     },
     "utils": {

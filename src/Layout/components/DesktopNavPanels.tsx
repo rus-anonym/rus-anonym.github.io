@@ -9,12 +9,14 @@ import {
     useAdaptivity,
     ViewWidth,
     PanelHeaderBack,
+    Separator,
 } from "@vkontakte/vkui";
 
 import {
     Icon28ArticlesOutline,
     Icon28CubeBoxOutline,
     Icon28HomeOutline,
+    Icon28InfoCircleOutline,
     Icon28ServicesOutline,
     Icon28UserOutline,
 } from "@vkontakte/icons";
@@ -107,6 +109,14 @@ const DesktopNavPanel = (): JSX.Element => {
                     text={t("prototypes.title")}
                     icon={<Icon28CubeBoxOutline />}
                     path="prototypes"
+                />
+                <Spacing />
+                <Separator />
+                <Spacing />
+                <ObserverNavigationCell
+                    text={t("aboutSite.title")}
+                    icon={<Icon28InfoCircleOutline />}
+                    path="about-site"
                 />
             </Group>
         </SplitCol>

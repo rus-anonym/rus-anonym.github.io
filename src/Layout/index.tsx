@@ -24,6 +24,7 @@ import ModalRoot from "./modal";
 
 import MainView from "../pages/Main";
 import AboutView from "../pages/About";
+import AboutSiteView from "../pages/AboutSite";
 import ArticlesView from "../pages/Articles";
 import PrototypesView from "../pages/Prototypes";
 import UtilsView from "../pages/Utils";
@@ -76,6 +77,7 @@ const Layout = (): JSX.Element => {
                     <AboutView id="about" />
                     <PrototypesView id="prototypes" />
                     <ArticlesView id="articles" />
+                    <AboutSiteView id="about-site" />
                 </Epic>
             </SplitCol>
         </SplitLayout>
