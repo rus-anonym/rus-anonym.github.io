@@ -14,9 +14,7 @@ import {
     SimpleCell,
 } from "@vkontakte/vkui";
 
-import {
-    Icon28LinkOutline,
-} from "@vkontakte/icons";
+import { Icon28LinkOutline } from "@vkontakte/icons";
 
 import session from "../../TS/store/session";
 
@@ -31,6 +29,7 @@ interface IHuman {
     nickname: string;
     avatar?: string;
     url: {
+        personal?: string;
         vk?: string;
         github?: string;
     };
@@ -67,7 +66,19 @@ const Human = ({
                 multiline
                 disabled
                 before={avatarElement}
-                caption={nickname}
+                caption={
+                    <>
+                        {nickname}
+                        {url.personal && (
+                            <>
+                                <br />
+                                <Link target="_blank" href={url.personal}>
+                                    {url.personal}
+                                </Link>
+                            </>
+                        )}
+                    </>
+                }
                 after={
                     <div
                         style={{
@@ -113,6 +124,7 @@ const humans: IHuman[] = [
         surname: "Пшеничный",
         nickname: "girl_dev",
         url: {
+            personal: "https://girl-dev.me/",
             vk: "https://vk.com/girl_dev",
             github: "https://github.com/GirlDev1337",
         },
@@ -131,6 +143,7 @@ const humans: IHuman[] = [
         surname: "Матеюк",
         nickname: "zhenya00000",
         url: {
+            personal: "https://zhenya00000.github.io/",
             vk: "https://vk.com/zhenya00000",
             github: "https://github.com/zhenya00000",
         },
