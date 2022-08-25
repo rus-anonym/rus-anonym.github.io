@@ -12,7 +12,9 @@ import {
     Header,
     Link,
     SimpleCell,
+    Cell,
 } from "@vkontakte/vkui";
+import { VscIssues, VscRepoForked, VscStarFull } from "react-icons/vsc";
 
 import { Icon28LinkOutline } from "@vkontakte/icons";
 
@@ -222,7 +224,30 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                             Сайт на Github
                         </SimpleCell>
                     </Link>
-                    {stats && <></>}
+                    {stats && (
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                            <Cell after={<VscStarFull size={24} />} disabled>
+                                {stats.stars}
+                            </Cell>
+                            <Cell
+                                after={
+                                    <VscIssues
+                                        size={24}
+                                        style={{
+                                            marginLeft: "5px",
+                                            marginTop: "5px",
+                                        }}
+                                    />
+                                }
+                                disabled
+                            >
+                                {stats.issues}
+                            </Cell>
+                            <Cell after={<VscRepoForked size={24} />} disabled>
+                                {stats.forks}
+                            </Cell>
+                        </div>
+                    )}
                 </Group>
                 <Group
                     header={
