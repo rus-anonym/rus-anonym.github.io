@@ -30,6 +30,7 @@ import {
 import { copyTextToClipboard } from "@vkontakte/vkjs";
 import { Dropdown } from "@vkontakte/vkui/dist/unstable";
 import { Icon24Sort } from "@vkontakte/icons";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface IChat {
     photo: null | {
@@ -62,7 +63,6 @@ interface IAPIParams {
 
 interface IAPIResponse {
     found: number;
-    totalСonversation: number;
     chats: IChat[];
 }
 
@@ -186,19 +186,152 @@ const Chat = ({ chat }: { chat: IChat }): JSX.Element => {
     );
 };
 
+interface IViewerParams {
+    isLoad: boolean;
+    isDesktop: boolean;
+    search: string;
+    sortParams:
+        | { dateOfPublication: 1 | -1 }
+        | { numberOfParticipants: 1 | -1 };
+    setLoad: React.Dispatch<React.SetStateAction<boolean>>;
+    setNotFound: React.Dispatch<React.SetStateAction<boolean>>;
+    setSearchFooter: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
+}
+
+const Pages = ({
+    search,
+    sortParams,
+    setLoad,
+    setNotFound,
+    setSearchFooter,
+    isDesktop,
+    isLoad,
+}: IViewerParams): JSX.Element => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [response, setResponse] = useState<IAPIResponse | null>();
+
+    const pagination = useMemo(() => {
+        if (response?.found === 0) {
+            return null;
+        } else {
+            return (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Pagination
+                        currentPage={currentPage}
+                        onChange={(page): void => setCurrentPage(page)}
+                        totalPages={Math.ceil((response?.found as number) / 25)}
+                    />
+                </div>
+            );
+        }
+    }, [response]);
+
+    useEffect(() => {
+        setSearchFooter(response ? pagination : null);
+
+        return () => setSearchFooter(null);
+    }, [pagination]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search]);
+
+    useEffect(() => {
+        setLoad(true);
+
+        void getConversations({
+            offset: (currentPage - 1) * 25,
+            title: search,
+            sort: sortParams,
+        }).then((res) => {
+            setResponse(res);
+            if (res.found === 0) {
+                setNotFound(true);
+            } else {
+                setNotFound(false);
+            }
+            setLoad(false);
+        });
+    }, [currentPage, search, sortParams]);
+
+    return (
+        <>
+            {!isLoad && response?.chats.map((chat) => <Chat chat={chat} />)}
+            {isDesktop && pagination}
+        </>
+    );
+};
+
+const Scroller = ({
+    search,
+    sortParams,
+    setLoad,
+    setNotFound,
+}: IViewerParams): JSX.Element => {
+    const [chats, setChats] = useState<IChat[]>([]);
+    const [lastResponse, setLastResponse] = useState<IAPIResponse | null>();
+
+    useEffect(() => {
+        setLoad(false);
+        void loadNext();
+    }, []);
+
+    useEffect(() => {
+        setChats([]);
+        setLastResponse(null);
+        void loadNext();
+    }, [search]);
+
+    const loadNext = async (): Promise<void> => {
+        const response = await getConversations({
+            offset: Math.ceil((lastResponse?.found ?? 0 - chats.length) / 25),
+            title: search,
+            sort: sortParams,
+        });
+
+        setLastResponse(response);
+        if (response.found === 0) {
+            setNotFound(true);
+            setChats([]);
+        } else {
+            setNotFound(false);
+            setChats([...chats, ...response.chats]);
+        }
+    };
+
+    return (
+        <InfiniteScroll
+            dataLength={chats.length}
+            next={loadNext}
+            hasMore={lastResponse ? lastResponse.found > chats.length : true}
+            loader={
+                <Placeholder>
+                    <Spinner size="large" />
+                </Placeholder>
+            }
+        >
+            {chats.map((chat) => (
+                <Chat chat={chat} />
+            ))}
+        </InfiniteScroll>
+    );
+};
+
 const VKConversations = (): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
-    const [isLoad, setIsLoad] = useState(true);
+    const [isLoad, setLoad] = useState(true);
+    const [isNotFound, setNotFound] = useState(false);
+
     const [searchFilter, setSearchFilter] = useState("");
+    const [searchFooter, setSearchFooter] = useState<JSX.Element | null>(null);
     const deferredSearchFilter = useDeferredValue(searchFilter);
     const [sort, setSort] = useState<
         "dateOfPublication" | "numberOfParticipants"
     >("dateOfPublication");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [response, setResponse] = useState<IAPIResponse | null>();
+    const [viewMethod, setViewMethod] = useState<"pages" | "scroller">("pages");
 
     const description = (
         <>
@@ -229,18 +362,6 @@ const VKConversations = (): JSX.Element => {
         </>
     );
 
-    const pagination = useMemo(() => {
-        return (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <Pagination
-                    currentPage={currentPage}
-                    onChange={(page): void => setCurrentPage(page)}
-                    totalPages={Math.ceil((response?.found as number) / 25)}
-                />
-            </div>
-        );
-    }, [response]);
-
     const search = (
         <>
             <Search
@@ -248,7 +369,6 @@ const VKConversations = (): JSX.Element => {
                 value={searchFilter}
                 onChange={(event): void => {
                     setSearchFilter(event.target.value);
-                    setCurrentPage(1);
                 }}
                 icon={
                     <Dropdown
@@ -306,6 +426,26 @@ const VKConversations = (): JSX.Element => {
                                         }}
                                     />
                                 </FormItem>
+                                <FormItem top="Вывод в">
+                                    <SegmentedControl
+                                        value={viewMethod}
+                                        options={[
+                                            {
+                                                label: "Страницах",
+                                                value: "pages",
+                                            },
+                                            {
+                                                label: "Ленте",
+                                                value: "scroller",
+                                            },
+                                        ]}
+                                        onChange={(val) => {
+                                            setViewMethod(
+                                                val as "pages" | "scroller"
+                                            );
+                                        }}
+                                    />
+                                </FormItem>
                             </Div>
                         }
                     >
@@ -318,6 +458,7 @@ const VKConversations = (): JSX.Element => {
                     </Dropdown>
                 }
             />
+            {searchFooter}
         </>
     );
 
@@ -331,48 +472,51 @@ const VKConversations = (): JSX.Element => {
         }
     }, [sort, sortOrder]);
 
-    useEffect(() => {
-        setIsLoad(true);
-
-        void getConversations({
-            offset: (currentPage - 1) * 25,
-            title: deferredSearchFilter,
-            sort: sortParams,
-        }).then((res) => {
-            setResponse(res);
-            setIsLoad(false);
-        });
-    }, [currentPage, deferredSearchFilter, sortParams]);
-
     return (
         <>
             {!isDesktop && (
                 <FixedLayout vertical="top" filled>
                     {search}
-                    {pagination}
                     <Spacing />
                 </FixedLayout>
             )}
 
             <Group
                 description={description}
-                style={{ paddingTop: isDesktop ? undefined : 100 }}
+                style={{
+                    paddingTop: isDesktop ? undefined : searchFooter ? 100 : 50,
+                }}
             >
                 {isDesktop && search}
-                {isLoad ? (
+                {isLoad && (
                     <Placeholder>
                         <Spinner size="large" />
                     </Placeholder>
-                ) : response?.chats.length === 0 ? (
+                )}
+                {isNotFound && (
                     <Placeholder>По фильтру ничего не найдено</Placeholder>
-                ) : (
-                    <>
-                        {isDesktop && pagination}
-                        {response?.chats.map((chat) => (
-                            <Chat chat={chat} />
-                        ))}
-                        {isDesktop && pagination}
-                    </>
+                )}
+                {viewMethod === "pages" && (
+                    <Pages
+                        search={deferredSearchFilter}
+                        sortParams={sortParams}
+                        setLoad={setLoad}
+                        setNotFound={setNotFound}
+                        setSearchFooter={setSearchFooter}
+                        isDesktop={isDesktop}
+                        isLoad={isLoad}
+                    />
+                )}
+                {viewMethod === "scroller" && (
+                    <Scroller
+                        search={deferredSearchFilter}
+                        sortParams={sortParams}
+                        setLoad={setLoad}
+                        setNotFound={setNotFound}
+                        setSearchFooter={setSearchFooter}
+                        isDesktop={isDesktop}
+                        isLoad={isLoad}
+                    />
                 )}
             </Group>
         </>
