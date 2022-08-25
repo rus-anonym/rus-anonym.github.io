@@ -8,6 +8,7 @@ import {
     ButtonGroup,
     calcInitialsAvatarColor,
     Div,
+    FixedLayout,
     FormItem,
     Group,
     Header,
@@ -20,6 +21,7 @@ import {
     Search,
     SegmentedControl,
     SimpleCell,
+    Spacing,
     Spinner,
     Switch,
     useAdaptivity,
@@ -239,41 +241,8 @@ const VKConversations = (): JSX.Element => {
         );
     }, [response]);
 
-    const sortParams = useMemo<
-        { dateOfPublication: 1 | -1 } | { numberOfParticipants: 1 | -1 }
-    >(() => {
-        if (sort === "dateOfPublication") {
-            return { dateOfPublication: sortOrder === "asc" ? 1 : -1 };
-        } else {
-            return { numberOfParticipants: sortOrder === "asc" ? 1 : -1 };
-        }
-    }, [sort, sortOrder]);
-
-    useEffect(() => {
-        setIsLoad(true);
-
-        void getConversations({
-            offset: (currentPage - 1) * 25,
-            title: deferredSearchFilter,
-            sort: sortParams,
-        }).then((res) => {
-            setResponse(res);
-            setIsLoad(false);
-        });
-    }, [currentPage, deferredSearchFilter, sortParams]);
-
-    const content = (
+    const search = (
         <>
-            {pagination}
-            {response?.chats.map((chat) => (
-                <Chat chat={chat} />
-            ))}
-            {pagination}
-        </>
-    );
-
-    return (
-        <Group description={description}>
             <Search
                 placeholder={"Поиск"}
                 value={searchFilter}
@@ -349,16 +318,64 @@ const VKConversations = (): JSX.Element => {
                     </Dropdown>
                 }
             />
-            {isLoad ? (
-                <Placeholder>
-                    <Spinner size="large" />
-                </Placeholder>
-            ) : response?.chats.length === 0 ? (
-                <Placeholder>По фильтру ничего не найдено</Placeholder>
-            ) : (
-                content
+        </>
+    );
+
+    const sortParams = useMemo<
+        { dateOfPublication: 1 | -1 } | { numberOfParticipants: 1 | -1 }
+    >(() => {
+        if (sort === "dateOfPublication") {
+            return { dateOfPublication: sortOrder === "asc" ? 1 : -1 };
+        } else {
+            return { numberOfParticipants: sortOrder === "asc" ? 1 : -1 };
+        }
+    }, [sort, sortOrder]);
+
+    useEffect(() => {
+        setIsLoad(true);
+
+        void getConversations({
+            offset: (currentPage - 1) * 25,
+            title: deferredSearchFilter,
+            sort: sortParams,
+        }).then((res) => {
+            setResponse(res);
+            setIsLoad(false);
+        });
+    }, [currentPage, deferredSearchFilter, sortParams]);
+
+    return (
+        <>
+            {!isDesktop && (
+                <FixedLayout vertical="top" filled>
+                    {search}
+                    {pagination}
+                    <Spacing />
+                </FixedLayout>
             )}
-        </Group>
+
+            <Group
+                description={description}
+                style={{ paddingTop: isDesktop ? undefined : 100 }}
+            >
+                {isDesktop && search}
+                {isLoad ? (
+                    <Placeholder>
+                        <Spinner size="large" />
+                    </Placeholder>
+                ) : response?.chats.length === 0 ? (
+                    <Placeholder>По фильтру ничего не найдено</Placeholder>
+                ) : (
+                    <>
+                        {isDesktop && pagination}
+                        {response?.chats.map((chat) => (
+                            <Chat chat={chat} />
+                        ))}
+                        {isDesktop && pagination}
+                    </>
+                )}
+            </Group>
+        </>
     );
 };
 
