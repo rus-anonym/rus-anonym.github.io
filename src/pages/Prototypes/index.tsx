@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import {
+    Button,
     CellButton,
     Group,
     Header,
@@ -124,7 +125,21 @@ const PrototypesView = ({ id }: { id: string }): JSX.Element => {
     return (
         <View id={id} activePanel={router.activePanel || "default"}>
             <Panel id="default">
-                <Group>{filteredPrototypes.map(UtilNavBlock)}</Group>
+                <Group>
+                    {filteredPrototypes.map(UtilNavBlock)}
+                    <Placeholder
+                        action={
+                            <Button
+                                size="l"
+                                onClick={() =>
+                                    (router.activeView = "about-site")
+                                }
+                            >
+                                О сайте
+                            </Button>
+                        }
+                    />
+                </Group>
             </Panel>
             {filteredPrototypes.map(UtilCell)}
         </View>

@@ -15,8 +15,10 @@ import {
     Cell,
     useAdaptivity,
     ViewWidth,
+    Placeholder,
 } from "@vkontakte/vkui";
 import { VscIssues, VscRepoForked, VscStarFull } from "react-icons/vsc";
+import { BsFillSuitHeartFill } from "react-icons/bs";
 
 import { Icon28LinkOutline } from "@vkontakte/icons";
 
@@ -201,6 +203,24 @@ const humans: IHuman[] = [
             github: "https://github.com/MrSlavik0",
         },
     },
+    {
+        name: "Вадим",
+        surname: "Филатов",
+        nickname: "flxpr",
+        url: {
+            vk: "https://vk.com/id649590332",
+            telegram: "https://t.me/flxpr",
+            github: "github.com/flxprhub",
+        },
+    },
+    {
+        name: "Юлий",
+        surname: "Цезарев",
+        nickname: "",
+        url: {
+            vk: "https://vk.com/id496798589",
+        },
+    },
 ];
 
 interface IRepositoryStat {
@@ -295,19 +315,34 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                             {t("dreamTeam")}
                         </Header>
                     }
-                    children={
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: isDesktop ? "row" : "column",
-                                flexWrap: "wrap",
-                                justifyContent: "center",
-                                alignItems: "flex-start",
-                            }}
-                            children={humans.map(Human)}
-                        />
-                    }
-                />
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: isDesktop ? "row" : "column",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                            alignItems: "flex-start",
+                        }}
+                        children={humans.map(Human)}
+                    />
+                    <Placeholder
+                        icon={
+                            <BsFillSuitHeartFill
+                                size={56}
+                                style={{ color: "red" }}
+                            />
+                        }
+                    >
+                        {t("RusAnonymTeam") + " "}
+                        <Link
+                            target="_blank"
+                            href="https://vk.me/join/Om2V2IQgXpaj1G5xqQhsZl6AFyZb682fo/c="
+                        >
+                            RusAnonym Team
+                        </Link>
+                    </Placeholder>
+                </Group>
             </Panel>
         </View>
     );
