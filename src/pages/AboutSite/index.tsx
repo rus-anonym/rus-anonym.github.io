@@ -302,6 +302,7 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                                 flexDirection: isDesktop ? "row" : "column",
                                 flexWrap: "wrap",
                                 justifyContent: "center",
+                                alignItems: "flex-start",
                             }}
                             children={humans.map(Human)}
                         />
