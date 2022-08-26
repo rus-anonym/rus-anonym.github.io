@@ -13,6 +13,8 @@ import {
     Link,
     SimpleCell,
     Cell,
+    useAdaptivity,
+    ViewWidth,
 } from "@vkontakte/vkui";
 import { VscIssues, VscRepoForked, VscStarFull } from "react-icons/vsc";
 
@@ -140,6 +142,7 @@ const humans: IHuman[] = [
             personal: "https://girl-dev.me/",
             vk: "https://vk.com/girl_dev",
             github: "https://github.com/GirlDev1337",
+            telegram: "https://t.me/girl_dev",
         },
     },
     {
@@ -230,6 +233,9 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
         keyPrefix: "pages.aboutSite",
     });
 
+    const { viewWidth } = useAdaptivity();
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
     useEffect(() => {
         void getRepositoryStat().then(setStats);
     }, []);
@@ -293,7 +299,7 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                         <div
                             style={{
                                 display: "flex",
-                                flexDirection: "row",
+                                flexDirection: isDesktop ? "row" : "column",
                                 flexWrap: "wrap",
                                 justifyContent: "center",
                             }}
