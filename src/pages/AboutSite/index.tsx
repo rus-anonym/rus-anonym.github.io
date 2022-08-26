@@ -337,7 +337,7 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                         {t("RusAnonymTeam") + " "}
                         <Link
                             target="_blank"
-                            href="https://vk.me/join/Om2V2IQgXpaj1G5xqQhsZl6AFyZb682fo/c="
+                            href="https://vk.com/rus_anonym_team"
                         >
                             RusAnonym Team
                         </Link>
