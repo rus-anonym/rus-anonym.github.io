@@ -21,9 +21,11 @@ import { Icon28LinkOutline } from "@vkontakte/icons";
 import session from "../../TS/store/session";
 
 import LogoVK from "../../SVG/socials/VK.svg";
+import LogoTelegram from "../../SVG/socials/Telegram.svg";
 
 import LogoGitHubDark from "../../PNG/socials/GitHub-dark.png";
 import LogoGitHubLight from "../../PNG/socials/GitHub-light.png";
+import { useTranslation } from "react-i18next";
 
 interface IHuman {
     name: string;
@@ -34,6 +36,7 @@ interface IHuman {
         personal?: string;
         vk?: string;
         github?: string;
+        telegram?: string;
     };
 }
 
@@ -63,60 +66,68 @@ const Human = ({
     );
 
     return (
-        <Group mode="plain" separator="hide">
-            <RichCell
-                multiline
-                disabled
-                before={avatarElement}
-                caption={
-                    <>
-                        {nickname}
-                        {url.personal && (
-                            <>
-                                <br />
-                                <Link target="_blank" href={url.personal}>
-                                    {url.personal}
-                                </Link>
-                            </>
-                        )}
-                    </>
-                }
-                after={
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                        }}
-                    >
-                        {url.github && (
-                            <Link href={url.github} target="_blank">
-                                <Avatar
-                                    style={{ margin: "5px" }}
-                                    size={36}
-                                    src={
-                                        session.theme === "dark"
-                                            ? LogoGitHubLight
-                                            : LogoGitHubDark
-                                    }
-                                />
+        <RichCell
+            multiline
+            disabled
+            before={avatarElement}
+            caption={
+                <>
+                    {nickname}
+                    {url.personal && (
+                        <>
+                            <br />
+                            <Link target="_blank" href={url.personal}>
+                                {url.personal}
                             </Link>
-                        )}
+                        </>
+                    )}
+                </>
+            }
+            bottom={
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                    }}
+                >
+                    {url.github && (
+                        <Link href={url.github} target="_blank">
+                            <Avatar
+                                style={{ margin: "5px" }}
+                                size={24}
+                                src={
+                                    session.theme === "dark"
+                                        ? LogoGitHubLight
+                                        : LogoGitHubDark
+                                }
+                            />
+                        </Link>
+                    )}
 
-                        {url.vk && (
-                            <Link href={url.vk} target="_blank">
-                                <Avatar
-                                    style={{ margin: "5px" }}
-                                    size={36}
-                                    src={LogoVK}
-                                />
-                            </Link>
-                        )}
-                    </div>
-                }
-            >
-                {name} {surname}
-            </RichCell>
-        </Group>
+                    {url.vk && (
+                        <Link href={url.vk} target="_blank">
+                            <Avatar
+                                style={{ margin: "5px" }}
+                                size={24}
+                                src={LogoVK}
+                            />
+                        </Link>
+                    )}
+
+                    {url.telegram && (
+                        <Link href={url.telegram} target="_blank">
+                            <Avatar
+                                style={{ margin: "5px" }}
+                                size={24}
+                                src={LogoTelegram}
+                            />
+                        </Link>
+                    )}
+                </div>
+            }
+        >
+            {name} {surname}
+        </RichCell>
     );
 };
 
@@ -138,6 +149,7 @@ const humans: IHuman[] = [
         url: {
             vk: "https://vk.com/sm1rnovdev",
             github: "https://github.com/sm1rnovdev",
+            telegram: "https://t.me/sm1rnovdev",
         },
     },
     {
@@ -156,6 +168,7 @@ const humans: IHuman[] = [
         nickname: "dimondaf",
         url: {
             vk: "https://vk.com/dimondaf",
+            telegram: "https://t.me/dimondaf",
         },
     },
     {
@@ -165,6 +178,24 @@ const humans: IHuman[] = [
         url: {
             vk: "https://vk.com/kolesto65",
             github: "https://github.com/kolesto65",
+        },
+    },
+    {
+        name: "Иван",
+        surname: "Ивлепенко",
+        nickname: "ivlepenko",
+        url: {
+            vk: "https://vk.com/ivlepenko",
+        },
+    },
+    {
+        name: "Ярослав",
+        surname: "Клопенко",
+        nickname: "klopenkooff",
+        url: {
+            vk: "https://vk.com/klopenkooff",
+            telegram: "https://t.me/klopenkooff",
+            github: "https://github.com/MrSlavik0",
         },
     },
 ];
@@ -195,6 +226,9 @@ const getRepositoryStat = async (): Promise<IRepositoryStat> => {
 
 const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
     const [stats, setStats] = useState<IRepositoryStat | null>();
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages.aboutSite",
+    });
 
     useEffect(() => {
         void getRepositoryStat().then(setStats);
@@ -221,7 +255,7 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                             }
                             after={<Icon28LinkOutline />}
                         >
-                            Сайт на Github
+                            {t("github")}
                         </SimpleCell>
                     </Link>
                     {stats && (
@@ -251,11 +285,21 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
                 </Group>
                 <Group
                     header={
-                        <Header subtitle="Помогали в разработке">
-                            Отряд крутышек
+                        <Header subtitle={t("dreamTeamDescription")}>
+                            {t("dreamTeam")}
                         </Header>
                     }
-                    children={humans.map(Human)}
+                    children={
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                                justifyContent: "center",
+                            }}
+                            children={humans.map(Human)}
+                        />
+                    }
                 />
             </Panel>
         </View>
