@@ -30,7 +30,6 @@ import { BrowserMultiFormatReader } from "@zxing/browser";
 
 import moment from "moment";
 import { ChipsSelect } from "@vkontakte/vkui/dist/unstable";
-import { ChipsInputOption } from "@vkontakte/vkui/dist/components/ChipsInput/ChipsInput";
 import { useTranslation } from "react-i18next";
 
 const formats = [
@@ -155,7 +154,9 @@ const ImageLoader = ({
 }): JSX.Element => {
     const [file, setFile] = useState<File | null>(null);
     const [placeholder, setPlaceholder] = useState<JSX.Element | null>(null);
-    const [selectedFormats, setSelectedFormats] = useState<ChipsInputOption[]>([
+    const [selectedFormats, setSelectedFormats] = useState<
+        { value: string; label: string }[]
+    >([
         {
             value: "11",
             label: formats[11].title,
