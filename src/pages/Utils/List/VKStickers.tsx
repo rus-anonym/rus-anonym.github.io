@@ -422,19 +422,22 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
     const filteredPacks = meta.filter((pack: TPack): boolean => {
         if (searchFilter !== "") {
             const packId = /^(pack|sticker)=(\d+)$/.exec(searchFilter);
-            if (packId === null) {
-                return false;
-            } else if (
-                packId[1] === "sticker" &&
-                pack.stickers.some((x) =>
-                    typeof x === "object"
-                        ? x.id === Number(packId[2])
-                        : x === Number(packId[2])
-                )
-            ) {
-                return true;
-            } else if (packId[1] === "pack" && pack.id === Number(packId[2])) {
-                return true;
+            if (packId) {
+                if (
+                    packId[1] === "sticker" &&
+                    pack.stickers.some((x) =>
+                        typeof x === "object"
+                            ? x.id === Number(packId[2])
+                            : x === Number(packId[2])
+                    )
+                ) {
+                    return true;
+                } else if (
+                    packId[1] === "pack" &&
+                    pack.id === Number(packId[2])
+                ) {
+                    return true;
+                }
             }
 
             if (
