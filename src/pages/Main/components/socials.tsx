@@ -258,7 +258,7 @@ const Socials = (): JSX.Element => {
                                                         <Separator />
                                                         <Link
                                                             target="_blank"
-                                                            href="https://npmjs.com/package/rus-anonym-utils"
+                                                            href="https://npmjs.com/package/@rus-anonym/node-utils"
                                                         >
                                                             <img
                                                                 alt=""
@@ -270,7 +270,7 @@ const Socials = (): JSX.Element => {
                                                         <Separator />
                                                         <Link
                                                             target="_blank"
-                                                            href="https://github.com/RusAnonym/rus-anonym-utils"
+                                                            href="https://github.com/rus-anonym/node-utils"
                                                         >
                                                             <img
                                                                 alt=""
@@ -287,7 +287,46 @@ const Socials = (): JSX.Element => {
                                                     </React.Fragment>
                                                 }
                                             >
-                                                rus-anonym-utils
+                                                @rus-anonym/node-utils
+                                            </SimpleCell>
+                                            <SimpleCell
+                                                disabled
+                                                description={t("npm.utils")}
+                                                after={
+                                                    <React.Fragment>
+                                                        <Separator />
+                                                        <Link
+                                                            target="_blank"
+                                                            href="https://npmjs.com/package/@rus-anonym/web-utils"
+                                                        >
+                                                            <img
+                                                                alt=""
+                                                                src={LogoNPM}
+                                                                width={36}
+                                                                height={36}
+                                                            />
+                                                        </Link>
+                                                        <Separator />
+                                                        <Link
+                                                            target="_blank"
+                                                            href="https://github.com/rus-anonym/web-utils"
+                                                        >
+                                                            <img
+                                                                alt=""
+                                                                src={
+                                                                    session.theme ===
+                                                                    "dark"
+                                                                        ? LogoGitHubLight
+                                                                        : LogoGitHubDark
+                                                                }
+                                                                width={36}
+                                                                height={36}
+                                                            />
+                                                        </Link>
+                                                    </React.Fragment>
+                                                }
+                                            >
+                                                @rus-anonym/web-utils
                                             </SimpleCell>
                                             <SimpleCell
                                                 disabled
@@ -297,7 +336,7 @@ const Socials = (): JSX.Element => {
                                                         <Separator />
                                                         <Link
                                                             target="_blank"
-                                                            href="https://npmjs.com/package/simple-scheduler-task"
+                                                            href="https://npmjs.com/package/@rus-anonym/scheduler"
                                                         >
                                                             <img
                                                                 alt=""
@@ -309,7 +348,7 @@ const Socials = (): JSX.Element => {
                                                         <Separator />
                                                         <Link
                                                             target="_blank"
-                                                            href="https://github.com/RusAnonym/simple-scheduler-task"
+                                                            href="https://github.com/rus-anonym/node-scheduler"
                                                         >
                                                             <img
                                                                 alt=""
@@ -326,7 +365,7 @@ const Socials = (): JSX.Element => {
                                                     </React.Fragment>
                                                 }
                                             >
-                                                simple-scheduler-task
+                                                @rus-anonym/node-scheduler
                                             </SimpleCell>
                                         </React.Fragment>
                                     );
