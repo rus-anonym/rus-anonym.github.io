@@ -18,7 +18,7 @@ const defaultLazyLoadParams: ILazyLoadParams = {
     useCache: true,
     withFallback: true,
     fallback: (
-        <Group separator="hide" mode="plain">
+        <Group separator="hide">
             <Placeholder>
                 <Spinner size="large" />
             </Placeholder>

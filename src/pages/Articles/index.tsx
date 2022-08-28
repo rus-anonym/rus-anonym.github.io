@@ -176,7 +176,7 @@ const byPublished = (a: IArticle, b: IArticle): 1 | 0 | -1 => {
     return 0;
 };
 
-const ArticlesView = ({ id }: { id: string }): JSX.Element => {
+const ArticlesView = (): JSX.Element => {
     const { t, i18n } = useTranslation("translation", {
         keyPrefix: "pages.articles",
     });
@@ -256,7 +256,7 @@ const ArticlesView = ({ id }: { id: string }): JSX.Element => {
     };
 
     return (
-        <View id={id} activePanel={router.activePanel || "default"}>
+        <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group>
                     <Search

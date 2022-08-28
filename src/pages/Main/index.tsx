@@ -1,28 +1,21 @@
 import React, { useEffect } from "react";
-import { Group, Panel, View } from "@vkontakte/vkui";
+import { Group } from "@vkontakte/vkui";
 
 import router from "../../TS/store/router";
 
-import LazyLoadComponent from "../../utils/LazyLoad";
+import Socials from "./components/socials";
+import Donates from "./components/donates";
 
-const MainPage = ({ id }: { id: string }): JSX.Element => {
+const MainPage = (): JSX.Element => {
     useEffect(() => {
         router.activePanel = null;
     });
 
     return (
-        <View id={id} activePanel="default">
-            <Panel id="default">
-                <Group>
-                    <LazyLoadComponent
-                        callbacks={[
-                            () => import("./components/socials"),
-                            () => import("./components/donates"),
-                        ]}
-                    />
-                </Group>
-            </Panel>
-        </View>
+        <Group>
+            <Socials />
+            <Donates />
+        </Group>
     );
 };
 

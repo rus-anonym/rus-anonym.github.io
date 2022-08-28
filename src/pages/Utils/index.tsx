@@ -40,7 +40,7 @@ interface IUtil {
     languages: typeof session.language[];
 }
 
-const UtilsView = ({ id }: { id: string }): JSX.Element => {
+const UtilsView = (): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
@@ -260,7 +260,7 @@ const UtilsView = ({ id }: { id: string }): JSX.Element => {
     };
 
     return (
-        <View id={id} activePanel={router.activePanel || "default"}>
+        <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group
                     description={

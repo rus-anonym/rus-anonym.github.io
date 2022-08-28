@@ -63,7 +63,7 @@ const prototypes: IPrototype[] = [
     },
 ];
 
-const PrototypesView = ({ id }: { id: string }): JSX.Element => {
+const PrototypesView = (): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
@@ -110,7 +110,7 @@ const PrototypesView = ({ id }: { id: string }): JSX.Element => {
 
     if (filteredPrototypes.length === 0) {
         return (
-            <View id={id} activePanel="default">
+            <View activePanel="default">
                 <Panel id="default">
                     <Group>
                         <Placeholder>
@@ -123,7 +123,7 @@ const PrototypesView = ({ id }: { id: string }): JSX.Element => {
     }
 
     return (
-        <View id={id} activePanel={router.activePanel || "default"}>
+        <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group>
                     {filteredPrototypes.map(UtilNavBlock)}

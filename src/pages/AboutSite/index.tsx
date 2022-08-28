@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 
 import {
-    View,
-    Panel,
     Group,
     RichCell,
     Avatar,
@@ -243,7 +241,7 @@ const getRepositoryStat = async (): Promise<IRepositoryStat> => {
     };
 };
 
-const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
+const SiteInfoView = (): JSX.Element => {
     const [stats, setStats] = useState<IRepositoryStat | null>();
     const { t } = useTranslation("translation", {
         keyPrefix: "pages.aboutSite",
@@ -257,90 +255,85 @@ const SiteInfoView = ({ id }: { id: string }): JSX.Element => {
     }, []);
 
     return (
-        <View id={id} activePanel="default">
-            <Panel id="default">
-                <Group>
-                    <Link
-                        target="_blank"
-                        href="https://github.com/rus-anonym/rus-anonym.github.io"
-                    >
-                        <SimpleCell
-                            before={
-                                <Avatar
-                                    size={36}
-                                    src={
-                                        session.theme === "dark"
-                                            ? LogoGitHubLight
-                                            : LogoGitHubDark
-                                    }
-                                />
-                            }
-                            after={<Icon28LinkOutline />}
-                        >
-                            {t("github")}
-                        </SimpleCell>
-                    </Link>
-                    {stats && (
-                        <div style={{ display: "flex", flexDirection: "row" }}>
-                            <Cell after={<VscStarFull size={24} />} disabled>
-                                {stats.stars}
-                            </Cell>
-                            <Cell
-                                after={
-                                    <VscIssues
-                                        size={24}
-                                        style={{
-                                            marginLeft: "5px",
-                                            marginTop: "5px",
-                                        }}
-                                    />
-                                }
-                                disabled
-                            >
-                                {stats.issues}
-                            </Cell>
-                            <Cell after={<VscRepoForked size={24} />} disabled>
-                                {stats.forks}
-                            </Cell>
-                        </div>
-                    )}
-                </Group>
-                <Group
-                    header={
-                        <Header subtitle={t("dreamTeamDescription")}>
-                            {t("dreamTeam")}
-                        </Header>
-                    }
+        <>
+            <Group>
+                <Link
+                    target="_blank"
+                    href="https://github.com/rus-anonym/rus-anonym.github.io"
                 >
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: isDesktop ? "row" : "column",
-                            flexWrap: "wrap",
-                            justifyContent: "center",
-                            alignItems: "flex-start",
-                        }}
-                        children={humans.map(Human)}
-                    />
-                    <Placeholder
-                        icon={
-                            <BsFillSuitHeartFill
-                                size={56}
-                                style={{ color: "red" }}
+                    <SimpleCell
+                        before={
+                            <Avatar
+                                size={36}
+                                src={
+                                    session.theme === "dark"
+                                        ? LogoGitHubLight
+                                        : LogoGitHubDark
+                                }
                             />
                         }
+                        after={<Icon28LinkOutline />}
                     >
-                        {t("RusAnonymTeam") + " "}
-                        <Link
-                            target="_blank"
-                            href="https://vk.com/rus_anonym_team"
+                        {t("github")}
+                    </SimpleCell>
+                </Link>
+                {stats && (
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <Cell after={<VscStarFull size={24} />} disabled>
+                            {stats.stars}
+                        </Cell>
+                        <Cell
+                            after={
+                                <VscIssues
+                                    size={24}
+                                    style={{
+                                        marginLeft: "5px",
+                                        marginTop: "5px",
+                                    }}
+                                />
+                            }
+                            disabled
                         >
-                            RusAnonym Team
-                        </Link>
-                    </Placeholder>
-                </Group>
-            </Panel>
-        </View>
+                            {stats.issues}
+                        </Cell>
+                        <Cell after={<VscRepoForked size={24} />} disabled>
+                            {stats.forks}
+                        </Cell>
+                    </div>
+                )}
+            </Group>
+            <Group
+                header={
+                    <Header subtitle={t("dreamTeamDescription")}>
+                        {t("dreamTeam")}
+                    </Header>
+                }
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: isDesktop ? "row" : "column",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                    }}
+                    children={humans.map(Human)}
+                />
+                <Placeholder
+                    icon={
+                        <BsFillSuitHeartFill
+                            size={56}
+                            style={{ color: "red" }}
+                        />
+                    }
+                >
+                    {t("RusAnonymTeam") + " "}
+                    <Link target="_blank" href="https://vk.com/rus_anonym_team">
+                        RusAnonym Team
+                    </Link>
+                </Placeholder>
+            </Group>
+        </>
     );
 };
 

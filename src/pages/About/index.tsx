@@ -4,9 +4,7 @@ import {
     Cell,
     Group,
     MiniInfoCell,
-    Panel,
     RichCell,
-    View,
 } from "@vkontakte/vkui";
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
@@ -32,7 +30,7 @@ const ageCount = moment().diff(
     false
 );
 
-const AboutView = ({ id }: { id: string }): JSX.Element => {
+const AboutView = (): JSX.Element => {
     const { t } = useTranslation("translation", { keyPrefix: "pages.about" });
 
     useEffect(() => {
@@ -40,96 +38,85 @@ const AboutView = ({ id }: { id: string }): JSX.Element => {
     });
 
     return (
-        <View id={id} activePanel="default">
-            <Panel id="default">
-                <Group>
-                    <Group mode="plain">
-                        <RichCell
-                            disabled
-                            before={
-                                <Icon56UserCircleOutline
-                                    width={72}
-                                    height={72}
-                                />
-                            }
-                            caption={t("specialty")}
-                        >
-                            {t("fullName")}
-                        </RichCell>
-                        <Cell
-                            disabled
-                            before={<Icon28PlaceOutline />}
-                            description={t("place", { context: "value" })}
-                            indicator={t("relocation")}
-                        >
-                            {t("place")}
-                        </Cell>
-                        <Cell
-                            description="05.04.2004"
-                            disabled
-                            before={<Icon28CalendarOutline />}
-                            indicator={`${ageCount} ${t("years", {
-                                count: ageCount,
-                            })}`}
-                        >
-                            {t("birthday")}
-                        </Cell>
-                        <Cell
-                            description="+7 909 623-05-55"
-                            disabled
-                            before={<Icon28PhoneOutline />}
-                        >
-                            {t("phone")}
-                        </Cell>
-                        <Cell
-                            description="alexandrsemin2033@gmail.com"
-                            disabled
-                            before={<Icon28MailOutline />}
-                        >
-                            {t("email")}
-                        </Cell>
-                    </Group>
+        <Group>
+            <Group mode="plain">
+                <RichCell
+                    disabled
+                    before={<Icon56UserCircleOutline width={72} height={72} />}
+                    caption={t("specialty")}
+                >
+                    {t("fullName")}
+                </RichCell>
+                <Cell
+                    disabled
+                    before={<Icon28PlaceOutline />}
+                    description={t("place", { context: "value" })}
+                    indicator={t("relocation")}
+                >
+                    {t("place")}
+                </Cell>
+                <Cell
+                    description="05.04.2004"
+                    disabled
+                    before={<Icon28CalendarOutline />}
+                    indicator={`${ageCount} ${t("years", {
+                        count: ageCount,
+                    })}`}
+                >
+                    {t("birthday")}
+                </Cell>
+                <Cell
+                    description="+7 909 623-05-55"
+                    disabled
+                    before={<Icon28PhoneOutline />}
+                >
+                    {t("phone")}
+                </Cell>
+                <Cell
+                    description="alexandrsemin2033@gmail.com"
+                    disabled
+                    before={<Icon28MailOutline />}
+                >
+                    {t("email")}
+                </Cell>
+            </Group>
 
-                    <Group mode="plain">
-                        <MiniInfoCell before={<Icon20MoneyCircleOutline />}>
-                            {`${t("salary")}: ${t("salary", {
-                                context: "value",
-                            })}`}
-                        </MiniInfoCell>
-                        <MiniInfoCell before={<Icon20GlobeOutline />}>
-                            {`${t("willingessToBusinessTrip")}: ${t(
-                                "willingessToBusinessTrip",
-                                {
-                                    context: "value",
-                                }
-                            )}`}
-                        </MiniInfoCell>
-                        <MiniInfoCell before={<Icon20NotebookCheckOutline />}>
-                            {`${t("employment")}: ${t("employment", {
-                                context: "value",
-                            })}`}
-                        </MiniInfoCell>
-                        <MiniInfoCell before={<Icon20CalendarOutline />}>
-                            {`${t("sсheduleOfWork")}: ${t("sсheduleOfWork", {
-                                context: "value",
-                            })}`}
-                        </MiniInfoCell>
-                        <MiniInfoCell before={<Icon20GovernmentOutline />}>
-                            {`${t("citizenship")}: ${t("citizenship", {
-                                context: "value",
-                            })}`}
-                        </MiniInfoCell>
-                        <MiniInfoCell
-                            before={<Icon20HieroglyphCharacterOutline />}
-                        >
-                            {`${t("languages")}: ${t("languages", {
-                                context: "value",
-                            })}`}
-                        </MiniInfoCell>
-                    </Group>
-                </Group>
-            </Panel>
-        </View>
+            <Group mode="plain">
+                <MiniInfoCell before={<Icon20MoneyCircleOutline />}>
+                    {`${t("salary")}: ${t("salary", {
+                        context: "value",
+                    })}`}
+                </MiniInfoCell>
+                <MiniInfoCell before={<Icon20GlobeOutline />}>
+                    {`${t("willingessToBusinessTrip")}: ${t(
+                        "willingessToBusinessTrip",
+                        {
+                            context: "value",
+                        }
+                    )}`}
+                </MiniInfoCell>
+                <MiniInfoCell before={<Icon20NotebookCheckOutline />}>
+                    {`${t("employment")}: ${t("employment", {
+                        context: "value",
+                    })}`}
+                </MiniInfoCell>
+                <MiniInfoCell before={<Icon20CalendarOutline />}>
+                    {`${t("sсheduleOfWork")}: ${t("sсheduleOfWork", {
+                        context: "value",
+                    })}`}
+                </MiniInfoCell>
+                <MiniInfoCell before={<Icon20GovernmentOutline />}>
+                    {`${t("citizenship")}: ${t("citizenship", {
+                        context: "value",
+                    })}`}
+                </MiniInfoCell>
+                <MiniInfoCell before={<Icon20HieroglyphCharacterOutline />}>
+                    {`${t("languages")}: ${t("languages", {
+                        context: "value",
+                    })}`}
+                </MiniInfoCell>
+            </Group>
+        </Group>
     );
 };
 

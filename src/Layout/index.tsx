@@ -10,6 +10,8 @@ import {
     usePlatform,
     VKCOM,
     PanelHeaderBack,
+    View,
+    Panel,
 } from "@vkontakte/vkui";
 
 import { observer } from "mobx-react";
@@ -22,12 +24,9 @@ import MobileTabbar from "./components/MobileTabbar";
 import RusAnonymTitle from "./components/RusAnonymTitle";
 import ModalRoot from "./modal";
 
-import MainView from "../pages/Main";
-import AboutView from "../pages/About";
-import AboutSiteView from "../pages/AboutSite";
-import ArticlesView from "../pages/Articles";
-import PrototypesView from "../pages/Prototypes";
-import UtilsView from "../pages/Utils";
+import MainPage from "../pages/Main";
+
+import LazyLoadComponent from "../utils/LazyLoad";
 
 const Layout = (): JSX.Element => {
     const platform = usePlatform();
@@ -35,6 +34,20 @@ const Layout = (): JSX.Element => {
 
     const hasHeader = platform !== VKCOM;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
+
+    const Page = ({
+        id,
+        children,
+    }: {
+        id: string;
+        children: React.ReactNode;
+    }): JSX.Element => {
+        return (
+            <View id={id} activePanel="default">
+                <Panel id="default" children={children} />
+            </View>
+        );
+    };
 
     return (
         <SplitLayout
@@ -72,12 +85,34 @@ const Layout = (): JSX.Element => {
                     activeStory={router.activeView}
                     tabbar={!isDesktop && <MobileTabbar />}
                 >
-                    <UtilsView id="utils" />
-                    <MainView id="" />
-                    <AboutView id="about" />
-                    <PrototypesView id="prototypes" />
-                    <ArticlesView id="articles" />
-                    <AboutSiteView id="about-site" />
+                    <Page id="utils">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/Utils")]}
+                        />
+                    </Page>
+                    <Page id="">
+                        <MainPage />
+                    </Page>
+                    <Page id="about">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/About")]}
+                        />
+                    </Page>
+                    <Page id="prototypes">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/Prototypes")]}
+                        />
+                    </Page>
+                    <Page id="articles">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/Articles")]}
+                        />
+                    </Page>
+                    <Page id="about-site">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/AboutSite")]}
+                        />
+                    </Page>
                 </Epic>
             </SplitCol>
         </SplitLayout>
