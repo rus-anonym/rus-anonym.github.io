@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 import PrototypesRpChatCreateProfile from "./modals/cards/PrototypesRpChatCreateProfile";
 import ArticlesFilter from "./modals/cards/ArticlesFilter";
 import UtilsFilter from "./modals/cards/UtilsFilter";
+import AdditionalNavigation from "./modals/cards/AdditionalNavigation";
 
 const ModalRootComponent = (): JSX.Element => {
     return (
@@ -28,6 +29,7 @@ const ModalRootComponent = (): JSX.Element => {
             <PrototypesRpChatCreateProfile id="prototypes-rpchat-createProfile" />
             <ArticlesFilter id="articles-filter" />
             <UtilsFilter id="utils-filter" />
+            <AdditionalNavigation id="additional-navigation" />
         </ModalRoot>
     );
 };

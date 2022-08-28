@@ -163,6 +163,7 @@
     "utils": {
         "changeTheme": "Сменить тему",
         "changeLanguage": "English",
-        "feature": "Скоро тут что-то появится :)"
+        "feature": "Скоро тут что-то появится :)",
+        "additionalNavigationMenu": "Дополнительное меню"
     }
 }

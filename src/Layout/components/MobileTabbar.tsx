@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useLongPress } from "use-long-press";
 
 import { Tabbar, TabbarItem } from "@vkontakte/vkui";
 
@@ -39,8 +40,12 @@ const ViewButton = ({
 const MobileTabbar = (): JSX.Element => {
     const { t } = useTranslation("translation", { keyPrefix: "pages" });
 
+    const bind = useLongPress(() => {
+        router.activeModal = "additional-navigation";
+    });
+
     return (
-        <Tabbar itemsLayout="vertical">
+        <Tabbar mode="vertical">
             <ViewButton
                 path="prototypes"
                 text={t("prototypes.title")}
@@ -51,11 +56,16 @@ const MobileTabbar = (): JSX.Element => {
                 text={t("utils.title")}
                 icon={<Icon28ServicesOutline />}
             />
-            <ViewButton
-                path=""
+            <TabbarItem
+                {...bind()}
+                onClick={(): void => {
+                    router.activeView = "";
+                }}
+                selected={router.activeView === ""}
                 text={t("main.title")}
-                icon={<Icon28HomeOutline />}
-            />
+            >
+                {<Icon28HomeOutline />}
+            </TabbarItem>
             <ViewButton
                 path="articles"
                 text={t("articles.title")}

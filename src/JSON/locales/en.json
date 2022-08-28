@@ -161,6 +161,7 @@
     "utils": {
         "changeTheme": "Change theme",
         "changeLanguage": "Русский",
-        "feature": "There's something coming up soon :)"
+        "feature": "There's something coming up soon :)",
+        "additionalNavigationMenu": "Additional menu"
     }
 }
