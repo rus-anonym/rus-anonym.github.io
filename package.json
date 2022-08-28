@@ -59,6 +59,7 @@
         "webpack-dev-server": "^4.10.0"
     },
     "dependencies": {
+        "@octokit/rest": "^19.0.4",
         "@rus-anonym/web-utils": "^1.0.0",
         "axios": "^0.27.2",
         "base64url": "^3.0.1",

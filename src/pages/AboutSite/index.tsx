@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { Octokit } from "@octokit/rest";
 
 import {
     View,
@@ -230,15 +230,11 @@ interface IRepositoryStat {
 }
 
 const getRepositoryStat = async (): Promise<IRepositoryStat> => {
-    const response = (await axios.get(
-        "https://api.github.com/repos/rus-anonym/rus-anonym.github.io"
-    )) as unknown as {
-        data: {
-            stargazers_count: number;
-            open_issues_count: number;
-            forks: number;
-        };
-    };
+    const octokit = new Octokit();
+    const response = await octokit.repos.get({
+        owner: "rus-anonym",
+        repo: "rus-anonym.github.io",
+    });
 
     return {
         stars: response.data.stargazers_count,
