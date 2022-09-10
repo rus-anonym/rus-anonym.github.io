@@ -175,6 +175,16 @@ const humans: IHuman[] = [
         },
     },
     {
+        name: "Всеволод",
+        surname: "Кравец",
+        nickname: "sevakravets",
+        url: {
+            vk: "https://vk.com/sevakravets",
+            telegram: "https://t.me/noname2544",
+            github: "https://github.com/kravetsone"
+        },
+    },
+    {
         name: "Сергей",
         surname: "Стёпочкин",
         nickname: "kolesto65",
@@ -208,7 +218,7 @@ const humans: IHuman[] = [
         url: {
             vk: "https://vk.com/id649590332",
             telegram: "https://t.me/flxpr",
-            github: "github.com/flxprhub",
+            github: "https://github.com/flxprhub",
         },
     },
     {
