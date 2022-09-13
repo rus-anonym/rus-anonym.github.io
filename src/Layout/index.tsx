@@ -28,26 +28,26 @@ import MainPage from "../pages/Main";
 
 import LazyLoadComponent from "../utils/LazyLoad";
 
+const Page = ({
+    id,
+    children,
+}: {
+    id: string;
+    children: React.ReactNode;
+}): JSX.Element => {
+    return (
+        <View id={id} activePanel="default">
+            <Panel id="default" children={children} />
+        </View>
+    );
+};
+
 const Layout = (): JSX.Element => {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivity();
 
     const hasHeader = platform !== VKCOM;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
-
-    const Page = ({
-        id,
-        children,
-    }: {
-        id: string;
-        children: React.ReactNode;
-    }): JSX.Element => {
-        return (
-            <View id={id} activePanel="default">
-                <Panel id="default" children={children} />
-            </View>
-        );
-    };
 
     return (
         <SplitLayout
