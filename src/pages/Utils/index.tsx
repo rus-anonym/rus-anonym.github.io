@@ -20,6 +20,7 @@ import {
     Icon56ComputerOutline,
     Icon56SmartphoneOutline,
     Icon24Filter,
+    Icon56ErrorTriangleOutline,
 } from "@vkontakte/icons";
 
 import router from "../../TS/store/router";
@@ -29,6 +30,7 @@ import { TextTooltip } from "@vkontakte/vkui/dist/unstable";
 import LazyLoadComponent from "../../utils/LazyLoad";
 import session from "../../TS/store/session";
 import storage from "../../TS/store/storage";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface IUtil {
     id: string;
@@ -221,6 +223,7 @@ const UtilsView = (): JSX.Element => {
             </Group>
         );
     };
+
     const UtilCell = (util: IUtil): JSX.Element => {
         if ((isDesktop && !util.isDesktop) || (!isDesktop && !util.isMobile)) {
             return (
@@ -256,7 +259,36 @@ const UtilsView = (): JSX.Element => {
             );
         }
 
-        return <Panel id={util.id}>{util.component}</Panel>;
+        const ErrorFallback = (): JSX.Element => {
+            return (
+                <Group>
+                    <Placeholder
+                        header={t("onStartError")}
+                        icon={<Icon56ErrorTriangleOutline />}
+                        action={
+                            <Button
+                                stretched
+                                size="l"
+                                mode="secondary"
+                                onClick={() => {
+                                    router.activePanel = "default";
+                                }}
+                            >
+                                {t("backToList")}
+                            </Button>
+                        }
+                    />
+                </Group>
+            );
+        };
+
+        return (
+            <Panel id={util.id}>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    {util.component}
+                </ErrorBoundary>
+            </Panel>
+        );
     };
 
     return (

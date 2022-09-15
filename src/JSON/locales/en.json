@@ -53,6 +53,8 @@
             "start": "Start",
             "close": "Close",
             "notAvailable": "The app is not available",
+            "onStartError": "Error when launching the utility",
+            "backToList": "Back to list",
             "onlyMobile": "Only available on mobile devices",
             "onlyDesktop": "Only available on computers",
             "multiplatform": "Available on computers and mobile devices",
