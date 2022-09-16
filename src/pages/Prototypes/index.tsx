@@ -127,18 +127,6 @@ const PrototypesView = (): JSX.Element => {
             <Panel id="default">
                 <Group>
                     {filteredPrototypes.map(UtilNavBlock)}
-                    <Placeholder
-                        action={
-                            <Button
-                                size="l"
-                                onClick={() =>
-                                    (router.activeView = "about-site")
-                                }
-                            >
-                                О сайте
-                            </Button>
-                        }
-                    />
                 </Group>
             </Panel>
             {filteredPrototypes.map(UtilCell)}
