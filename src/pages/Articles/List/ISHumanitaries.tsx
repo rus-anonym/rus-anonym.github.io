@@ -1,5 +1,7 @@
 import React from "react";
-import { Div, Group, Spacing, Title, Text, Link } from "@vkontakte/vkui";
+import {
+    Div, Group, Spacing, Title, Text, Link 
+} from "@vkontakte/vkui";
 import storage from "../../../TS/store/storage";
 
 interface IConcept {
@@ -282,7 +284,9 @@ const ISHumanitaries = (): JSX.Element => {
             }
         >
             <Div>
-                <Title level="1" style={{ textAlign: "center" }}>
+                <Title level="1" style={{
+                    textAlign: "center" 
+                }}>
                     Основные понятия информационной безопасности для
                     гуманитариев рабочего класса
                 </Title>

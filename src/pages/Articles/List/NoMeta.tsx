@@ -156,14 +156,18 @@ const NoMeta = (): JSX.Element => {
     return (
         <Group description={description}>
             <Div>
-                <Title level="1" style={{ textAlign: "center" }}>
+                <Title level="1" style={{
+                    textAlign: "center" 
+                }}>
                     Пожалуйста, не задавайте мета-вопросов в чате!
                 </Title>
             </Div>
 
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>Плохо:</Header>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>Плохо:</Header>
                 }
             >
                 <Message text="Привет" user={users.you} time="12:32:12" />
@@ -185,7 +189,9 @@ const NoMeta = (): JSX.Element => {
             </Group>
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>
                         Хорошо:
                     </Header>
                 }
@@ -209,7 +215,9 @@ const NoMeta = (): JSX.Element => {
                 philosophy
             ) : (
                 <Placeholder
-                    style={{ height: "220px" }}
+                    style={{
+                        height: "220px" 
+                    }}
                     icon={<Icon28BrainOutline height={72} width={72} />}
                     header="Философия статьи"
                     action={

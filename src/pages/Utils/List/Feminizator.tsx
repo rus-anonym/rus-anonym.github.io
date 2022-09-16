@@ -58,7 +58,9 @@ class Feminizator {
                 "Женщина, прогнувшаяся под патриархат и получающая удовольствие от угнетения.",
         },
     ].map((x) => {
-        return { ...x, type: "exception" };
+        return {
+            ...x, type: "exception" 
+        };
     });
 
     public static readonly endings: IEnding[] = [
@@ -982,7 +984,9 @@ class Feminizator {
             );
 
             if (rule) {
-                rules.push({ ending, rule });
+                rules.push({
+                    ending, rule 
+                });
             }
         }
 

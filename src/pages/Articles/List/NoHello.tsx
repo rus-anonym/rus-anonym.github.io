@@ -77,13 +77,17 @@ const NoHello = (): JSX.Element => {
     return (
         <Group description={description}>
             <Div>
-                <Title level="1" style={{ textAlign: "center" }}>
+                <Title level="1" style={{
+                    textAlign: "center" 
+                }}>
                     Please Don't Say Just Hello In Chat
                 </Title>
             </Div>
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>Bad:</Header>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>Bad:</Header>
                 }
             >
                 <Message text="Hi" user={users.you} time="12:32:12" />
@@ -105,7 +109,9 @@ const NoHello = (): JSX.Element => {
             </Group>
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>Good:</Header>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>Good:</Header>
                 }
             >
                 <Message

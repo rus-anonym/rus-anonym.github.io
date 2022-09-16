@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Group, Placeholder, Spinner } from "@vkontakte/vkui";
+import {
+    Group, Placeholder, Spinner 
+} from "@vkontakte/vkui";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -94,7 +96,9 @@ const CatScroll = (): JSX.Element => {
                         return (
                             <>
                                 <div
-                                    style={{ width: "90%", marginTop: "20px" }}
+                                    style={{
+                                        width: "90%", marginTop: "20px" 
+                                    }}
                                 >
                                     <ImageLoader src={src} />
                                 </div>
@@ -103,7 +107,8 @@ const CatScroll = (): JSX.Element => {
                                     <Group
                                         mode="plain"
                                         separator="hide"
-                                        style={{}}
+                                        style={{
+                                        }}
                                     >
                                         <Placeholder header={index} />
                                     </Group>

@@ -47,7 +47,8 @@ const NavigationCell = ({
                 router.activeView = path;
             }}
             disabled={router.activeView === path}
-            style={router.activeView === path ? activeViewStyle : {}}
+            style={router.activeView === path ? activeViewStyle : {
+            }}
             before={icon}
             after={
                 router.activeView === path &&
@@ -72,7 +73,9 @@ const DesktopNavPanel = (): JSX.Element => {
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
-    const { t } = useTranslation("translation", { keyPrefix: "pages" });
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages" 
+    });
 
     return (
         <SplitCol fixed width={"20vw"} maxWidth={"20vw"}>

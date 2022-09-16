@@ -38,7 +38,9 @@ const ViewButton = ({
 };
 
 const MobileTabbar = (): JSX.Element => {
-    const { t } = useTranslation("translation", { keyPrefix: "pages" });
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages" 
+    });
 
     const bind = useLongPress(() => {
         router.activeModal = "additional-navigation";

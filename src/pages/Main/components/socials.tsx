@@ -91,14 +91,18 @@ const SocialElement = ({
 
     const image =
         method === "avatar" ? (
-            <Avatar size={84} src={logo} style={{ backgroundColor }} />
+            <Avatar size={84} src={logo} style={{
+                backgroundColor 
+            }} />
         ) : (
             <img
                 alt=""
                 src={logo}
                 width={84}
                 height={84}
-                style={{ backgroundColor }}
+                style={{
+                    backgroundColor 
+                }}
             />
         );
 
@@ -113,7 +117,9 @@ const SocialElement = ({
             <HorizontalCell
                 size="l"
                 header={
-                    <Header style={{ justifyContent: "center" }}>{name}</Header>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>{name}</Header>
                 }
                 disabled
             >
@@ -141,9 +147,7 @@ const SocialElement = ({
     }
 };
 
-const SocialsList = ({
-    list,
-}: {
+const SocialsList = ({ list, }: {
     list: ISocialElementParams[];
 }): JSX.Element => {
     return (
@@ -171,7 +175,9 @@ const Socials = (): JSX.Element => {
                 mode="plain"
                 separator="hide"
                 header={
-                    <Header style={{ justifyContent: "center" }}>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>
                         {t("contactMe")}
                     </Header>
                 }
@@ -197,7 +203,9 @@ const Socials = (): JSX.Element => {
             <Group
                 mode="plain"
                 header={
-                    <Header style={{ justifyContent: "center" }}>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>
                         {t("alsoExist")}
                     </Header>
                 }
@@ -206,7 +214,9 @@ const Socials = (): JSX.Element => {
                     separator="hide"
                     mode="plain"
                     header={
-                        <Header style={{ justifyContent: "center" }}>
+                        <Header style={{
+                            justifyContent: "center" 
+                        }}>
                             Code
                         </Header>
                     }
@@ -389,7 +399,9 @@ const Socials = (): JSX.Element => {
                     separator="hide"
                     mode="plain"
                     header={
-                        <Header style={{ justifyContent: "center" }}>
+                        <Header style={{
+                            justifyContent: "center" 
+                        }}>
                             {t("occasionallyLook")}
                         </Header>
                     }
@@ -487,9 +499,7 @@ const Socials = (): JSX.Element => {
                                 logo: LogoMLBB,
                                 method: "native",
                                 tooltipContent: (): JSX.Element => {
-                                    const Action = ({
-                                        id,
-                                    }: {
+                                    const Action = ({ id, }: {
                                         id: number;
                                     }): JSX.Element => {
                                         const [isCopied, setCopied] =
@@ -521,7 +531,9 @@ const Socials = (): JSX.Element => {
 
                                     return (
                                         <Div>
-                                            <div style={{ display: "flex" }}>
+                                            <div style={{
+                                                display: "flex" 
+                                            }}>
                                                 <RichCell
                                                     disabled
                                                     text="ID: 339158807"
@@ -549,7 +561,9 @@ const Socials = (): JSX.Element => {
                                                     rus_anonym
                                                 </RichCell>
                                             </div>
-                                            <div style={{ display: "flex" }}>
+                                            <div style={{
+                                                display: "flex" 
+                                            }}>
                                                 <RichCell
                                                     disabled
                                                     text="ID: 3346392"

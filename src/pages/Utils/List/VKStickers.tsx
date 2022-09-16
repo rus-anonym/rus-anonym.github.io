@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, {
+    useEffect, useState, useMemo, useRef 
+} from "react";
 import axios from "axios";
 
 import {
@@ -212,7 +214,9 @@ const AnimatedPack = ({ pack }: { pack: IAnimatedPack }): JSX.Element => {
                     </Div>
                 }
             >
-                <div style={{ width: "64px", height: "64px" }}>{container}</div>
+                <div style={{
+                    width: "64px", height: "64px" 
+                }}>{container}</div>
             </Dropdown>
         );
     };
@@ -262,7 +266,9 @@ const Pack = ({
             <div
                 style={
                     isDesktop
-                        ? { display: "flex", flexDirection: "row" }
+                        ? {
+                            display: "flex", flexDirection: "row" 
+                        }
                         : undefined
                 }
             >
@@ -496,7 +502,9 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
     }
 
     const pagination = (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{
+            display: "flex", justifyContent: "center" 
+        }}>
             <Pagination
                 currentPage={currentPage}
                 onChange={(page): void => setCurrentPage(page)}

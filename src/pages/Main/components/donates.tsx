@@ -1,5 +1,7 @@
 import React from "react";
-import { Group, Header, Link } from "@vkontakte/vkui";
+import {
+    Group, Header, Link 
+} from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
@@ -13,14 +15,18 @@ import LogoYoomoneyLight from "../../../SVG/donate/YooMoney-light.svg";
 import LogoYoomoneyDark from "../../../SVG/donate/YooMoney-dark.svg";
 
 const Donate = (): JSX.Element => {
-    const { t } = useTranslation("translation", { keyPrefix: "pages.main" });
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages.main" 
+    });
 
     return (
         <Group
             mode="plain"
             separator="hide"
             header={
-                <Header style={{ justifyContent: "center" }}>
+                <Header style={{
+                    justifyContent: "center" 
+                }}>
                     {t("donateToMe")}
                 </Header>
             }

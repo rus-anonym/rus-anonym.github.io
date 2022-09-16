@@ -1,6 +1,8 @@
 import React from "react";
 
-import { ModalCard, SimpleCell, Switch } from "@vkontakte/vkui";
+import {
+    ModalCard, SimpleCell, Switch 
+} from "@vkontakte/vkui";
 import { useTranslation } from "react-i18next";
 import storage from "../../../TS/store/storage";
 import { observer } from "mobx-react";

@@ -78,7 +78,9 @@ const Schedule = (): JSX.Element => {
             const schedule = await axios.get(
                 "https://api.mpt-assistant.space/schedule.get",
                 {
-                    params: { group: "БИ50-3-19" },
+                    params: {
+                        group: "БИ50-3-19" 
+                    },
                 }
             );
             setSchedule((schedule.data as { response: ISchedule }).response);

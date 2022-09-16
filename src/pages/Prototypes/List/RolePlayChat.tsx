@@ -123,7 +123,9 @@ const RolePlayChat = (): JSX.Element => {
 
     return (
         <FixedLayout vertical="bottom" filled>
-            <Group mode="plain" style={{ height: "100vh" }} />
+            <Group mode="plain" style={{
+                height: "100vh" 
+            }} />
             <Group mode="plain">{messages.map(Message)}</Group>
             <WriteBar
                 before={

@@ -46,8 +46,12 @@ const styles = {
             padding: "3px",
             borderRadius: "3px",
         },
-        valid: { color: "green" },
-        default: { color: "black" },
+        valid: {
+            color: "green" 
+        },
+        default: {
+            color: "black" 
+        },
     },
     dark: {
         current: {
@@ -62,8 +66,12 @@ const styles = {
             padding: "3px",
             borderRadius: "3px",
         },
-        valid: { color: "green" },
-        default: { color: "white" },
+        valid: {
+            color: "green" 
+        },
+        default: {
+            color: "white" 
+        },
     },
 } as const;
 
@@ -73,7 +81,9 @@ const Word = ({ value, status }: IWord): JSX.Element => {
 
 const generateLetters = (text: string): IWord[] => {
     const letters: IWord[] = text.split("").map((x) => {
-        return { value: x, status: "default" };
+        return {
+            value: x, status: "default" 
+        };
     });
     letters[0].status = "current";
 
@@ -140,7 +150,9 @@ const Speedtype = (): JSX.Element => {
 
     const Result = (element: THistoryElement): JSX.Element => {
         return (
-            <Card mode="outline" style={{ textAlign: "center" }}>
+            <Card mode="outline" style={{
+                textAlign: "center" 
+            }}>
                 <RichCell
                     disabled
                     text={
@@ -291,7 +303,9 @@ const Speedtype = (): JSX.Element => {
                 >
                     <Progress value={progressValue} />
                     <Spacing size={28} />
-                    <div style={{ textAlign: "center" }}>
+                    <div style={{
+                        textAlign: "center" 
+                    }}>
                         {letters.map(Word)}
                     </div>
                 </Div>
@@ -346,7 +360,9 @@ const Speedtype = (): JSX.Element => {
                     <Group
                         separator="hide"
                         mode="plain"
-                        style={{ textAlign: "center" }}
+                        style={{
+                            textAlign: "center" 
+                        }}
                         description={`${t("formula")}: ${t("cpm")} / ${t(
                             "errors"
                         )}`}
@@ -371,7 +387,9 @@ const Speedtype = (): JSX.Element => {
                             </Group>
                             {history.length > 1 && (
                                 <Group
-                                    style={{ marginLeft: "5px" }}
+                                    style={{
+                                        marginLeft: "5px" 
+                                    }}
                                     separator="hide"
                                     mode="plain"
                                 >

@@ -57,7 +57,9 @@ const formats = [
         title: "Data Matrix 2D",
         url: "https://ru.wikipedia.org/wiki/Data_Matrix",
     },
-    { title: "EAN-8 1D", url: "https://en.wikipedia.org/wiki/EAN-8" },
+    {
+        title: "EAN-8 1D", url: "https://en.wikipedia.org/wiki/EAN-8" 
+    },
     {
         title: "EAN-13 1D",
         url: "https://en.wikipedia.org/wiki/International_Article_Number",
@@ -224,7 +226,9 @@ const ImageLoader = ({
             <FormItem top={t("selectScanFormats")}>
                 <ChipsSelect
                     options={formats.map((x, index) => {
-                        return { value: index.toString(), label: x.title };
+                        return {
+                            value: index.toString(), label: x.title 
+                        };
                     })}
                     onChange={setSelectedFormats}
                     closeAfterSelect={false}
@@ -274,7 +278,9 @@ const QR = (): JSX.Element => {
 
     const requestCamera = async (): Promise<void> => {
         try {
-            await navigator.mediaDevices.getUserMedia({ video: true });
+            await navigator.mediaDevices.getUserMedia({
+                video: true 
+            });
             setCameraStatus("work");
         } catch (error) {
             setCameraStatus("error");
@@ -342,10 +348,16 @@ const QR = (): JSX.Element => {
                         }
                     }}
                     constraints={{
-                        width: { ideal: 1920 },
-                        height: { ideal: 1080 },
+                        width: {
+                            ideal: 1920 
+                        },
+                        height: {
+                            ideal: 1080 
+                        },
                         ...(!isDesktop && {
-                            facingMode: { exact: "environment" },
+                            facingMode: {
+                                exact: "environment" 
+                            },
                         }),
                     }}
                 />

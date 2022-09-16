@@ -31,7 +31,9 @@ const ageCount = moment().diff(
 );
 
 const AboutView = (): JSX.Element => {
-    const { t } = useTranslation("translation", { keyPrefix: "pages.about" });
+    const { t } = useTranslation("translation", {
+        keyPrefix: "pages.about" 
+    });
 
     useEffect(() => {
         router.activePanel = null;
@@ -50,7 +52,9 @@ const AboutView = (): JSX.Element => {
                 <Cell
                     disabled
                     before={<Icon28PlaceOutline />}
-                    description={t("place", { context: "value" })}
+                    description={t("place", {
+                        context: "value" 
+                    })}
                     indicator={t("relocation")}
                 >
                     {t("place")}

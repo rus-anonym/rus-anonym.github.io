@@ -154,14 +154,18 @@ const EbatMeta = (): JSX.Element => {
     return (
         <Group description={description}>
             <Div>
-                <Title level="1" style={{ textAlign: "center" }}>
+                <Title level="1" style={{
+                    textAlign: "center" 
+                }}>
                     Пожалуйста, не задавай хуевые вопросы в чате!
                 </Title>
             </Div>
 
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>Ебано:</Header>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>Ебано:</Header>
                 }
             >
                 <Message text="Ебать" user={users.you} time="12:32:12" />
@@ -183,7 +187,9 @@ const EbatMeta = (): JSX.Element => {
             </Group>
             <Group
                 header={
-                    <Header style={{ justifyContent: "center" }}>
+                    <Header style={{
+                        justifyContent: "center" 
+                    }}>
                         Пиздато:
                     </Header>
                 }
@@ -207,7 +213,9 @@ const EbatMeta = (): JSX.Element => {
                 philosophy
             ) : (
                 <Placeholder
-                    style={{ height: "220px" }}
+                    style={{
+                        height: "220px" 
+                    }}
                     icon={<Icon28BrainOutline height={72} width={72} />}
                     header="Философия статьи"
                     action={

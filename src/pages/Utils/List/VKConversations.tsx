@@ -1,4 +1,6 @@
-import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
+import React, {
+    useDeferredValue, useEffect, useMemo, useState 
+} from "react";
 import axios from "axios";
 import moment from "moment";
 
@@ -215,7 +217,9 @@ const Pages = ({
             return null;
         } else {
             return (
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{
+                    display: "flex", justifyContent: "center" 
+                }}>
                     <Pagination
                         currentPage={currentPage}
                         onChange={(page): void => setCurrentPage(page)}
@@ -466,9 +470,13 @@ const VKConversations = (): JSX.Element => {
         { dateOfPublication: 1 | -1 } | { numberOfParticipants: 1 | -1 }
     >(() => {
         if (sort === "dateOfPublication") {
-            return { dateOfPublication: sortOrder === "asc" ? 1 : -1 };
+            return {
+                dateOfPublication: sortOrder === "asc" ? 1 : -1 
+            };
         } else {
-            return { numberOfParticipants: sortOrder === "asc" ? 1 : -1 };
+            return {
+                numberOfParticipants: sortOrder === "asc" ? 1 : -1 
+            };
         }
     }, [sort, sortOrder]);
 

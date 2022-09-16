@@ -197,8 +197,8 @@ const UtilsView = (): JSX.Element => {
                                 util.isDesktop && util.isMobile
                                     ? t("multiplatform")
                                     : util.isDesktop
-                                    ? t("onlyDesktop")
-                                    : t("onlyMobile")
+                                        ? t("onlyDesktop")
+                                        : t("onlyMobile")
                             }
                         >
                             {util.isDesktop && util.isMobile ? (

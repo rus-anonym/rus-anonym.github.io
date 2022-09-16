@@ -164,7 +164,9 @@ const WinRateCalculator = (): JSX.Element => {
                 </FormItem>
             </FormLayout>
 
-            <Group mode="plain" style={{ textAlign: "center", height: "4vh" }}>
+            <Group mode="plain" style={{
+                textAlign: "center", height: "4vh" 
+            }}>
                 <Result result={result} desiredWinrate={desiredWinrate} />
             </Group>
         </Group>

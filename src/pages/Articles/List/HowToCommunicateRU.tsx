@@ -135,7 +135,9 @@ const Case = ({
                 <Div>
                     <div ref={ref}>
                         <Div>
-                            <Title level="2" style={{ textAlign: "center" }}>
+                            <Title level="2" style={{
+                                textAlign: "center" 
+                            }}>
                                 {title}
                             </Title>
                             <Spacing />
@@ -189,7 +191,9 @@ const Case = ({
             ) : (
                 <Div>
                     <Div>
-                        <Title level="2" style={{ textAlign: "center" }}>
+                        <Title level="2" style={{
+                            textAlign: "center" 
+                        }}>
                             {title}
                         </Title>
                     </Div>
@@ -220,7 +224,9 @@ const HowToCommunicate = (): JSX.Element => {
     return (
         <Group>
             <Div>
-                <Title level="1" style={{ textAlign: "center" }}>
+                <Title level="1" style={{
+                    textAlign: "center" 
+                }}>
                     Как разговаривать в интернете
                 </Title>
             </Div>

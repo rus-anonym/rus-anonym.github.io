@@ -1,5 +1,7 @@
 import React from "react";
-import { Group, Placeholder, InitialsAvatar, RichCell } from "@vkontakte/vkui";
+import {
+    Group, Placeholder, InitialsAvatar, RichCell 
+} from "@vkontakte/vkui";
 
 interface IUser {
     name: string;

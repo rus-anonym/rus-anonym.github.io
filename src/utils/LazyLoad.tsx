@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 import React, { Suspense, useMemo } from "react";
-import { Group, Placeholder, Spinner } from "@vkontakte/vkui";
+import {
+ Group, Placeholder, Spinner 
+} from "@vkontakte/vkui";
 
 type TLazyImportCallback = () => Promise<{
     default: React.ComponentType<unknown>;
@@ -34,7 +36,9 @@ const LazyLoadComponent = ({
     callbacks: TLazyImportCallback[];
 }): JSX.Element => {
     const options: ILazyLoadParams = params
-        ? { ...defaultLazyLoadParams, ...params }
+        ? {
+ ...defaultLazyLoadParams, ...params 
+}
         : defaultLazyLoadParams;
 
     if (options.delay > 0) {

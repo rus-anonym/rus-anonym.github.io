@@ -74,7 +74,10 @@ class Storage implements IStorage {
         this.articles = storage.articles;
         this.utils = storage.utils;
 
-        makeAutoObservable(this, {}, { deep: true });
+        makeAutoObservable(this, {
+        }, {
+            deep: true 
+        });
         autorun(() => {
             localStorage.setItem("storage", JSON.stringify(this));
         });

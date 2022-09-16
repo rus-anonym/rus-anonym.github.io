@@ -51,7 +51,9 @@ const Layout = (): JSX.Element => {
 
     return (
         <SplitLayout
-            style={{ justifyContent: "center" }}
+            style={{
+                justifyContent: "center" 
+            }}
             header={hasHeader && <PanelHeader separator={false} />}
             popout={router.popout}
             modal={<ModalRoot />}

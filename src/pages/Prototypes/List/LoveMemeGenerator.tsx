@@ -159,7 +159,9 @@ const LoveMemeGenerator = (): JSX.Element => {
                         filteredTemplates.map((template) => {
                             return (
                                 <Card>
-                                    <Div style={{ textAlign: "center" }}>
+                                    <Div style={{
+                                        textAlign: "center" 
+                                    }}>
                                         {template.content}
                                         <Spacing size={20} />
                                         <Button

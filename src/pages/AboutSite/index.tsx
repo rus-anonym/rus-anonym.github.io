@@ -15,7 +15,9 @@ import {
     ViewWidth,
     Placeholder,
 } from "@vkontakte/vkui";
-import { VscIssues, VscRepoForked, VscStarFull } from "react-icons/vsc";
+import {
+    VscIssues, VscRepoForked, VscStarFull 
+} from "react-icons/vsc";
 import { BsFillSuitHeartFill } from "react-icons/bs";
 
 import { Icon28LinkOutline } from "@vkontakte/icons";
@@ -95,7 +97,9 @@ const Human = ({
                     {url.github && (
                         <Link href={url.github} target="_blank">
                             <Avatar
-                                style={{ margin: "5px" }}
+                                style={{
+                                    margin: "5px" 
+                                }}
                                 size={24}
                                 src={
                                     session.theme === "dark"
@@ -109,7 +113,9 @@ const Human = ({
                     {url.vk && (
                         <Link href={url.vk} target="_blank">
                             <Avatar
-                                style={{ margin: "5px" }}
+                                style={{
+                                    margin: "5px" 
+                                }}
                                 size={24}
                                 src={LogoVK}
                             />
@@ -119,7 +125,9 @@ const Human = ({
                     {url.telegram && (
                         <Link href={url.telegram} target="_blank">
                             <Avatar
-                                style={{ margin: "5px" }}
+                                style={{
+                                    margin: "5px" 
+                                }}
                                 size={24}
                                 src={LogoTelegram}
                             />
@@ -268,7 +276,9 @@ const SiteInfoView = (): JSX.Element => {
         <>
             <Group>
                 {stats && (
-                    <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div style={{
+                        display: "flex", flexDirection: "row" 
+                    }}>
                         <Cell after={<VscStarFull size={24} />} disabled>
                             {stats.stars}
                         </Cell>
@@ -333,7 +343,9 @@ const SiteInfoView = (): JSX.Element => {
                     icon={
                         <BsFillSuitHeartFill
                             size={56}
-                            style={{ color: "red" }}
+                            style={{
+                                color: "red" 
+                            }}
                         />
                     }
                 >

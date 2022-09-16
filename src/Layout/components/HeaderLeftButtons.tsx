@@ -28,7 +28,9 @@ const useForceUpdate = (): (() => void) => {
 };
 
 const HeaderLeftButtons = (): JSX.Element => {
-    const { t, i18n } = useTranslation("translation", { keyPrefix: "utils" });
+    const { t, i18n } = useTranslation("translation", {
+        keyPrefix: "utils" 
+    });
 
     const { viewWidth } = useAdaptivity();
     const isDesktop = viewWidth >= ViewWidth.TABLET;

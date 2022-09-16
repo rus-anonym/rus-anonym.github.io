@@ -9,7 +9,9 @@ const RusAnonym = (): JSX.Element => {
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     const [title, setTitle] = useState("RusAnonym");
-    const [styles, api] = useSpring(() => ({ filter: "" }));
+    const [styles, api] = useSpring(() => ({
+        filter: "" 
+    }));
 
     const changeTitle = (title: string): void => {
         api.start({
@@ -18,9 +20,13 @@ const RusAnonym = (): JSX.Element => {
                 duration: 500,
             },
             to: async (next) => {
-                await next({ filter: "blur(3px)" });
+                await next({
+                    filter: "blur(3px)" 
+                });
                 setTitle(title);
-                await next({ filter: "blur(0)" });
+                await next({
+                    filter: "blur(0)" 
+                });
             },
         });
     };
