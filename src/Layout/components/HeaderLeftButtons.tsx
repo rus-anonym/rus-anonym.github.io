@@ -36,6 +36,12 @@ const HeaderLeftButtons = (): JSX.Element => {
     const forceUpdate = useForceUpdate();
 
     const DropdownContent = (): JSX.Element => {
+        const prefersColorScheme =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+
         return (
             <Div>
                 <ButtonGroup mode="vertical" gap="s" stretched>
@@ -79,7 +85,7 @@ const HeaderLeftButtons = (): JSX.Element => {
                             forceUpdate();
                         }}
                     >
-                        {i18n.t("themes.auto") as unknown as string}
+                        {i18n.t("themes.auto") as unknown as string} ({i18n.t("themes." + prefersColorScheme) as unknown as string})
                     </Button>
                 </ButtonGroup>
             </Div>
