@@ -34,7 +34,7 @@ import { useTranslation } from "react-i18next";
 interface IHuman {
     name: string;
     surname: string;
-    nickname: string;
+    nickname?: string;
     avatar?: string;
     url: {
         personal?: string;
@@ -232,11 +232,20 @@ const humans: IHuman[] = [
     {
         name: "Юлий",
         surname: "Цезарев",
-        nickname: "",
         url: {
             vk: "https://vk.com/id496798589",
         },
     },
+    {
+        name: "Руслан",
+        surname: "Некрасов",
+        nickname: "RuslanNashkin",
+        url: {
+            vk: "https://vk.com/RuslanNashkin",
+            github: "https://github.com/RuslanNashkin",
+            telegram: "https://t.me/RuslanNashkin",
+        },
+    }
 ];
 
 interface IRepositoryStat {
