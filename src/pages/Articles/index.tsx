@@ -164,6 +164,23 @@ const articlesList: IArticle[] = [
         published: new Date("2022-08-11T23:42:34"),
         isExplicit: false,
     },
+    {
+        id: "my-vk-permanent-ban",
+        title: "История о моём перманентном бане в ВК",
+        content: (
+            <LazyLoadComponent
+                params={{
+                    fallback: (
+                        <ArticleFallback title="История о моём перманентном бане в ВК" />
+                    ),
+                }}
+                callbacks={[() => import("./List/MyVKPermanentBan")]}
+            />
+        ),
+        lang: "ru",
+        published: new Date("2022-10-19T02:35:45"),
+        isExplicit: false,
+    },
 ];
 
 const byPublished = (a: IArticle, b: IArticle): 1 | 0 | -1 => {
