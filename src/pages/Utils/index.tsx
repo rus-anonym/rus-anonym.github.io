@@ -154,7 +154,7 @@ const UtilsView = (): JSX.Element => {
                 />
             ),
             languages: ["ru"],
-        },
+        }
     ];
 
     const filter = (util: IUtil): boolean => {
@@ -188,7 +188,8 @@ const UtilsView = (): JSX.Element => {
         return (
             <Group mode="plain">
                 <Cell
-                    disabled
+                    hasActive={false}
+                    hasHover={false}
                     description={util.description}
                     badge={
                         <TextTooltip
