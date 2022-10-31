@@ -46,7 +46,8 @@ const NavigationCell = ({
             onClick={(): void => {
                 router.activeView = path;
             }}
-            disabled={router.activeView === path}
+            hasActive={router.activeView !== path}
+            hasHover={router.activeView !== path}
             style={router.activeView === path ? activeViewStyle : {
             }}
             before={icon}

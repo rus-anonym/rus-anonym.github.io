@@ -72,7 +72,8 @@ const Human = ({
     return (
         <RichCell
             multiline
-            disabled
+            hasActive={false}
+            hasHover={false}
             before={avatarElement}
             caption={
                 <>
@@ -288,7 +289,11 @@ const SiteInfoView = (): JSX.Element => {
                     <div style={{
                         display: "flex", flexDirection: "row" 
                     }}>
-                        <Cell after={<VscStarFull size={24} />} disabled>
+                        <Cell 
+                            after={<VscStarFull size={24} />} 
+                            hasActive={false}
+                            hasHover={false}
+                        >
                             {stats.stars}
                         </Cell>
                         <Cell
@@ -305,7 +310,8 @@ const SiteInfoView = (): JSX.Element => {
                         >
                             {stats.issues}
                         </Cell>
-                        <Cell after={<VscRepoForked size={24} />} disabled>
+                        <Cell after={<VscRepoForked size={24} />} hasActive={false}
+                            hasHover={false}>
                             {stats.forks}
                         </Cell>
                     </div>

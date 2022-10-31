@@ -88,7 +88,8 @@ const SimplePack = ({ pack }: { pack: IPack }): JSX.Element => {
                             width="128px"
                             src={`https://rus-anonym.github.io/vk-stickers-storage/${pack.id}/stickers/${sticker.id}/${stickerSize}.png`}
                         />
-                        <RichCell disabled>ID: {sticker.id}</RichCell>
+                        <RichCell hasActive={false}
+                            hasHover={false}>ID: {sticker.id}</RichCell>
                         <ButtonGroup mode="vertical" stretched>
                             {sticker.images.map((image) => {
                                 return (
@@ -205,7 +206,8 @@ const AnimatedPack = ({ pack }: { pack: IAnimatedPack }): JSX.Element => {
                             textAlign: "center",
                         }}
                     >
-                        <RichCell disabled>ID: {id}</RichCell>
+                        <RichCell hasActive={false}
+                            hasHover={false}>ID: {id}</RichCell>
                         <ButtonGroup mode="vertical" stretched>
                             <Link target="_blank" href={animationUrl}>
                                 animation.json
@@ -295,7 +297,8 @@ const Pack = ({
                         after="Идентификатор пака"
                         afterCaption={pack.id}
                         multiline
-                        disabled
+                        hasActive={false}
+                        hasHover={false}
                         actions={
                             <ButtonGroup mode="vertical" stretched>
                                 <Button
@@ -389,7 +392,8 @@ const PackPreview = ({
                     src={`https://rus-anonym.github.io/vk-stickers-storage/${id}/previews/${previewSize}.jpeg`}
                 />
             }
-            disabled
+            hasActive={false}
+            hasHover={false}
             subhead={type === "simple" ? "Обычный" : "Анимированный"}
             text={description}
             caption={author}
@@ -528,7 +532,8 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                             <Div>
                                 <Header>Фильтры</Header>
                                 <SimpleCell
-                                    disabled
+                                    hasActive={false}
+                                    hasHover={false}
                                     multiline
                                     after={
                                         <Switch
@@ -544,7 +549,8 @@ const VKStickers = ({ meta }: { meta: TMeta }): JSX.Element => {
                                     Обычные
                                 </SimpleCell>
                                 <SimpleCell
-                                    disabled
+                                    hasActive={false}
+                                    hasHover={false}
                                     multiline
                                     after={
                                         <Switch

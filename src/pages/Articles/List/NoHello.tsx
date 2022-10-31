@@ -31,7 +31,8 @@ const Message = ({
     return (
         <RichCell
             multiline
-            disabled
+            hasActive={false}
+            hasHover={false}
             before={user.avatar}
             text={text}
             after={time}
@@ -103,7 +104,8 @@ const NoHello = (): JSX.Element => {
                     user={users.coWorker}
                     time="12:35:21"
                 />
-                <SimpleCell disabled>
+                <SimpleCell hasActive={false}
+                    hasHover={false}>
                     <InfoRow header="Spent">3 minutes и 9 seconds</InfoRow>
                 </SimpleCell>
             </Group>
@@ -124,7 +126,8 @@ const NoHello = (): JSX.Element => {
                     user={users.coWorker}
                     time="12:33:32"
                 />
-                <SimpleCell disabled>
+                <SimpleCell hasActive={false}
+                    hasHover={false}>
                     <InfoRow header="Spent">1 minute и 20 seconds</InfoRow>
                 </SimpleCell>
             </Group>

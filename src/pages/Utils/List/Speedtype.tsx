@@ -154,7 +154,8 @@ const Speedtype = (): JSX.Element => {
                 textAlign: "center" 
             }}>
                 <RichCell
-                    disabled
+                    hasActive={false}
+                    hasHover={false}
                     text={
                         i18n.t(`languages.${element.lang}`) as unknown as string
                     }
@@ -423,7 +424,8 @@ const Speedtype = (): JSX.Element => {
 
                     <Separator />
 
-                    <SimpleCell disabled>
+                    <SimpleCell hasActive={false}
+                        hasHover={false}>
                         <Button
                             size="m"
                             mode="destructive"

@@ -20,7 +20,8 @@ const Message = ({
     return (
         <RichCell
             multiline
-            disabled
+            hasActive={false}
+            hasHover={false}
             before={user.avatar}
             text={text}
             after={time}

@@ -35,7 +35,8 @@ const Message = ({
     return (
         <RichCell
             multiline
-            disabled
+            hasActive={false}
+            hasHover={false}
             before={user.avatar}
             text={text}
             after={time}
@@ -183,7 +184,8 @@ const NoMeta = (): JSX.Element => {
                     user={users.colleague}
                     time="12:35:21"
                 />
-                <SimpleCell disabled>
+                <SimpleCell hasActive={false}
+                    hasHover={false}>
                     <InfoRow header="Потрачено">3 минуты и 9 секунд</InfoRow>
                 </SimpleCell>
             </Group>
@@ -206,7 +208,8 @@ const NoMeta = (): JSX.Element => {
                     user={users.colleague}
                     time="12:33:32"
                 />
-                <SimpleCell disabled>
+                <SimpleCell hasActive={false}
+                    hasHover={false}>
                     <InfoRow header="Потрачено">1 минута и 20 секунд</InfoRow>
                 </SimpleCell>
             </Group>

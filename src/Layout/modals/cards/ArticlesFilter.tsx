@@ -32,7 +32,8 @@ const ArticlesFilter = ({ id }: { id: string }): JSX.Element => {
                 {t("filters.anotherLanguage")}
             </SimpleCell>
             <SimpleCell
-                disabled
+                hasActive={false}
+                hasHover={false}
                 multiline
                 after={
                     <Switch

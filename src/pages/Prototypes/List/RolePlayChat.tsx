@@ -34,7 +34,8 @@ const Message = ({
     return (
         <RichCell
             multiline
-            disabled
+            hasActive={false}
+            hasHover={false}
             before={user.avatar}
             text={text}
             after={moment(time).format("HH:mm:ss")}
@@ -136,7 +137,8 @@ const RolePlayChat = (): JSX.Element => {
                                 {profiles.map((x, i) => {
                                     return (
                                         <RichCell
-                                            disabled
+                                            hasActive={false}
+                                            hasHover={false}
                                             before={x.avatar}
                                             actions={
                                                 <ButtonGroup mode="horizontal">

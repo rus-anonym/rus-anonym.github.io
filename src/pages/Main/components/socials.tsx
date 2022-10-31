@@ -261,7 +261,8 @@ const Socials = (): JSX.Element => {
                                     return (
                                         <React.Fragment>
                                             <SimpleCell
-                                                disabled
+                                                hasActive={false}
+                                                hasHover={false}
                                                 description={t("npm.utils")}
                                                 after={
                                                     <React.Fragment>
@@ -300,7 +301,8 @@ const Socials = (): JSX.Element => {
                                                 @rus-anonym/node-utils
                                             </SimpleCell>
                                             <SimpleCell
-                                                disabled
+                                                hasActive={false}
+                                                hasHover={false}
                                                 description={t("npm.utils")}
                                                 after={
                                                     <React.Fragment>
@@ -339,7 +341,8 @@ const Socials = (): JSX.Element => {
                                                 @rus-anonym/web-utils
                                             </SimpleCell>
                                             <SimpleCell
-                                                disabled
+                                                hasActive={false}
+                                                hasHover={false}
                                                 description={t("npm.scheduler")}
                                                 after={
                                                     <React.Fragment>
@@ -535,7 +538,8 @@ const Socials = (): JSX.Element => {
                                                 display: "flex" 
                                             }}>
                                                 <RichCell
-                                                    disabled
+                                                    hasActive={false}
+                                                    hasHover={false}
                                                     text="ID: 339158807"
                                                     caption={t("mlbb.mainAcc")}
                                                     actions={
@@ -547,7 +551,8 @@ const Socials = (): JSX.Element => {
                                                     rus_anonym
                                                 </RichCell>
                                                 <RichCell
-                                                    disabled
+                                                    hasActive={false}
+                                                    hasHover={false}
                                                     text="ID: 1158262934"
                                                     caption={t(
                                                         "mlbb.secondAcc"
@@ -565,7 +570,8 @@ const Socials = (): JSX.Element => {
                                                 display: "flex" 
                                             }}>
                                                 <RichCell
-                                                    disabled
+                                                    hasActive={false}
+                                                    hasHover={false}
                                                     text="ID: 3346392"
                                                     caption={t("mlbb.group")}
                                                     actions={
@@ -575,7 +581,8 @@ const Socials = (): JSX.Element => {
                                                     RusCringe
                                                 </RichCell>
                                                 <RichCell
-                                                    disabled
+                                                    hasActive={false}
+                                                    hasHover={false}
                                                     text="ID: 4415974"
                                                     caption={t("mlbb.team")}
                                                     after="MVP"

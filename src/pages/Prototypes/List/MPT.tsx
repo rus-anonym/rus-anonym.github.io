@@ -43,7 +43,8 @@ interface ISchedule {
 const Lesson = ({ lesson }: { lesson: ILesson }): JSX.Element => {
     return (
         <RichCell
-            disabled
+            hasActive={false}
+            hasHover={false}
             multiline
             text={lesson.teacher}
             before={`${lesson.num}.`}
@@ -56,7 +57,8 @@ const Lesson = ({ lesson }: { lesson: ILesson }): JSX.Element => {
 
 const MptGroup = ({ group }: { group: IGroup }): JSX.Element => {
     return (
-        <RichCell disabled text={group.specialty} subhead="Группа">
+        <RichCell hasActive={false}
+            hasHover={false} text={group.specialty} subhead="Группа">
             {group.name}
         </RichCell>
     );
@@ -64,7 +66,8 @@ const MptGroup = ({ group }: { group: IGroup }): JSX.Element => {
 
 const Week = ({ week }: { week: IWeek }): JSX.Element => {
     return (
-        <RichCell disabled text={week.value} subhead="Неделя">
+        <RichCell hasActive={false}
+            hasHover={false} text={week.value} subhead="Неделя">
             {week.date}
         </RichCell>
     );
@@ -108,7 +111,8 @@ const Schedule = (): JSX.Element => {
             >
                 <MptGroup group={schedule.group} />
                 <Week week={schedule.week} />
-                <RichCell disabled subhead="Место">
+                <RichCell hasActive={false}
+                    hasHover={false} subhead="Место">
                     {schedule.schedule.place}
                 </RichCell>
             </div>
