@@ -19,11 +19,6 @@ interface IWeek {
     isDenominator: boolean;
 }
 
-interface IGroup {
-    name: string;
-    specialty: string;
-}
-
 interface ILesson {
     num: number;
     name: string;
@@ -32,12 +27,8 @@ interface ILesson {
 
 interface ISchedule {
     week: IWeek;
-    group: IGroup;
-    schedule: {
-        place: string;
-        lessons: ILesson[];
-        hasReplacements: boolean;
-    };
+    place: string;
+    lessons: ILesson[];
 }
 
 const Lesson = ({ lesson }: { lesson: ILesson }): JSX.Element => {
@@ -51,15 +42,6 @@ const Lesson = ({ lesson }: { lesson: ILesson }): JSX.Element => {
             after="08:30:00 - 10:00:00"
         >
             {lesson.name}
-        </RichCell>
-    );
-};
-
-const MptGroup = ({ group }: { group: IGroup }): JSX.Element => {
-    return (
-        <RichCell hasActive={false}
-            hasHover={false} text={group.specialty} subhead="Группа">
-            {group.name}
         </RichCell>
     );
 };
@@ -79,7 +61,7 @@ const Schedule = (): JSX.Element => {
     useEffect(() => {
         void (async (): Promise<void> => {
             const schedule = await axios.get(
-                "https://api.mpt-assistant.space/schedule.get",
+                "https://api.mpt-assistant.ru/schedule.get",
                 {
                     params: {
                         group: "БИ50-3-19" 
@@ -109,26 +91,25 @@ const Schedule = (): JSX.Element => {
                     justifyContent: "space-around",
                 }}
             >
-                <MptGroup group={schedule.group} />
                 <Week week={schedule.week} />
                 <RichCell hasActive={false}
                     hasHover={false} subhead="Место">
-                    {schedule.schedule.place}
+                    {schedule.place}
                 </RichCell>
             </div>
             <Group>
                 <List>
-                    {schedule.schedule.lessons.map((lesson, index) => (
+                    {schedule.lessons.map((lesson, index) => (
                         <>
                             <Lesson lesson={lesson} />
-                            {index !== schedule.schedule.lessons.length - 1 && (
+                            {index !== schedule.lessons.length - 1 && (
                                 <Separator />
                             )}
                         </>
                     ))}
                 </List>
             </Group>
-            <Footer>{schedule.schedule.lessons.length} пары</Footer>
+            <Footer>{schedule.lessons.length} пары</Footer>
         </>
     );
 };
