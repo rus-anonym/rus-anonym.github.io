@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     Link,
     Group,
-    HorizontalCell,
     Avatar,
     Header,
     ViewWidth,
@@ -114,23 +113,25 @@ const SocialElement = ({
                 }
             }}
         >
-            <HorizontalCell
-                size="l"
-                header={
-                    <Header style={{
-                        justifyContent: "center" 
-                    }}>{name}</Header>
-                }
-                disabled
+            <SimpleCell
+                hasActive={false}
+                hasHover={false}
             >
-                {url ? (
-                    <Link href={url} target="_blank">
-                        {image}
-                    </Link>
-                ) : (
-                    image
-                )}
-            </HorizontalCell>
+                <div style={{
+                    display: "flex", 
+                    flexDirection: "column",
+                    alignItems: "center"
+                }}>
+                    {url ? (
+                        <Link href={url} target="_blank">
+                            {image}
+                        </Link>
+                    ) : (
+                        image
+                    )}
+                    <Header >{name}</Header>
+                </div>
+            </SimpleCell>
         </div>
     );
 
