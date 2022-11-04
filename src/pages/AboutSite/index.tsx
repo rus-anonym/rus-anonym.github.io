@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {
+    useEffect, useMemo, useState 
+} from "react";
 import { Octokit } from "@octokit/rest";
 
 import {
@@ -30,64 +32,61 @@ import LogoTelegram from "../../SVG/socials/Telegram.svg";
 import LogoGitHubDark from "../../PNG/socials/GitHub-dark.png";
 import LogoGitHubLight from "../../PNG/socials/GitHub-light.png";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 interface IHuman {
-    name: string;
-    surname: string;
-    nickname?: string;
-    avatar?: string;
-    url: {
-        personal?: string;
-        vk?: string;
-        github?: string;
-        telegram?: string;
-    };
+    id: number;
+    name: string
+    surname: string
+    photo: string;
+    telegram?: string;
+    github?: string;
 }
 
-const Human = ({
-    name,
-    surname,
-    nickname,
-    avatar,
-    url,
-}: IHuman): JSX.Element => {
-    const avatarElement = avatar ? (
-        <Avatar size={48} src={avatar} />
-    ) : (
-        <InitialsAvatar
-            size={48}
-            gradientColor={calcInitialsAvatarColor(
-                [...name.split(""), ...surname.split("")]
-                    .map((x) => x.charCodeAt(0))
-                    .reduce((accumulator, value) => {
-                        return accumulator + value;
-                    }, 0)
-            )}
-        >
-            {name[0]}
-            {surname[0]}
-        </InitialsAvatar>
-    );
+const Human = ({ user }: {user: IHuman}): JSX.Element => {
+    const {
+        id,
+        name,
+        surname,
+        photo,
+        github,
+        telegram,
+    } = user;
+
+    const [isLoadAvatar, setIsLoadAvatar] = useState(true);
+
+    const avatar = useMemo(() => {
+        return <>
+            {isLoadAvatar && <InitialsAvatar
+                size={48}
+                gradientColor={calcInitialsAvatarColor(
+                    [...name.split(""), ...surname.split("")]
+                        .map((x) => x.charCodeAt(0))
+                        .reduce((accumulator, value) => {
+                            return accumulator + value;
+                        }, 0)
+                )}
+            >
+                {name[0]}
+                {surname[0]}
+            </InitialsAvatar>}
+            <Avatar
+                style={{
+                    display: isLoadAvatar ? "none" : undefined 
+                }}
+                size={48}
+                src={photo}
+                onLoad={() => setIsLoadAvatar(false)}
+            />
+        </>;
+    }, [isLoadAvatar]);
 
     return (
         <RichCell
             multiline
             hasActive={false}
             hasHover={false}
-            before={avatarElement}
-            caption={
-                <>
-                    {nickname}
-                    {url.personal && (
-                        <>
-                            <br />
-                            <Link target="_blank" href={url.personal}>
-                                {url.personal}
-                            </Link>
-                        </>
-                    )}
-                </>
-            }
+            before={avatar}
             bottom={
                 <div
                     style={{
@@ -95,11 +94,11 @@ const Human = ({
                         flexDirection: "row",
                     }}
                 >
-                    {url.github && (
-                        <Link href={url.github} target="_blank">
+                    {github && (
+                        <Link href={`https://github.com/${github}`} target="_blank">
                             <Avatar
                                 style={{
-                                    margin: "5px" 
+                                    margin: "5px",
                                 }}
                                 size={24}
                                 src={
@@ -111,23 +110,21 @@ const Human = ({
                         </Link>
                     )}
 
-                    {url.vk && (
-                        <Link href={url.vk} target="_blank">
-                            <Avatar
-                                style={{
-                                    margin: "5px" 
-                                }}
-                                size={24}
-                                src={LogoVK}
-                            />
-                        </Link>
-                    )}
+                    <Link href={`https://vk.com/id${id}`} target="_blank">
+                        <Avatar
+                            style={{
+                                margin: "5px",
+                            }}
+                            size={24}
+                            src={LogoVK}
+                        />
+                    </Link>
 
-                    {url.telegram && (
-                        <Link href={url.telegram} target="_blank">
+                    {telegram && (
+                        <Link href={`https://t.me/${telegram}`} target="_blank">
                             <Avatar
                                 style={{
-                                    margin: "5px" 
+                                    margin: "5px",
                                 }}
                                 size={24}
                                 src={LogoTelegram}
@@ -141,113 +138,6 @@ const Human = ({
         </RichCell>
     );
 };
-
-const humans: IHuman[] = [
-    {
-        name: "Андрей",
-        surname: "Пшеничный",
-        nickname: "girl_dev",
-        url: {
-            personal: "https://girl-dev.me/",
-            vk: "https://vk.com/girl_dev",
-            github: "https://github.com/GirlDev1337",
-            telegram: "https://t.me/girl_dev",
-        },
-    },
-    {
-        name: "Никита",
-        surname: "Смирнов",
-        nickname: "sm1rnovdev",
-        url: {
-            vk: "https://vk.com/sm1rnovdev",
-            github: "https://github.com/sm1rnovdev",
-            telegram: "https://t.me/sm1rnovdev",
-        },
-    },
-    {
-        name: "Женя",
-        surname: "Матеюк",
-        nickname: "zhenya00000",
-        url: {
-            personal: "https://zhenya00000.github.io/",
-            vk: "https://vk.com/zhenya00000",
-            github: "https://github.com/zhenya00000",
-        },
-    },
-    {
-        name: "Дмитрий",
-        surname: "Волков",
-        nickname: "dimondaf",
-        url: {
-            vk: "https://vk.com/dimondaf",
-            telegram: "https://t.me/dimondaf",
-        },
-    },
-    {
-        name: "Всеволод",
-        surname: "Кравец",
-        nickname: "sevakravets",
-        url: {
-            vk: "https://vk.com/sevakravets",
-            telegram: "https://t.me/noname2544",
-            github: "https://github.com/kravetsone"
-        },
-    },
-    {
-        name: "Сергей",
-        surname: "Стёпочкин",
-        nickname: "kolesto65",
-        url: {
-            vk: "https://vk.com/kolesto65",
-            github: "https://github.com/kolesto65",
-        },
-    },
-    {
-        name: "Иван",
-        surname: "Ивлепенко",
-        nickname: "ivlepenko",
-        url: {
-            vk: "https://vk.com/ivlepenko",
-        },
-    },
-    {
-        name: "Ярослав",
-        surname: "Клопенко",
-        nickname: "klopenkooff",
-        url: {
-            vk: "https://vk.com/klopenkooff",
-            telegram: "https://t.me/klopenkooff",
-            github: "https://github.com/MrSlavik0",
-        },
-    },
-    {
-        name: "Вадим",
-        surname: "Филатов",
-        nickname: "flxpr",
-        url: {
-            vk: "https://vk.com/id649590332",
-            telegram: "https://t.me/flxpr",
-            github: "https://github.com/flxprhub",
-        },
-    },
-    {
-        name: "Юлий",
-        surname: "Цезарев",
-        url: {
-            vk: "https://vk.com/id496798589",
-        },
-    },
-    {
-        name: "Руслан",
-        surname: "Некрасов",
-        nickname: "RuslanNashkin",
-        url: {
-            vk: "https://vk.com/RuslanNashkin",
-            github: "https://github.com/RuslanNashkin",
-            telegram: "https://t.me/RuslanNashkin",
-        },
-    }
-];
 
 interface IRepositoryStat {
     stars: number;
@@ -269,8 +159,18 @@ const getRepositoryStat = async (): Promise<IRepositoryStat> => {
     };
 };
 
+const getDreamteamList = async (): Promise<IHuman[]> => {
+    const list = await axios.post<{
+        response: IHuman[];
+    }>("https://api.rus-anonym-team.ru/dreamteam.get");
+
+    return list.data.response;
+};
+
 const SiteInfoView = (): JSX.Element => {
-    const [stats, setStats] = useState<IRepositoryStat | null>();
+    const [stats, setStats] = useState<IRepositoryStat | null>(null);
+    const [dreamteamList, setDreamteamList] = useState<IHuman[] | null>(null);
+
     const { t } = useTranslation("translation", {
         keyPrefix: "pages.aboutSite",
     });
@@ -280,17 +180,21 @@ const SiteInfoView = (): JSX.Element => {
 
     useEffect(() => {
         void getRepositoryStat().then(setStats);
+        void getDreamteamList().then(setDreamteamList);
     }, []);
 
     return (
         <>
             <Group>
                 {stats && (
-                    <div style={{
-                        display: "flex", flexDirection: "row" 
-                    }}>
-                        <Cell 
-                            after={<VscStarFull size={24} />} 
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                        }}
+                    >
+                        <Cell
+                            after={<VscStarFull size={24} />}
                             hasActive={false}
                             hasHover={false}
                         >
@@ -310,8 +214,11 @@ const SiteInfoView = (): JSX.Element => {
                         >
                             {stats.issues}
                         </Cell>
-                        <Cell after={<VscRepoForked size={24} />} hasActive={false}
-                            hasHover={false}>
+                        <Cell
+                            after={<VscRepoForked size={24} />}
+                            hasActive={false}
+                            hasHover={false}
+                        >
                             {stats.forks}
                         </Cell>
                     </div>
@@ -344,7 +251,7 @@ const SiteInfoView = (): JSX.Element => {
                     </Header>
                 }
             >
-                <div
+                {dreamteamList && <div
                     style={{
                         display: "flex",
                         flexDirection: isDesktop ? "row" : "column",
@@ -352,14 +259,16 @@ const SiteInfoView = (): JSX.Element => {
                         justifyContent: "center",
                         alignItems: "flex-start",
                     }}
-                    children={humans.map(Human)}
-                />
+                    children={dreamteamList.map(user => {
+                        return <Human user={user}/>;
+                    }) }
+                />}
                 <Placeholder
                     icon={
                         <BsFillSuitHeartFill
                             size={56}
                             style={{
-                                color: "red" 
+                                color: "red",
                             }}
                         />
                     }
