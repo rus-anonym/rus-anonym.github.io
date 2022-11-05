@@ -27,18 +27,6 @@ interface IPrototype {
 
 const prototypes: IPrototype[] = [
     {
-        id: "rp-chat",
-        title: "RolePlay chat",
-        description: "",
-        isMobile: true,
-        isDesktop: true,
-        component: (
-            <LazyLoadComponent
-                callbacks={[() => import("./List/RolePlayChat")]}
-            />
-        ),
-    },
-    {
         id: "love-meme-generator",
         title: "Love Meme generator",
         description: "",
