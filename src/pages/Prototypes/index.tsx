@@ -39,16 +39,6 @@ const prototypes: IPrototype[] = [
         ),
     },
     {
-        id: "MPT",
-        title: "MPT Assistant",
-        description: "MPT Assistant prototype",
-        isMobile: true,
-        isDesktop: true,
-        component: (
-            <LazyLoadComponent callbacks={[() => import("./List/MPT")]} />
-        ),
-    },
-    {
         id: "love-meme-generator",
         title: "Love Meme generator",
         description: "",
@@ -124,9 +114,7 @@ const PrototypesView = (): JSX.Element => {
     return (
         <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
-                <Group>
-                    {filteredPrototypes.map(UtilNavBlock)}
-                </Group>
+                <Group>{filteredPrototypes.map(UtilNavBlock)}</Group>
             </Panel>
             {filteredPrototypes.map(UtilCell)}
         </View>
