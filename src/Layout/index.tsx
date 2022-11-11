@@ -35,9 +35,31 @@ const Page = ({
     id: string;
     children: React.ReactNode;
 }): JSX.Element => {
+    const { viewWidth } = useAdaptivity();
+
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
     return (
         <View id={id} activePanel="default">
-            <Panel id="default" children={children} />
+            <Panel id="default">
+                <PanelHeader
+                    separator={isDesktop}
+                    before={!isDesktop && <HeaderLeftButtons />}
+                    after={
+                        !isDesktop &&
+                        router.activePanel !== null && (
+                            <PanelHeaderBack
+                                onClick={(): void => {
+                                    router.activePanel = null;
+                                }}
+                            />
+                        )
+                    }
+                >
+                    {!isDesktop && <RusAnonymTitle />}
+                </PanelHeader>
+                {children}
+            </Panel>
         </View>
     );
 };
@@ -66,22 +88,6 @@ const Layout = (): JSX.Element => {
                 width={isDesktop ? "45vw" : "100%"}
                 maxWidth={isDesktop ? "45vw" : "100%"}
             >
-                <PanelHeader
-                    before={!isDesktop && <HeaderLeftButtons />}
-                    after={
-                        !isDesktop &&
-                        router.activePanel !== null && (
-                            <PanelHeaderBack
-                                onClick={(): void => {
-                                    router.activePanel = null;
-                                }}
-                            />
-                        )
-                    }
-                >
-                    {!isDesktop && <RusAnonymTitle />}
-                </PanelHeader>
-
                 <Epic
                     id="default"
                     activeStory={router.activeView}
