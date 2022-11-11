@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import {
     useAdaptivity,
@@ -39,10 +39,26 @@ const Page = ({
 
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
+    const title = useMemo(() => {
+        if (router.activeView === "team") {
+            return "RusAnonymTeam";
+        }
+
+        if (isDesktop) {
+            return null;
+        } else {
+            return <RusAnonymTitle />;
+        }
+    }, []);
+
     return (
         <View id={id} activePanel="default">
             <Panel id="default">
                 <PanelHeader
+                    style={router.activeView === "team" && isDesktop ? {
+                        textAlign: "center" 
+                    } : {
+                    }}
                     separator={isDesktop}
                     before={!isDesktop && <HeaderLeftButtons />}
                     after={
@@ -56,7 +72,7 @@ const Page = ({
                         )
                     }
                 >
-                    {!isDesktop && <RusAnonymTitle />}
+                    {title}
                 </PanelHeader>
                 {children}
             </Panel>
@@ -119,6 +135,11 @@ const Layout = (): JSX.Element => {
                     <Page id="about-site">
                         <LazyLoadComponent
                             callbacks={[() => import("../pages/AboutSite")]}
+                        />
+                    </Page>
+                    <Page id="team">
+                        <LazyLoadComponent
+                            callbacks={[() => import("../pages/Team")]}
                         />
                     </Page>
                 </Epic>
