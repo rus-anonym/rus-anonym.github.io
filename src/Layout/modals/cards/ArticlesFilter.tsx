@@ -17,7 +17,8 @@ const ArticlesFilter = ({ id }: { id: string }): JSX.Element => {
     return (
         <ModalCard id={id} header={t("filters.title")}>
             <SimpleCell
-                disabled
+                hasActive={false}
+                hasHover={false}
                 multiline
                 after={
                     <Switch
