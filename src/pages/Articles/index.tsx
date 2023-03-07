@@ -12,9 +12,8 @@ import {
     Placeholder,
     Search,
     Spacing,
-    useAdaptivity,
+    useAdaptivityWithJSMediaQueries,
     View,
-    ViewWidth,
 } from "@vkontakte/vkui";
 
 import {
@@ -131,23 +130,6 @@ const articlesList: IArticle[] = [
         isExplicit: true,
     },
     {
-        id: "davidov-retake",
-        title: "Сказ о том как Давидов пересдачу закрывал",
-        content: (
-            <LazyLoadComponent
-                params={{
-                    fallback: (
-                        <ArticleFallback title="Сказ о том как Давидов пересдачу закрывал" />
-                    ),
-                }}
-                callbacks={[() => import("./List/DavidovRetake")]}
-            />
-        ),
-        lang: "ru",
-        published: new Date("2021-10-20T22:11:34"),
-        isExplicit: true,
-    },
-    {
         id: "information-security-concepts-for-humanitarians",
         title: "Основные понятия информационной безопасности для гуманитариев",
         content: (
@@ -198,8 +180,7 @@ const ArticlesView = (): JSX.Element => {
         keyPrefix: "pages.articles",
     });
 
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const [searchFilter, setSearchFilter] = useState("");
 
@@ -277,7 +258,7 @@ const ArticlesView = (): JSX.Element => {
             <Panel id="default">
                 <Group>
                     <Search
-                        placeholder={t("filters.search")}
+                        placeholder={t("filters.search").toString()}
                         value={searchFilter}
                         onChange={(event): void => {
                             setSearchFilter(event.target.value);

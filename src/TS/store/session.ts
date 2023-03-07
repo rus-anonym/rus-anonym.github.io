@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import i18n from "../i18n";
 import EventsEmitter from "eventemitter3";
-import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
+import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/Avatar/Avatar";
 
 interface IPrototypesRpChatProfile {
     name: string;

@@ -43,18 +43,16 @@ const AboutView = (): JSX.Element => {
         <Group>
             <Group mode="plain">
                 <RichCell
-                    hasActive={false}
-                    hasHover={false}
+                    disabled
                     before={<Icon56UserCircleOutline width={72} height={72} />}
                     caption={t("specialty")}
                 >
                     {t("fullName")}
                 </RichCell>
                 <Cell
-                    hasActive={false}
-                    hasHover={false}
+                    disabled
                     before={<Icon28PlaceOutline />}
-                    description={t("place", {
+                    subtitle={t("place", {
                         context: "value" 
                     })}
                     indicator={t("relocation")}
@@ -62,9 +60,8 @@ const AboutView = (): JSX.Element => {
                     {t("place")}
                 </Cell>
                 <Cell
-                    description="05.04.2004"
-                    hasActive={false}
-                    hasHover={false}
+                    subtitle="05.04.2004"
+                    disabled
                     before={<Icon28CalendarOutline />}
                     indicator={`${ageCount} ${t("years", {
                         count: ageCount,
@@ -73,17 +70,15 @@ const AboutView = (): JSX.Element => {
                     {t("birthday")}
                 </Cell>
                 <Cell
-                    description="+7 909 623-05-55"
-                    hasActive={false}
-                    hasHover={false}
+                    subtitle="+7 909 623-05-55"
+                    disabled
                     before={<Icon28PhoneOutline />}
                 >
                     {t("phone")}
                 </Cell>
                 <Cell
-                    description="alexandrsemin2033@gmail.com"
-                    hasActive={false}
-                    hasHover={false}
+                    subtitle="alexandrsemin2033@gmail.com"
+                    disabled
                     before={<Icon28MailOutline />}
                 >
                     {t("email")}

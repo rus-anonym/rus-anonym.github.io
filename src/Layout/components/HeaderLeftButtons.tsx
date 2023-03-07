@@ -6,10 +6,9 @@ import {
     ButtonGroup,
     Div,
     PanelHeaderButton,
-    useAdaptivity,
-    ViewWidth,
+    useAdaptivityWithJSMediaQueries,
 } from "@vkontakte/vkui";
-import { Dropdown, TextTooltip } from "@vkontakte/vkui/dist/unstable";
+import {  unstable_Popover as Popover, unstable_TextTooltip as TextTooltip } from "@vkontakte/vkui";
 
 import {
     Icon28MoonOutline,
@@ -32,8 +31,7 @@ const HeaderLeftButtons = (): JSX.Element => {
         keyPrefix: "utils" 
     });
 
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const forceUpdate = useForceUpdate();
 
@@ -96,14 +94,14 @@ const HeaderLeftButtons = (): JSX.Element => {
 
     return (
         <>
-            <Dropdown
+            <Popover
                 action={isDesktop ? "hover" : "click"}
                 content={<DropdownContent />}
             >
                 <PanelHeaderButton
                     hasActive={!isDesktop}
                     hasHover={false}
-                    aria-label={t("changeLanguage")}
+                    aria-label={t("changeLanguage").toString()}
                 >
                     {session.theme === "light" ? (
                         <Icon28SunOutline />
@@ -111,10 +109,10 @@ const HeaderLeftButtons = (): JSX.Element => {
                         <Icon28MoonOutline />
                     )}
                 </PanelHeaderButton>
-            </Dropdown>
+            </Popover>
             <TextTooltip text={t("changeLanguage")}>
                 <PanelHeaderButton
-                    aria-label={t("changeLanguage")}
+                    aria-label={t("changeLanguage").toString()}
                     onClick={(): void => {
                         session.language =
                             session.language === "en" ? "ru" : "en";

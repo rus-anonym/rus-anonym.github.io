@@ -6,8 +6,6 @@ import {
     Group,
     Cell,
     Spacing,
-    useAdaptivity,
-    ViewWidth,
     PanelHeaderBack,
     Separator,
 } from "@vkontakte/vkui";
@@ -37,7 +35,7 @@ const NavigationCell = ({
     text: string;
 }): JSX.Element => {
     const activeViewStyle: React.CSSProperties = {
-        backgroundColor: "var(--button_secondary_background)",
+        backgroundColor: "var(--vkui--color_background_secondary)",
         borderRadius: 8,
     };
 
@@ -71,16 +69,13 @@ const NavigationCell = ({
 const ObserverNavigationCell = observer(NavigationCell);
 
 const DesktopNavPanel = (): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
-
     const { t } = useTranslation("translation", {
         keyPrefix: "pages" 
     });
 
     return (
-        <SplitCol fixed width={"20vw"} maxWidth={"20vw"}>
-            <PanelHeader separator={isDesktop} before={<HeaderLeftButtons />}>
+        <SplitCol  width={"20vw"} maxWidth={"20vw"}>
+            <PanelHeader separator before={<HeaderLeftButtons />}>
                 <RusAnonymTitle />
             </PanelHeader>
 

@@ -4,7 +4,7 @@ import {
     Div,
     Group,
     Headline,
-    InitialsAvatar,
+    Avatar,
     Link,
     RichCell,
     Snackbar,
@@ -45,8 +45,7 @@ const Message = ({
     return (
         <RichCell
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
             before={user.avatar}
             text={content}
             after={time}
@@ -63,17 +62,13 @@ const users: {
     you: {
         name: "Ты",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="red">
-                Т
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="red" initials="Т" />
         ),
     },
     interlocutor: {
         name: "Собеседник",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="green">
-                С
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="green" initials="С"/>
         ),
     },
 } as const;
@@ -232,7 +227,7 @@ const HowToCommunicate = (): JSX.Element => {
                 </Title>
             </Div>
             <Div>
-                <Headline weight="regular">
+                <Headline weight="2">
                     Если вы тут оказались, значит теперь ваш черёд потратить
                     время на очевидные вещи, многие из которых вы не знали, но
                     вы бесите людей этим и они вам отправили эту статью
@@ -265,7 +260,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 user={users.interlocutor}
                                 content="У тебя есть время?"
                             />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Ёб вашу жизнь, вы понимаете что пишете 4-6
                                 предложений перед тем как перейти к ебаной сути,
                                 блядь? Нахуй вы раздражаете этим людей? Задавай
@@ -273,7 +268,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 ответ.
                             </Headline>
                             <Spacing size={20} />
-                            <Headline weight="medium">Вот как надо:</Headline>
+                            <Headline weight="3">Вот как надо:</Headline>
                             <Message
                                 user={users.you}
                                 content="Привет. Можешь одолжить мне 500 рублей на мастеркард карту? Верну в конце недели?"
@@ -306,7 +301,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 user={users.you}
                                 content="Спасибо большое!"
                             />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 ИДИ НАХУЙ СУКА! Просто, блядь, пошел ты нахуй
                                 дебик сраный. Ты вообще срать как ходишь? Всех
                                 своих друзей и родственников спрашиваешь как
@@ -353,18 +348,18 @@ const HowToCommunicate = (): JSX.Element => {
                             <Spacing />
                             <Title level="3">Т Ы Ч Е П Ё С О Х У Е Л?</Title>
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Во-первых, странно незнакомому человеку писать
                                 вообще какие-то тематические реквесты, о которых
                                 он может не знать.
                             </Headline>
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Во-вторых, если ты знаешь человека, то наверняка
                                 знаешь чем он занимается и какого хуя ты вообще
                                 спрашиваешь у человека то, что он заведомо может
                                 не знать.
                             </Headline>
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Ну и в третьих самый конченый блядский приём
                                 пытаться обязать кого-то выполнить твоё ебаное
                                 поручение. Ты директор дохуя или управляющий?
@@ -389,7 +384,7 @@ const HowToCommunicate = (): JSX.Element => {
                             />
                             <Message user={users.you} content="Ясно" />
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Хуясно, пидор. Ты пиздец такой дохуя занятой,
                                 чтобы написать «Спасибо, обязательно схожу если
                                 буду»? Пожалуй миллиардами на бирже ворочаешь и
@@ -412,7 +407,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 content="Привет, не могу."
                             />
                             <Message user={users.you} content="Понятно." />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Что тебе понятно, говно? Неспособность принимать
                                 отказы и отвечать, будто ты обиделся, говножуй —
                                 удел тупоголовых хуесосов. Ты, блядина, с
@@ -434,7 +429,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 content="Ну ничего, извини что потревожил.."
                             />
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Так человек, который вам отказал одновременно
                                 поймет, что вы не сухая мразота, и в то же время
                                 его не будет беспокоить чувство того, что вы
@@ -474,7 +469,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 time="16:52:34"
                             />
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 АААААААА!!! Какого, блядь, черта?! Что с вами не
                                 так, уроды?! Если ты задаешь сраный вопрос,
                                 сука, или диалог продолжается, научись всё время
@@ -502,7 +497,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 content="Здарова, я знаю ты интересуешься музыкой, поэтому советую тебе попробовать Яндекс.Музыку, ну или Apple Music"
                             />
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 СКАЖИ, БЛЯДЬ, ГДЕ ТЫ БЕРЕШЬ ВСЕ ЭТИ ОХУИТЕЛЬНЫЕ
                                 СОВЕТЫ, МЕМЫ И ЛИШНИЕ ХРОМОСОМЫ?! Не пробовал
                                 пойти работать ведущим музыкальных передач на
@@ -512,7 +507,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 под краном там вода или в магазине может видел?
                             </Headline>
                             <Spacing size={20} />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Как ты думаешь, можно ли жить в 2017м году и
                                 рекомендовать человеку что-то, что настолько
                                 популярно и известно как ютуб, айфон, кока-кола
@@ -551,22 +546,22 @@ const HowToCommunicate = (): JSX.Element => {
                             })}
 
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Есть много речевых расстройств, и людей
                                 страдающих ими, но твоё особенное.
                             </Headline>
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Потому что ты в интернете
                             </Headline>
                             <Spacing />
-                            <Headline weight="medium">особенный</Headline>
+                            <Headline weight="3">особенный</Headline>
                             <Spacing />
-                            <Headline weight="medium">мудоёбинский</Headline>
+                            <Headline weight="3">мудоёбинский</Headline>
                             <Spacing />
-                            <Headline weight="medium">пиздотряс</Headline>
+                            <Headline weight="3">пиздотряс</Headline>
                             <Spacing size={20} />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Самое пиздецовое от таких дегенератов открывать
                                 +35 пропущенных сообщений, а там вся суть
                                 умещается в одно предложение, которое пидорасы
@@ -595,7 +590,7 @@ const HowToCommunicate = (): JSX.Element => {
                             />
                             <Message user={users.you} content="Как дела?" />
 
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Серьёзно, блядь, в мире открылась какая-то школа
                                 заботливых супергероев-долбоебов? Какой вообще,
                                 нахуй, смысл в вопросе «как дела?» или «как
@@ -626,13 +621,13 @@ const HowToCommunicate = (): JSX.Element => {
                                 content="Здарвыа! Бля сто лет ни видсмл! Че ты как рассссссссссскажи, го попиздим. Ваще давай я подъеду. Че бля стол ет не виделис."
                             />
 
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Иди проспись, животное. Либо ты зовешь людей
                                 пить заранее, либо нехуй им звонить и писать,
                                 когда тебе уже хорошо или не хватило.
                             </Headline>
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Нормальным же людям рекомендую вообще ничего на
                                 такое не отвечать.
                             </Headline>
@@ -643,7 +638,7 @@ const HowToCommunicate = (): JSX.Element => {
                     title="Левитан на минималках"
                     content={
                         <>
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Ваши аудиосообщения просто доебали. Всё понятно
                                 дохуя занятые, в дороге (в дороге надо на дорогу
                                 смотреть), на хуе крутитесь или в вам отрезало
@@ -651,7 +646,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 своё ебаное мычание, сформулируйте мысль.
                             </Headline>
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Нет ничего более уёбищного, чем из-за ваших
                                 кретинских размышлений отвлекаться от музыки,
                                 фильма или работы, чтобы 3 минуты слушать
@@ -659,7 +654,7 @@ const HowToCommunicate = (): JSX.Element => {
                                 которое укладывается в одно сраное предложение.
                             </Headline>
                             <Spacing />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Аудиосообщения придумали на случай, когда нужно
                                 сразу большой объем информации быстро передать и
                                 нет клавиатуры или возможности набирать быстро,
@@ -676,7 +671,7 @@ const HowToCommunicate = (): JSX.Element => {
                         <>
                             <Title level="3">Пример:</Title>
                             <Message user={users.you} content=")" />
-                            <Headline weight="medium">
+                            <Headline weight="3">
                                 Отвечать одной скобкой можно только создателю
                                 сообщества{" "}
                                 <Link

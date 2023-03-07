@@ -10,6 +10,7 @@ import {
     Placeholder,
     Search,
     useAdaptivity,
+    useAdaptivityWithJSMediaQueries,
     View,
     ViewWidth,
 } from "@vkontakte/vkui";
@@ -26,7 +27,7 @@ import {
 import router from "../../TS/store/router";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react";
-import { TextTooltip } from "@vkontakte/vkui/dist/unstable";
+import { unstable_TextTooltip as TextTooltip } from "@vkontakte/vkui";
 import LazyLoadComponent from "../../utils/LazyLoad";
 import session from "../../TS/store/session";
 import storage from "../../TS/store/storage";
@@ -43,8 +44,7 @@ interface IUtil {
 }
 
 const UtilsView = (): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const [searchFilter, setSearchFilter] = useState("");
 
@@ -99,19 +99,6 @@ const UtilsView = (): JSX.Element => {
             component: (
                 <LazyLoadComponent
                     callbacks={[() => import("./List/Feminizator")]}
-                />
-            ),
-            languages: ["ru"],
-        },
-        {
-            id: "vk-stickers",
-            title: "VK Stickers",
-            description: "Приложение для просмотра всех стикеров ВКонтакте",
-            isMobile: true,
-            isDesktop: true,
-            component: (
-                <LazyLoadComponent
-                    callbacks={[() => import("./List/VKStickers")]}
                 />
             ),
             languages: ["ru"],
@@ -190,8 +177,8 @@ const UtilsView = (): JSX.Element => {
                 <Cell
                     hasActive={false}
                     hasHover={false}
-                    description={util.description}
-                    badge={
+                    subtitle={util.description}
+                    badgeAfterTitle={
                         <TextTooltip
                             shown={!isDesktop ? false : undefined}
                             text={
@@ -320,7 +307,7 @@ const UtilsView = (): JSX.Element => {
                     }
                 >
                     <Search
-                        placeholder={t("filters.search")}
+                        placeholder={t("filters.search").toString()}
                         value={searchFilter}
                         onChange={(event): void => {
                             setSearchFilter(event.target.value);

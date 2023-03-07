@@ -41,8 +41,7 @@ const Message = ({ avatar, sender, text, date }: IMessageParams) => {
                 </Caption>
             }
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
         >
             <Headline weight="1">{sender}</Headline>
         </RichCell>

@@ -1,17 +1,16 @@
 import React, { useMemo } from "react";
 
 import {
-    useAdaptivity,
-    ViewWidth,
     Epic,
     PanelHeader,
     SplitCol,
     SplitLayout,
     usePlatform,
-    VKCOM,
     PanelHeaderBack,
     View,
     Panel,
+    useAdaptivityWithJSMediaQueries,
+    Platform,
 } from "@vkontakte/vkui";
 
 import { observer } from "mobx-react";
@@ -35,9 +34,7 @@ const Page = ({
     id: string;
     children: React.ReactNode;
 }): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const title = useMemo(() => {
         if (router.activeView === "team") {
@@ -82,10 +79,9 @@ const Page = ({
 
 const Layout = (): JSX.Element => {
     const platform = usePlatform();
-    const { viewWidth } = useAdaptivity();
 
-    const hasHeader = platform !== VKCOM;
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const hasHeader = platform !== Platform.VKCOM;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     return (
         <SplitLayout
@@ -98,12 +94,7 @@ const Layout = (): JSX.Element => {
         >
             {isDesktop && <DesktopNavPanel />}
 
-            <SplitCol
-                animate={!isDesktop}
-                spaced={isDesktop}
-                width={isDesktop ? "45vw" : "100%"}
-                maxWidth={isDesktop ? "45vw" : "100%"}
-            >
+            <SplitCol stretchedOnMobile autoSpaced maxWidth={"45vw"}>
                 <Epic
                     id="default"
                     activeStory={router.activeView}

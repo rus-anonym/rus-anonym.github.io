@@ -208,7 +208,7 @@ const Speedtype = (): JSX.Element => {
                     actions={[
                         {
                             title: t("continue"),
-                            autoclose: true,
+                            autoClose: true,
                             mode: "default",
                         },
                     ]}
@@ -428,7 +428,8 @@ const Speedtype = (): JSX.Element => {
                         hasHover={false}>
                         <Button
                             size="m"
-                            mode="destructive"
+                            mode="primary"
+                            appearance="negative"
                             onClick={(): void => {
                                 setHistory([]);
                                 History.save([]);

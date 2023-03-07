@@ -7,7 +7,6 @@ import {
     FormItem,
     Input,
     Radio,
-    InitialsAvatar,
     File,
     Avatar,
     Spacing,
@@ -16,10 +15,10 @@ import {
 
 import { observer } from "mobx-react";
 
-import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/InitialsAvatar/InitialsAvatar";
 import { Icon24Camera } from "@vkontakte/icons";
 import router from "../../../TS/store/router";
 import session from "../../../TS/store/session";
+import { InitialsAvatarTextGradients } from "@vkontakte/vkui/dist/components/Avatar/Avatar";
 
 const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
     const [name, setName] = useState("");
@@ -56,13 +55,12 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                         setAvatarColor("red");
                     }}
                 >
-                    <InitialsAvatar size={32} gradientColor="red" />
+                    <Avatar size={32} gradientColor="red" />
                 </Radio>
             </Div>
 
             {(
                 [
-                    "pink",
                     "orange",
                     "yellow",
                     "green",
@@ -79,7 +77,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
                                 setAvatarColor(color);
                             }}
                         >
-                            <InitialsAvatar size={32} gradientColor={color} />
+                            <Avatar size={32} gradientColor={color} />
                         </Radio>
                     </Div>
                 );

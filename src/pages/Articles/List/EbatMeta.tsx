@@ -3,7 +3,7 @@ import {
     Group,
     Header,
     InfoRow,
-    InitialsAvatar,
+    Avatar,
     Link,
     Placeholder,
     RichCell,
@@ -34,8 +34,7 @@ const Message = ({
     return (
         <RichCell
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
             before={user.avatar}
             text={text}
             after={time}
@@ -52,17 +51,15 @@ const users: {
     you: {
         name: "Ты",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="red">
+            <Avatar size={32} gradientColor="red" initials="Т">
                 Т
-            </InitialsAvatar>
+            </Avatar>
         ),
     },
     brother: {
         name: "Братуха",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="green">
-                Б
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="green" initials="Б"/>
         ),
     },
 } as const;
@@ -85,7 +82,7 @@ const EbatMeta = (): JSX.Element => {
     const philosophy = (
         <Div>
             <Spacing />
-            <Headline weight="regular">
+            <Headline weight="2">
                 Хуевый вопрос — это вопрос, который подразумевает ебать другие
                 вопросы:
             </Headline>
@@ -111,12 +108,12 @@ const EbatMeta = (): JSX.Element => {
                     time=""
                 />
             </Div>
-            <Headline weight="regular">
+            <Headline weight="2">
                 — «Ясен хуй, но что ебаного в этих вопросах и почему мне блять
                 их не задавать?»
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 — Блять, они тратят время! И твое, и других челов, которые
                 пытаются тебя нахуй послать! Ты стараешься быть ровным, не
                 переходя сразу на рамсы, но ебать люди так делают выходя
@@ -126,12 +123,12 @@ const EbatMeta = (): JSX.Element => {
                 вопрос, что приводит к ебаному ступору.
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 То же самое относится к такой хуйне: «Здравия желаю», «Привет.
                 Че по чем?», «Пошли выйдем?», «Бля». Просто задай вопрос!
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 К тому же, когда ты задаешь вопрос сразу не выебываясь, братки
                 могут метнуться порешать другие вопросики. Если пацан не але, а
                 ты метнешься до того как он вернется, он по-прежнему может

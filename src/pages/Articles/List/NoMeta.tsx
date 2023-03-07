@@ -4,7 +4,7 @@ import {
     Group,
     Header,
     InfoRow,
-    InitialsAvatar,
+    Avatar,
     Link,
     Placeholder,
     RichCell,
@@ -35,8 +35,7 @@ const Message = ({
     return (
         <RichCell
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
             before={user.avatar}
             text={text}
             after={time}
@@ -53,17 +52,13 @@ const users: {
     you: {
         name: "Вы",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="red">
-                Т
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="red" initials="Т" />
         ),
     },
     colleague: {
         name: "Ваш коллега",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="green">
-                Б
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="green" initials="Б"/>
         ),
     },
 } as const;
@@ -86,7 +81,7 @@ const NoMeta = (): JSX.Element => {
     const philosophy = (
         <Div>
             <Spacing />
-            <Headline weight="regular">
+            <Headline weight="2">
                 Мета-вопрос — это вопрос, который подразумевает другие вопросы,
                 например:
             </Headline>
@@ -112,12 +107,12 @@ const NoMeta = (): JSX.Element => {
                     time=""
                 />
             </Div>
-            <Headline weight="regular">
+            <Headline weight="2">
                 — «Понятно, но что плохого в этих вопросах и почему мне не стоит
                 их задавать?»
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 — Они тратят время! И ваше, и других людей, которые пытаются вам
                 помочь! Вы стараетесь быть вежливым, не переходя сразу к своей
                 проблеме, как люди делают при личной встрече. Но чат — это
@@ -127,13 +122,13 @@ const NoMeta = (): JSX.Element => {
                 производительности.
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 То же самое относится к таким сообщениям: «Здравствуйте»,
                 «Привет. Ты здесь?», «Есть минутка?», «Пинг». Просто задавайте
                 вопрос!
             </Headline>
             <Spacing size={20} />
-            <Headline weight="regular">
+            <Headline weight="2">
                 К тому же, когда вы задаете вопрос сразу, открывается
                 возможность асинхронного взаимодействия. Если собеседник
                 недоступен, а вы уйдёте до того как он вернется, он по-прежнему

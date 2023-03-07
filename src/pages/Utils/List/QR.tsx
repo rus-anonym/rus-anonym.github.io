@@ -12,8 +12,7 @@ import {
     MiniInfoCell,
     Placeholder,
     Spacing,
-    useAdaptivity,
-    ViewWidth,
+    useAdaptivityWithJSMediaQueries,
 } from "@vkontakte/vkui";
 import {
     Icon20ArticleOutline,
@@ -29,7 +28,7 @@ import { Result, DecodeHintType } from "@zxing/library";
 import { BrowserMultiFormatReader } from "@zxing/browser";
 
 import moment from "moment";
-import { ChipsSelect } from "@vkontakte/vkui/dist/unstable";
+import { unstable_ChipsSelect as ChipsSelect } from "@vkontakte/vkui";
 import { useTranslation } from "react-i18next";
 
 const formats = [
@@ -111,13 +110,11 @@ const QRInfo = ({ result }: { result: Result }): JSX.Element => {
             <MiniInfoCell
                 before={<Icon20ArticleOutline />}
                 textWrap="full"
-                textLevel="primary"
             >
                 {t("text")}: {result.getText()}
             </MiniInfoCell>
             <MiniInfoCell
                 before={<Icon20CalendarOutline />}
-                textLevel="primary"
             >
                 {t("created")}:{" "}
                 {moment(result.getTimestamp()).format("DD.MM.YYYY, HH:mm:ss")}
@@ -133,7 +130,6 @@ const QRInfo = ({ result }: { result: Result }): JSX.Element => {
             <MiniInfoCell
                 before={<Icon20ArticleOutline />}
                 textWrap="full"
-                textLevel="primary"
             >
                 Barcode Format:{" "}
                 <Link
@@ -213,7 +209,7 @@ const ImageLoader = ({
             <FormItem top={file ? file.name : t("selectFile")}>
                 <File
                     before={<Icon24Camera />}
-                    controlSize="l"
+                    size="l"
                     stretched
                     appearance="accent"
                     onChange={(ctx): void => {
@@ -234,7 +230,7 @@ const ImageLoader = ({
                     closeAfterSelect={false}
                     creatable={false}
                     value={selectedFormats}
-                    emptyText={t("emptyFormats")}
+                    emptyText={t("emptyFormats").toString()}
                 />
             </FormItem>
             <FormItem>
@@ -273,8 +269,7 @@ const QR = (): JSX.Element => {
         "initialize" | "error" | "work"
     >("initialize");
 
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const requestCamera = async (): Promise<void> => {
         try {

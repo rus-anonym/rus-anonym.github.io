@@ -6,9 +6,8 @@ import {
     Header,
     Panel,
     Placeholder,
-    useAdaptivity,
+    useAdaptivityWithJSMediaQueries,
     View,
-    ViewWidth,
 } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
@@ -41,8 +40,7 @@ const prototypes: IPrototype[] = [
 ];
 
 const PrototypesView = (): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const { t, i18n } = useTranslation("translation", {
         keyPrefix: "pages.prototypes",

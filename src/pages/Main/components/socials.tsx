@@ -4,8 +4,6 @@ import {
     Group,
     Avatar,
     Header,
-    ViewWidth,
-    useAdaptivity,
     Spinner,
     Placeholder,
     Button,
@@ -13,10 +11,11 @@ import {
     Div,
     SimpleCell,
     Separator,
+    useAdaptivityWithJSMediaQueries,
 } from "@vkontakte/vkui";
 import copy from "copy-to-clipboard";
 
-import { RichTooltip } from "@vkontakte/vkui/dist/unstable";
+import { unstable_RichTooltip as RichTooltip } from "@vkontakte/vkui";
 
 import LogoVK from "../../../SVG/socials/VK.svg";
 import LogoTelegram from "../../../SVG/socials/Telegram.svg";
@@ -83,8 +82,7 @@ const SocialElement = ({
     // eslint-disable-next-line @typescript-eslint/naming-convention
     tooltipContent: TooltipContent,
 }: ISocialElementParams): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const [isShowTooltip, setShowTooltip] = useState(false);
 
@@ -264,7 +262,7 @@ const Socials = (): JSX.Element => {
                                             <SimpleCell
                                                 hasActive={false}
                                                 hasHover={false}
-                                                description={t("npm.utils")}
+                                                subtitle={t("npm.utils")}
                                                 after={
                                                     <React.Fragment>
                                                         <Separator />
@@ -304,7 +302,7 @@ const Socials = (): JSX.Element => {
                                             <SimpleCell
                                                 hasActive={false}
                                                 hasHover={false}
-                                                description={t("npm.utils")}
+                                                subtitle={t("npm.utils")}
                                                 after={
                                                     <React.Fragment>
                                                         <Separator />
@@ -344,7 +342,7 @@ const Socials = (): JSX.Element => {
                                             <SimpleCell
                                                 hasActive={false}
                                                 hasHover={false}
-                                                description={t("npm.scheduler")}
+                                                subtitle={t("npm.scheduler")}
                                                 after={
                                                     <React.Fragment>
                                                         <Separator />

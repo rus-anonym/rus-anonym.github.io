@@ -6,13 +6,11 @@ import {
     Group,
     RichCell,
     Avatar,
-    InitialsAvatar,
     calcInitialsAvatarColor,
     Header,
     Link,
-    useAdaptivity,
-    ViewWidth,
     Placeholder,
+    useAdaptivityWithJSMediaQueries,
 } from "@vkontakte/vkui";
 
 import { BsFillSuitHeartFill } from "react-icons/bs";
@@ -50,7 +48,8 @@ const Human = ({ user }: {user: IHuman}): JSX.Element => {
 
     const avatar = useMemo(() => {
         return <>
-            {isLoadAvatar && <InitialsAvatar
+            {isLoadAvatar && <Avatar
+                initials={`${name[0]}${surname[0]}`}
                 size={48}
                 gradientColor={calcInitialsAvatarColor(
                     [...name.split(""), ...surname.split("")]
@@ -60,9 +59,8 @@ const Human = ({ user }: {user: IHuman}): JSX.Element => {
                         }, 0)
                 )}
             >
-                {name[0]}
-                {surname[0]}
-            </InitialsAvatar>}
+                
+            </Avatar>}
             <Avatar
                 style={{
                     display: isLoadAvatar ? "none" : undefined 
@@ -77,8 +75,7 @@ const Human = ({ user }: {user: IHuman}): JSX.Element => {
     return (
         <RichCell
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
             before={avatar}
             bottom={
                 <div
@@ -147,8 +144,7 @@ const RusAnonymTeam = (): JSX.Element => {
         keyPrefix: "pages.aboutSite",
     });
 
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     useEffect(() => {
         void getDreamteamList().then(setDreamteamList);

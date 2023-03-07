@@ -3,7 +3,7 @@ import {
     Group,
     Header,
     InfoRow,
-    InitialsAvatar,
+    Avatar,
     Link,
     Placeholder,
     RichCell,
@@ -31,8 +31,7 @@ const Message = ({
     return (
         <RichCell
             multiline
-            hasActive={false}
-            hasHover={false}
+            disabled
             before={user.avatar}
             text={text}
             after={time}
@@ -49,17 +48,13 @@ const users: {
     you: {
         name: "You",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="red">
-                Y
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="red" initials="Y" />
         ),
     },
     coWorker: {
         name: "Co-worker",
         avatar: (
-            <InitialsAvatar size={32} gradientColor="green">
-                CW
-            </InitialsAvatar>
+            <Avatar size={32} gradientColor="green" initials="CW" />
         ),
     },
 } as const;
@@ -134,12 +129,12 @@ const NoHello = (): JSX.Element => {
 
             <Div>
                 <Spacing />
-                <Headline weight="regular">
+                <Headline weight="2">
                     Note that you get help minutes sooner, and you don't make
                     them wait. Instead, the co-worker can start thinking about
                     your question right away!
                 </Headline>
-                <Headline weight="regular">
+                <Headline weight="2">
                     You're trying to be polite by not jumping right into the
                     request, like you would do in person or on the phone. But
                     Chat is neither of those things. Typing is much slower than
@@ -148,13 +143,13 @@ const NoHello = (): JSX.Element => {
                     lost productivity.
                 </Headline>
                 <Spacing size={20} />
-                <Headline weight="regular">
+                <Headline weight="2">
                     The same goes for "Hello -- Are you there?", "Hi Bob --
                     quick question.", "Do you have a sec ?", "yt?" and "ping".
                     Just ask the question!
                 </Headline>
                 <Spacing size={20} />
-                <Headline weight="regular">
+                <Headline weight="2">
                     If you feel it's brusque to simply say "Hi" and ask the
                     question, you can do something like this:
                 </Headline>
@@ -164,7 +159,7 @@ const NoHello = (): JSX.Element => {
                     time=""
                 />
                 <Spacing size={20} />
-                <Headline weight="regular">
+                <Headline weight="2">
                     Additionally, asking your question before getting a reply
                     allows asynchronous communication. If the other party is
                     away, and you leave before they come back, they can still
