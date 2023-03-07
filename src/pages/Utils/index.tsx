@@ -9,10 +9,8 @@ import {
     Panel,
     Placeholder,
     Search,
-    useAdaptivity,
     useAdaptivityWithJSMediaQueries,
     View,
-    ViewWidth,
 } from "@vkontakte/vkui";
 import {
     Icon28ComputerOutline,
@@ -141,6 +139,19 @@ const UtilsView = (): JSX.Element => {
                 />
             ),
             languages: ["ru"],
+        },
+        {
+            id: "password-generator",
+            title: "Password generator",
+            description: "",
+            isMobile: true,
+            isDesktop: true,
+            component: (
+                <LazyLoadComponent
+                    callbacks={[() => import("./List/PasswordGenerator")]}
+                />
+            ),
+            languages: ["ru", "en"],
         }
     ];
 
