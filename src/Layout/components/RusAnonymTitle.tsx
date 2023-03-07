@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useAdaptivity, ViewWidth } from "@vkontakte/vkui";
+import { useAdaptivityWithJSMediaQueries } from "@vkontakte/vkui";
 import { animated, useSpring } from "react-spring";
 
 import router from "../../TS/store/router";
 
 const RusAnonym = (): JSX.Element => {
-    const { viewWidth } = useAdaptivity();
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
     const [title, setTitle] = useState("RusAnonym");
     const [styles, api] = useSpring(() => ({
