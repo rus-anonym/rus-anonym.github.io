@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrus_anonym=self.webpackChunkrus_anonym||[]).push([[8939],{2806:r=>{r.exports=function(r,e){for(var n={},s=Object.keys(r),a=Array.isArray(e),u=0;u<s.length;u++){var t=s[u],c=r[t];(a?-1!==e.indexOf(t):e(t,c,r))&&(n[t]=c)}return n}}}]);
