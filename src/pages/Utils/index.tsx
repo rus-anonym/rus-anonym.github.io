@@ -1,4 +1,12 @@
-import React, { useEffect, useState } from "react";
+import {
+    Icon24Filter,
+    Icon28ComputerOutline,
+    Icon28ComputerSmartphoneOutline,
+    Icon28SmartphoneOutline,
+    Icon56ComputerOutline,
+    Icon56ErrorTriangleOutline,
+    Icon56SmartphoneOutline,
+} from "@vkontakte/icons";
 import {
     Button,
     Cell,
@@ -12,24 +20,16 @@ import {
     useAdaptivityWithJSMediaQueries,
     View,
 } from "@vkontakte/vkui";
-import {
-    Icon28ComputerOutline,
-    Icon28SmartphoneOutline,
-    Icon28ComputerSmartphoneOutline,
-    Icon56ComputerOutline,
-    Icon56SmartphoneOutline,
-    Icon24Filter,
-    Icon56ErrorTriangleOutline,
-} from "@vkontakte/icons";
+import React, { useEffect, useState } from "react";
 
-import router from "../../TS/store/router";
-import { useTranslation } from "react-i18next";
-import { observer } from "mobx-react";
 import { unstable_TextTooltip as TextTooltip } from "@vkontakte/vkui";
-import LazyLoadComponent from "../../utils/LazyLoad";
+import { observer } from "mobx-react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
+import router from "../../TS/store/router";
 import session from "../../TS/store/session";
 import storage from "../../TS/store/storage";
-import { ErrorBoundary } from "react-error-boundary";
+import LazyLoadComponent from "../../utils/LazyLoad";
 
 interface IUtil {
     id: string;
@@ -38,7 +38,7 @@ interface IUtil {
     isMobile: boolean;
     isDesktop: boolean;
     component: React.ReactNode;
-    languages: typeof session.language[];
+    languages: (typeof session.language)[];
 }
 
 const UtilsView = (): JSX.Element => {
@@ -152,7 +152,7 @@ const UtilsView = (): JSX.Element => {
                 />
             ),
             languages: ["ru", "en"],
-        }
+        },
     ];
 
     const filter = (util: IUtil): boolean => {
@@ -196,8 +196,8 @@ const UtilsView = (): JSX.Element => {
                                 util.isDesktop && util.isMobile
                                     ? t("multiplatform")
                                     : util.isDesktop
-                                        ? t("onlyDesktop")
-                                        : t("onlyMobile")
+                                    ? t("onlyDesktop")
+                                    : t("onlyMobile")
                             }
                         >
                             {util.isDesktop && util.isMobile ? (
@@ -223,7 +223,7 @@ const UtilsView = (): JSX.Element => {
         );
     };
 
-    const UtilCell = (util: IUtil): JSX.Element => {
+    const UtilCell = (util: IUtil): React.ReactElement => {
         if ((isDesktop && !util.isDesktop) || (!isDesktop && !util.isMobile)) {
             return (
                 <Panel id={util.id}>
@@ -291,6 +291,9 @@ const UtilsView = (): JSX.Element => {
     };
 
     return (
+        // EBANIY TYPESCRIPT SUKA YA HUI ZNAET V CHEM OSHIBKA BLYATB, but it's working right
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group

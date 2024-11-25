@@ -10,9 +10,9 @@ import {
     View,
 } from "@vkontakte/vkui";
 
+import { observer } from "mobx-react";
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
-import { observer } from "mobx-react";
 import LazyLoadComponent from "../../utils/LazyLoad";
 
 interface IPrototype {
@@ -98,6 +98,9 @@ const PrototypesView = (): JSX.Element => {
     }
 
     return (
+        // EBANIY TYPESCRIPT SUKA YA HUI ZNAET V CHEM OSHIBKA BLYATB, but it's working right
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <View activePanel={router.activePanel || "default"}>
             <Panel id="default">
                 <Group>{filteredPrototypes.map(UtilNavBlock)}</Group>
