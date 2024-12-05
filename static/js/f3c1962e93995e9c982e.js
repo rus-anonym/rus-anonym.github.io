@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrus_anonym=self.webpackChunkrus_anonym||[]).push([[5732],{2327:(r,s,c)=>{c.d(s,{a:()=>e});class e extends Error{constructor(r){super(r),Error.captureStackTrace&&Error.captureStackTrace(this,this.constructor),this.name="Deprecation"}}}}]);

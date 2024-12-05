@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrus_anonym=self.webpackChunkrus_anonym||[]).push([[3365],{350:(e,s,n)=>{function r(){return"object"==typeof navigator&&"userAgent"in navigator?navigator.userAgent:"object"==typeof process&&"version"in process?`Node.js/${process.version.substr(1)} (${process.platform}; ${process.arch})`:"<environment undetectable>"}n.d(s,{a:()=>r})}}]);
