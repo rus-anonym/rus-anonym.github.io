@@ -93,7 +93,6 @@ const Layout = (): JSX.Element => {
       }}
       header={hasHeader && <PanelHeader delimiter="none" />}
       popout={router.popout}
-      modal={<ModalRoot />}
     >
       {isDesktop && <DesktopNavPanel />}
 
@@ -132,6 +131,7 @@ const Layout = (): JSX.Element => {
           </Page>
         </Epic>
       </SplitCol>
+      <ModalRoot />
     </SplitLayout>
   );
 };
