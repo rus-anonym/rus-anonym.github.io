@@ -84,7 +84,7 @@ const PasswordGenerator = () => {
             <Input
               type="number"
               name="length"
-              value={config.length}
+              value={Number(config.length)}
               min="0"
               onChange={(value) => {
                 setConfig({
@@ -95,16 +95,56 @@ const PasswordGenerator = () => {
             />
           </FormItem>
           <FormItem>
-            <Checkbox checked={config.uppercase}>Uppercase</Checkbox>
+            <Checkbox
+              checked={config.uppercase}
+              onChange={(event) => {
+                setConfig({
+                  ...config,
+                  uppercase: event.target.checked,
+                });
+              }}
+            >
+              Uppercase
+            </Checkbox>
           </FormItem>
           <FormItem>
-            <Checkbox checked={config.lowercase}>Lowercase</Checkbox>
+            <Checkbox
+              checked={config.lowercase}
+              onChange={(event) => {
+                setConfig({
+                  ...config,
+                  lowercase: event.target.checked,
+                });
+              }}
+            >
+              Lowercase
+            </Checkbox>
           </FormItem>
           <FormItem>
-            <Checkbox checked={config.numbers}>Numbers</Checkbox>
+            <Checkbox
+              checked={config.numbers}
+              onChange={(event) => {
+                setConfig({
+                  ...config,
+                  numbers: event.target.checked,
+                });
+              }}
+            >
+              Numbers
+            </Checkbox>
           </FormItem>
           <FormItem>
-            <Checkbox checked={config.symbols}>Symbols</Checkbox>
+            <Checkbox
+              checked={config.symbols}
+              onChange={(event) => {
+                setConfig({
+                  ...config,
+                  symbols: event.target.checked,
+                });
+              }}
+            >
+              Symbols
+            </Checkbox>
           </FormItem>
         </FormLayoutGroup>
         <FormItem>
