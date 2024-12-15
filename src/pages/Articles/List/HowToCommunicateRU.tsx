@@ -42,13 +42,7 @@ const Message = ({
   time?: string;
 }): JSX.Element => {
   return (
-    <RichCell
-      multiline
-      disabled
-      before={user.avatar}
-      subtitle={content}
-      after={time}
-    >
+    <RichCell multiline before={user.avatar} subtitle={content} after={time}>
       {user.name}
     </RichCell>
   );
@@ -66,7 +60,6 @@ const users: {
     name: "Собеседник",
     avatar: <Avatar size={32} gradientColor="green" initials="С" />,
   },
-
 } as const;
 
 const Case = ({
@@ -93,6 +86,7 @@ const Case = ({
             Скриншот скопирован в буфер обмена
           </Snackbar>
         );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         const link = document.createElement("a");
         link.download = `${title}.jpeg`;
@@ -330,7 +324,9 @@ const HowToCommunicate = (): JSX.Element => {
                 content="Ну если кто-то будет, ты дай мне знать, хорошо?"
               />
               <Spacing />
-              <Title level="3">Т Ы Ч Е П Ё С О Х У Е Л?</Title>
+              <Title level="3" style={{ textAlign: "center" }}>
+                Т Ы Ч Е П Ё С О Х У Е Л?
+              </Title>
               <Spacing />
               <Headline weight="3" useAccentWeight>
                 Во-первых, странно незнакомому человеку писать вообще какие-то
