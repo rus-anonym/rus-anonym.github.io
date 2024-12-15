@@ -11,13 +11,14 @@ import {
   Icon28MailOutline,
   Icon28PhoneOutline,
   Icon28PlaceOutline,
-  Icon56UserCircleOutline,
 } from "@vkontakte/icons";
-import { Cell, Group, MiniInfoCell, RichCell } from "@vkontakte/vkui";
+import { Avatar, Cell, Group, MiniInfoCell, RichCell } from "@vkontakte/vkui";
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
 
 import moment from "moment";
+
+import SelfAvatar from "../../PNG/about/avatar.png";
 
 const ageCount = moment().diff(
   moment("05.04.2004", "DD.MM.YYYY"),
@@ -38,7 +39,7 @@ const AboutView = (): JSX.Element => {
     <Group>
       <Group mode="plain">
         <RichCell
-          before={<Icon56UserCircleOutline width={72} height={72} />}
+          before={<Avatar src={SelfAvatar} width={72} height={72} />}
           extraSubtitle={t("specialty")}
         >
           {t("fullName")}
