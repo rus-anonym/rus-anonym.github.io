@@ -1,16 +1,16 @@
 import React, { useMemo } from "react";
 
 import {
-    Epic,
-    PanelHeader,
-    SplitCol,
-    SplitLayout,
-    usePlatform,
-    PanelHeaderBack,
-    View,
-    Panel,
-    useAdaptivityWithJSMediaQueries,
-    Platform,
+  Epic,
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  Platform,
+  SplitCol,
+  SplitLayout,
+  useAdaptivityWithJSMediaQueries,
+  usePlatform,
+  View,
 } from "@vkontakte/vkui";
 
 import { observer } from "mobx-react";
@@ -28,115 +28,112 @@ import MainPage from "../pages/Main";
 import LazyLoadComponent from "../utils/LazyLoad";
 
 const Page = ({
-    id,
-    children,
+  id,
+  children,
 }: {
-    id: string;
-    children: React.ReactNode;
+  id: string;
+  children: React.ReactNode;
 }): JSX.Element => {
-    const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
-    const title = useMemo(() => {
-        if (router.activeView === "team") {
-            return "RusAnonymTeam";
-        }
+  const title = useMemo(() => {
+    if (router.activeView === "team") {
+      return "RusAnonymTeam";
+    }
 
-        if (isDesktop) {
-            return null;
-        } else {
-            return <RusAnonymTitle />;
-        }
-    }, []);
+    if (isDesktop) {
+      return null;
+    } else {
+      return <RusAnonymTitle />;
+    }
+  }, []);
 
-    return (
-        <View id={id} activePanel="default">
-            <Panel id="default">
-                <PanelHeader
-                    style={router.activeView === "team" && isDesktop ? {
-                        textAlign: "center" 
-                    } : {
-                    }}
-                    separator={isDesktop}
-                    before={!isDesktop && <HeaderLeftButtons />}
-                    after={
-                        !isDesktop &&
-                        router.activePanel !== null && (
-                            <PanelHeaderBack
-                                onClick={(): void => {
-                                    router.activePanel = null;
-                                }}
-                            />
-                        )
-                    }
-                >
-                    {title}
-                </PanelHeader>
-                {children}
-            </Panel>
-        </View>
-    );
+  return (
+    <View id={id} activePanel="default">
+      <Panel id="default">
+        <PanelHeader
+          style={
+            router.activeView === "team" && isDesktop
+              ? {
+                  textAlign: "center",
+                }
+              : {}
+          }
+          delimiter={isDesktop ? "separator" : "none"}
+          before={!isDesktop && <HeaderLeftButtons />}
+          after={
+            !isDesktop &&
+            router.activePanel !== null && (
+              <PanelHeaderBack
+                onClick={(): void => {
+                  router.activePanel = null;
+                }}
+              />
+            )
+          }
+        >
+          {title}
+        </PanelHeader>
+        {children}
+      </Panel>
+    </View>
+  );
 };
 
 const Layout = (): JSX.Element => {
-    const platform = usePlatform();
+  const platform = usePlatform();
 
-    const hasHeader = platform !== Platform.VKCOM;
-    const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const hasHeader = platform !== Platform.VKCOM;
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
-    return (
-        <SplitLayout
-            style={{
-                justifyContent: "center" 
-            }}
-            header={hasHeader && <PanelHeader separator={false} />}
-            popout={router.popout}
-            modal={<ModalRoot />}
+  return (
+    <SplitLayout
+      style={{
+        justifyContent: "center",
+      }}
+      header={hasHeader && <PanelHeader delimiter="none" />}
+      popout={router.popout}
+      modal={<ModalRoot />}
+    >
+      {isDesktop && <DesktopNavPanel />}
+
+      <SplitCol stretchedOnMobile autoSpaced maxWidth={"45vw"}>
+        <Epic
+          id="default"
+          activeStory={router.activeView}
+          tabbar={!isDesktop && <MobileTabbar />}
         >
-            {isDesktop && <DesktopNavPanel />}
-
-            <SplitCol stretchedOnMobile autoSpaced maxWidth={"45vw"}>
-                <Epic
-                    id="default"
-                    activeStory={router.activeView}
-                    tabbar={!isDesktop && <MobileTabbar />}
-                >
-                    <Page id="utils">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/Utils")]}
-                        />
-                    </Page>
-                    <Page id="">
-                        <MainPage />
-                    </Page>
-                    <Page id="about">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/About")]}
-                        />
-                    </Page>
-                    <Page id="prototypes">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/Prototypes")]}
-                        />
-                    </Page>
-                    <Page id="articles">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/Articles")]}
-                        />
-                    </Page>
-                    <Page id="about-site">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/AboutSite")]}
-                        />
-                    </Page>
-                    <Page id="team">
-                        <LazyLoadComponent
-                            callbacks={[() => import("../pages/Team")]}
-                        />
-                    </Page>
-                </Epic>
-            </SplitCol>
-        </SplitLayout>
-    );
+          <Page id="utils">
+            <LazyLoadComponent callbacks={[() => import("../pages/Utils")]} />
+          </Page>
+          <Page id="">
+            <MainPage />
+          </Page>
+          <Page id="about">
+            <LazyLoadComponent callbacks={[() => import("../pages/About")]} />
+          </Page>
+          <Page id="prototypes">
+            <LazyLoadComponent
+              callbacks={[() => import("../pages/Prototypes")]}
+            />
+          </Page>
+          <Page id="articles">
+            <LazyLoadComponent
+              callbacks={[() => import("../pages/Articles")]}
+            />
+          </Page>
+          <Page id="about-site">
+            <LazyLoadComponent
+              callbacks={[() => import("../pages/AboutSite")]}
+            />
+          </Page>
+          <Page id="team">
+            <LazyLoadComponent callbacks={[() => import("../pages/Team")]} />
+          </Page>
+        </Epic>
+      </SplitCol>
+    </SplitLayout>
+  );
 };
 
 export default observer(Layout);

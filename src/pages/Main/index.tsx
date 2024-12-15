@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
 import { Group } from "@vkontakte/vkui";
+import { useEffect } from "react";
 
 import router from "../../TS/store/router";
 
-import Socials from "./components/socials";
 import Donates from "./components/donates";
+import Socials from "./components/socials";
 
 const MainPage = (): JSX.Element => {
-    useEffect(() => {
-        router.activePanel = null;
-    });
+  useEffect(() => {
+    router.activePanel = null;
+  });
 
-    return (
-        <Group>
-            <Socials />
-            <Donates />
-        </Group>
-    );
+  return (
+    <Group>
+      <Socials />
+      <Donates />
+    </Group>
+  );
 };
 
 export default MainPage;

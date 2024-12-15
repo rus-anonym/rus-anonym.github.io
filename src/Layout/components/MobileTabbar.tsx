@@ -24,16 +24,16 @@ const ViewButton = ({
     icon: React.ReactNode;
 }): JSX.Element => {
     return (
-        <TabbarItem
+        (<TabbarItem
             onClick={(): void => {
                 router.activeView = path;
             }}
             selected={router.activeView === path}
             disabled={router.activeView === path && router.activePanel === null}
-            text={text}
+            label={text}
         >
             {icon}
-        </TabbarItem>
+        </TabbarItem>)
     );
 };
 
@@ -47,7 +47,7 @@ const MobileTabbar = (): JSX.Element => {
     });
 
     return (
-        <Tabbar mode="vertical">
+        (<Tabbar mode="vertical">
             <ViewButton
                 path="prototypes"
                 text={t("prototypes.title")}
@@ -64,7 +64,7 @@ const MobileTabbar = (): JSX.Element => {
                     router.activeView = "";
                 }}
                 selected={router.activeView === ""}
-                text={t("main.title")}
+                label={t("main.title")}
             >
                 {<Icon28HomeOutline />}
             </TabbarItem>
@@ -78,7 +78,7 @@ const MobileTabbar = (): JSX.Element => {
                 text={t("about.title")}
                 icon={<Icon28UserOutline />}
             />
-        </Tabbar>
+        </Tabbar>)
     );
 };
 
