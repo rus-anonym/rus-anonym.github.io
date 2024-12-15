@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 
 import "@vkontakte/vkui/dist/vkui.css";
 import "./CSS/disableScrollBar.css";
+import "./CSS/disableTextSelection.css";
 
 import App from "./app";
 
