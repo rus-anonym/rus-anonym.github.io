@@ -65,9 +65,6 @@
       },
       "notFound": "No utils by the selected filters were found",
       "list": {
-        "cat": {
-          "description": "Infinite cat scroll"
-        },
         "qr": {
           "rescan": "Rescan",
           "requestCamera": "Request access to the camera",

@@ -63,15 +63,6 @@ const UtilsView = (): JSX.Element => {
       languages: ["en", "ru"],
     },
     {
-      id: "cat",
-      title: "Cat",
-      description: t("list.cat.description"),
-      isMobile: true,
-      isDesktop: true,
-      component: <LazyLoadComponent callbacks={[() => import("./List/Cat")]} />,
-      languages: ["en", "ru"],
-    },
-    {
       id: "speedtype",
       title: "Speedtype",
       description: t("list.speedtype.description"),
@@ -116,19 +107,6 @@ const UtilsView = (): JSX.Element => {
         <LazyLoadComponent callbacks={[() => import("./List/Demotivator")]} />
       ),
       languages: ["ru", "en"],
-    },
-    {
-      id: "vk-conversations",
-      title: "VK Conversations",
-      description: "",
-      isMobile: true,
-      isDesktop: true,
-      component: (
-        <LazyLoadComponent
-          callbacks={[() => import("./List/VKConversations")]}
-        />
-      ),
-      languages: ["ru"],
     },
     {
       id: "password-generator",
