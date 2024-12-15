@@ -195,7 +195,7 @@ const Socials = (): JSX.Element => {
           list={[
             {
               name: "VK",
-              url: "https://vk.me/rus_cybersec",
+              url: "https://vk.com/id842917178",
               logo: LogoVK,
               method: "avatar",
             },
