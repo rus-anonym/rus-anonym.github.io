@@ -64,10 +64,7 @@ const AboutView = (): JSX.Element => {
         <Cell subtitle="+7 909 623-05-55" before={<Icon28PhoneOutline />}>
           {t("phone")}
         </Cell>
-        <Cell
-          subtitle="alexandrsemin2033@gmail.com"
-          before={<Icon28MailOutline />}
-        >
+        <Cell subtitle="rus_cybersec@vk.com" before={<Icon28MailOutline />}>
           {t("email")}
         </Cell>
       </Group>
