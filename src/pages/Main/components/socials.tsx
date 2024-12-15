@@ -182,13 +182,13 @@ const Socials = (): JSX.Element => {
         mode="plain"
         separator="hide"
         header={
-          <Header
+          <h4
             style={{
-              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             {t("contactMe")}
-          </Header>
+          </h4>
         }
       >
         <SocialsList
@@ -211,26 +211,26 @@ const Socials = (): JSX.Element => {
       <Group
         mode="plain"
         header={
-          <Header
+          <h4
             style={{
-              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             {t("alsoExist")}
-          </Header>
+          </h4>
         }
       >
         <Group
           separator="hide"
           mode="plain"
           header={
-            <Header
+            <h5
               style={{
-                justifyContent: "center",
+                textAlign: "center",
               }}
             >
               Code
-            </Header>
+            </h5>
           }
         >
           <SocialsList
@@ -409,13 +409,13 @@ const Socials = (): JSX.Element => {
           separator="hide"
           mode="plain"
           header={
-            <Header
+            <h5
               style={{
-                justifyContent: "center",
+                textAlign: "center",
               }}
             >
               {t("occasionallyLook")}
-            </Header>
+            </h5>
           }
         >
           <SocialsList

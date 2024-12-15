@@ -1,4 +1,4 @@
-import { Group, Header, Link } from "@vkontakte/vkui";
+import { Group, Link } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
@@ -21,13 +21,13 @@ const Donate = (): JSX.Element => {
       mode="plain"
       separator="hide"
       header={
-        <Header
+        <h4
           style={{
-            justifyContent: "center",
+            textAlign: "center",
           }}
         >
           {t("donateToMe")}
-        </Header>
+        </h4>
       }
     >
       <div
