@@ -14,7 +14,8 @@ import {
   Spacing,
   Title,
 } from "@vkontakte/vkui";
-import { useState } from "react";
+import moment from "moment";
+import { useMemo, useState } from "react";
 
 interface IUser {
   name: string;
@@ -31,13 +32,7 @@ const Message = ({
   time: string;
 }): JSX.Element => {
   return (
-    <RichCell
-      multiline
-      disabled
-      before={user.avatar}
-      subtitle={text}
-      after={time}
-    >
+    <RichCell multiline before={user.avatar} subtitle={text} after={time}>
       {user.name}
     </RichCell>
   );
@@ -62,6 +57,8 @@ const users: {
 } as const;
 
 const EbatMeta = (): JSX.Element => {
+  const now = useMemo(() => Date.now(), []);
+
   const description = (
     <>
       Inspired by{" "}
@@ -168,12 +165,12 @@ const EbatMeta = (): JSX.Element => {
         <Message
           text="Я сейчас ебусь с тем-то и тем-то и хочу пиздануть то-то...."
           user={users.you}
-          time="12:34:01"
+          time={moment(now).format("HH:mm:ss")}
         />
         <Message
           text="Ага, можешь ебануть так-то...."
           user={users.brother}
-          time="12:35:21"
+          time={moment(now + 80000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Потрачено">3 минуты и 9 секунд</InfoRow>
@@ -193,12 +190,12 @@ const EbatMeta = (): JSX.Element => {
         <Message
           text="Привет, я сейчас ебусь с тем-то и тем-то и хочу пиздануть то-то..."
           user={users.you}
-          time="12:32:12"
+          time={moment(now).format("HH:mm:ss")}
         />
         <Message
           text="Ага, можешь ебануть так-то..."
           user={users.brother}
-          time="12:33:32"
+          time={moment(now + 80000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Потрачено">1 минута и 20 секунд</InfoRow>
