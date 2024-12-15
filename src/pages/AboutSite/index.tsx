@@ -52,13 +52,7 @@ const SiteInfoView = (): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <Cell
-            after={<VscStarFull size={24} />}
-            hasActive={false}
-            hasHover={false}
-          >
-            {stats.stars}
-          </Cell>
+          <Cell after={<VscStarFull size={24} />}>{stats.stars}</Cell>
           <Cell
             after={
               <VscIssues
@@ -69,17 +63,10 @@ const SiteInfoView = (): JSX.Element => {
                 }}
               />
             }
-            disabled
           >
             {stats.issues}
           </Cell>
-          <Cell
-            after={<VscRepoForked size={24} />}
-            hasActive={false}
-            hasHover={false}
-          >
-            {stats.forks}
-          </Cell>
+          <Cell after={<VscRepoForked size={24} />}>{stats.forks}</Cell>
         </div>
       )}
       <Link
