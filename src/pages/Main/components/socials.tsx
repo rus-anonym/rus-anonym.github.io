@@ -30,7 +30,6 @@ import LogoDiscord from "../../../PNG/socials/Discord.png";
 import LogoICQ from "../../../PNG/socials/ICQ.png";
 import LogoLinkedIn from "../../../PNG/socials/LinkedIn.png";
 import LogoMLBB from "../../../PNG/socials/MLBB.png";
-import LogoPikabu from "../../../PNG/socials/Pikabu.png";
 import LogoPinterest from "../../../PNG/socials/Pinterest.png";
 import LogoPlayground from "../../../PNG/socials/Playground.png";
 import LogoReddit from "../../../PNG/socials/Reddit.png";
@@ -452,13 +451,6 @@ const Socials = (): JSX.Element => {
                 logo: LogoLinkedIn,
                 method: "native",
               },
-              {
-                name: "Pikabu",
-                url: "https://pikabu.ru/@RusAnonym",
-                logo: LogoPikabu,
-                method: "avatar",
-              },
-
               {
                 name: "Reddit",
                 url: "https://www.reddit.com/user/rus_anonym",
