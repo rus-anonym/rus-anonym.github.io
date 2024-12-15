@@ -141,9 +141,11 @@ const SocialElement = ({
       <Tooltip
         shown={isDesktop ? undefined : isShowTooltip}
         enableInteractive
-        placement="bottom-start"
+        placement="bottom"
+        maxWidth={null}
+        description={<TooltipContent />}
       >
-        <TooltipContent />
+        {element}
       </Tooltip>
     );
   } else {
