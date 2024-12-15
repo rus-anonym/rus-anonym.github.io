@@ -5,11 +5,9 @@ import {
   Panel,
   PanelHeader,
   PanelHeaderBack,
-  Platform,
   SplitCol,
   SplitLayout,
   useAdaptivityWithJSMediaQueries,
-  usePlatform,
   View,
 } from "@vkontakte/vkui";
 
@@ -81,9 +79,6 @@ const Page = ({
 };
 
 const Layout = (): JSX.Element => {
-  const platform = usePlatform();
-
-  const hasHeader = platform !== Platform.VKCOM;
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   return (
@@ -91,7 +86,7 @@ const Layout = (): JSX.Element => {
       style={{
         justifyContent: "center",
       }}
-      header={hasHeader && <PanelHeader delimiter="none" />}
+      header={<PanelHeader delimiter="spacing" />}
       popout={router.popout}
     >
       {isDesktop && <DesktopNavPanel />}
