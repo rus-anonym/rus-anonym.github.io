@@ -9,6 +9,7 @@ import {
   RichCell,
   SimpleCell,
   Spinner,
+  Text,
   useAdaptivityWithJSMediaQueries,
 } from "@vkontakte/vkui";
 import copy from "copy-to-clipboard";
@@ -546,15 +547,6 @@ const Socials = (): JSX.Element => {
                         >
                           rus_anonym
                         </RichCell>
-                        <RichCell
-                          hasActive={false}
-                          hasHover={false}
-                          subtitle="ID: 1158262934"
-                          extraSubtitle={t("mlbb.secondAcc")}
-                          actions={<Action id={1158262934} />}
-                        >
-                          rus_anonym
-                        </RichCell>
                       </div>
                       <div
                         style={{
@@ -564,21 +556,11 @@ const Socials = (): JSX.Element => {
                         <RichCell
                           hasActive={false}
                           hasHover={false}
-                          subtitle="ID: 3346392"
-                          extraSubtitle={t("mlbb.group")}
-                          actions={<Action id={3346392} />}
-                        >
-                          RusCringe
-                        </RichCell>
-                        <RichCell
-                          hasActive={false}
-                          hasHover={false}
                           subtitle="ID: 4415974"
                           extraSubtitle={t("mlbb.team")}
-                          after="MVP"
                           actions={<Action id={4415974} />}
                         >
-                          RusCringe
+                          <Text inline>RusCringe</Text>
                         </RichCell>
                       </div>
                     </Div>
