@@ -7,7 +7,6 @@ import {
   Link,
   Placeholder,
   RichCell,
-  Separator,
   SimpleCell,
   Spinner,
   useAdaptivityWithJSMediaQueries,
@@ -277,7 +276,7 @@ const Socials = (): JSX.Element => {
                         subtitle={t("npm.utils")}
                         after={
                           <React.Fragment>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://npmjs.com/package/@rus-anonym/node-utils"
@@ -289,7 +288,7 @@ const Socials = (): JSX.Element => {
                                 height={36}
                               />
                             </Link>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://github.com/rus-anonym/node-utils"
@@ -316,7 +315,7 @@ const Socials = (): JSX.Element => {
                         subtitle={t("npm.utils")}
                         after={
                           <React.Fragment>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://npmjs.com/package/@rus-anonym/web-utils"
@@ -328,7 +327,7 @@ const Socials = (): JSX.Element => {
                                 height={36}
                               />
                             </Link>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://github.com/rus-anonym/web-utils"
@@ -355,7 +354,7 @@ const Socials = (): JSX.Element => {
                         subtitle={t("npm.scheduler")}
                         after={
                           <React.Fragment>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://npmjs.com/package/@rus-anonym/scheduler"
@@ -367,7 +366,7 @@ const Socials = (): JSX.Element => {
                                 height={36}
                               />
                             </Link>
-                            <Separator />
+                            <div style={{ margin: "5px" }} />
                             <Link
                               target="_blank"
                               href="https://github.com/rus-anonym/node-scheduler"
