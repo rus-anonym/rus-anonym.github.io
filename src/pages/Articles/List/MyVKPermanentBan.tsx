@@ -41,7 +41,6 @@ const Message = ({ avatar, sender, text, date }: IMessageParams) => {
         </Caption>
       }
       multiline
-      disabled
     >
       <Headline weight="1" useAccentWeight>
         {sender}
