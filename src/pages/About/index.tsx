@@ -38,14 +38,12 @@ const AboutView = (): JSX.Element => {
     <Group>
       <Group mode="plain">
         <RichCell
-          disabled
           before={<Icon56UserCircleOutline width={72} height={72} />}
           extraSubtitle={t("specialty")}
         >
           {t("fullName")}
         </RichCell>
         <Cell
-          disabled
           before={<Icon28PlaceOutline />}
           subtitle={t("place", {
             context: "value",
@@ -56,7 +54,6 @@ const AboutView = (): JSX.Element => {
         </Cell>
         <Cell
           subtitle="05.04.2004"
-          disabled
           before={<Icon28CalendarOutline />}
           indicator={`${ageCount} ${t("years", {
             count: ageCount,
@@ -64,16 +61,11 @@ const AboutView = (): JSX.Element => {
         >
           {t("birthday")}
         </Cell>
-        <Cell
-          subtitle="+7 909 623-05-55"
-          disabled
-          before={<Icon28PhoneOutline />}
-        >
+        <Cell subtitle="+7 909 623-05-55" before={<Icon28PhoneOutline />}>
           {t("phone")}
         </Cell>
         <Cell
           subtitle="alexandrsemin2033@gmail.com"
-          disabled
           before={<Icon28MailOutline />}
         >
           {t("email")}
