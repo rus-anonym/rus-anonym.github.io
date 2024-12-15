@@ -34,19 +34,14 @@ const NavigationCell = ({
   icon: React.ReactNode;
   text: string;
 }): JSX.Element => {
-  const activeViewStyle: React.CSSProperties = {
-    backgroundColor: "var(--vkui--color_background_secondary)",
-    borderRadius: 8,
-  };
-
   return (
     <Cell
       onClick={(): void => {
         router.activeView = path;
       }}
-      hasActive={router.activeView !== path}
-      hasHover={router.activeView !== path}
-      style={router.activeView === path ? activeViewStyle : {}}
+      hasHover={false}
+      hasActive={false}
+      hovered={router.activeView === path}
       before={icon}
       after={
         router.activeView === path &&
