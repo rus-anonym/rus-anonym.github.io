@@ -1,3 +1,4 @@
+import utils from "@rus-anonym/web-utils";
 import {
   FormItem,
   FormItemProps,
@@ -34,7 +35,18 @@ const Result = ({
   return (
     <Text>
       Для достижения процента побед {desiredWinrate}% необходимо{" "}
-      {result.count as number} {result.type === "win" ? "побед" : "поражений"}{" "}
+      {result.count as number}{" "}
+      {result.type === "win"
+        ? utils.string.declOfNum(result.count as number, [
+            "победа",
+            "победы",
+            "побед",
+          ])
+        : utils.string.declOfNum(result.count as number, [
+            "поражение",
+            "поражения",
+            "поражений",
+          ])}{" "}
       подряд
     </Text>
   );
