@@ -112,7 +112,7 @@ const HeaderLeftButtons = (): JSX.Element => {
           )}
         </PanelHeaderButton>
       </Popover>
-      <Tooltip title={t("changeLanguage")}>
+      <Tooltip title={t("changeLanguage")} disableCloseAfterClick={isDesktop}>
         <PanelHeaderButton
           aria-label={t("changeLanguage").toString()}
           onClick={(): void => {
