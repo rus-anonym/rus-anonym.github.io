@@ -53,7 +53,10 @@ const LazyLoadComponent = ({
 
   const elements = options.useCache
     ? // eslint-disable-next-line react-hooks/rules-of-hooks
-      useMemo(() => callbacks.map((callback) => React.lazy(callback)), [])
+      useMemo(
+        () => callbacks.map((callback) => React.lazy(callback)),
+        [callbacks]
+      )
     : callbacks.map((callback) => React.lazy(callback));
 
   return (

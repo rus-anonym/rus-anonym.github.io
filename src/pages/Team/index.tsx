@@ -63,7 +63,7 @@ const Human = ({ user }: { user: IHuman }): JSX.Element => {
         />
       </>
     );
-  }, [isLoadAvatar]);
+  }, [isLoadAvatar, name, photo, surname]);
 
   return (
     <RichCell

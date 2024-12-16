@@ -33,4 +33,5 @@ const ModalRootComponent = (): JSX.Element => {
   );
 };
 
-export default observer(ModalRootComponent);
+const ObservedModalRootComponent = observer(ModalRootComponent);
+export default ObservedModalRootComponent;

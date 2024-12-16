@@ -231,6 +231,7 @@ const Demotivator = (): JSX.Element => {
     return () => {
       document.removeEventListener("paste", onPasteHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(render, [
     titleText,
@@ -238,6 +239,7 @@ const Demotivator = (): JSX.Element => {
     titleTextSize,
     lowerTextSize,
     imageSrc,
+    isDemotivatorRendered,
   ]);
 
   return (

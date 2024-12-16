@@ -290,6 +290,7 @@ const Speedtype = (): JSX.Element => {
     return () => {
       document.removeEventListener("keypress", keypressHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cpm, startDate, errors, history, progressValue, isStarted]);
 
   return (
@@ -432,4 +433,6 @@ const Speedtype = (): JSX.Element => {
   );
 };
 
-export default observer(Speedtype);
+const ObservedSpeedtype = observer(Speedtype);
+
+export default ObservedSpeedtype;

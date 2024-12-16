@@ -170,6 +170,7 @@ const ImageLoader = ({
     try {
       const result = await reader.decodeFromImageUrl(URL.createObjectURL(file));
       setResult(result);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       const result = await new BrowserMultiFormatReader()
         .decodeFromImageUrl(URL.createObjectURL(file))
@@ -265,6 +266,7 @@ const QR = (): JSX.Element => {
         video: true,
       });
       setCameraStatus("work");
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setCameraStatus("error");
     }

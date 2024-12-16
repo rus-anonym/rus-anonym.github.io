@@ -138,4 +138,5 @@ const Layout = (): JSX.Element => {
   );
 };
 
-export default observer(Layout);
+const ObservedLayout = observer(Layout);
+export default ObservedLayout;

@@ -101,4 +101,5 @@ const PrototypesView = (): JSX.Element => {
   );
 };
 
-export default observer(PrototypesView);
+const ObservedPrototypesView = observer(PrototypesView);
+export default ObservedPrototypesView;

@@ -112,6 +112,7 @@ const Case = ({
       document.getElementById(id)?.scrollIntoView(true);
       window.scrollBy(0, -50);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

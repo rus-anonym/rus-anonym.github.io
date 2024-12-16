@@ -46,4 +46,5 @@ const ArticlesFilter = ({ id }: { id: string }): JSX.Element => {
   );
 };
 
-export default observer(ArticlesFilter);
+const ObservedArticlesFilter = observer(ArticlesFilter);
+export default ObservedArticlesFilter;

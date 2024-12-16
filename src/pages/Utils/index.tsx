@@ -313,4 +313,6 @@ const UtilsView = (): JSX.Element => {
   );
 };
 
-export default observer(UtilsView);
+const ObservedUtilsView = observer(UtilsView);
+
+export default ObservedUtilsView;

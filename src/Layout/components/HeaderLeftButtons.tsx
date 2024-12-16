@@ -126,4 +126,5 @@ const HeaderLeftButtons = (): JSX.Element => {
   );
 };
 
-export default observer(HeaderLeftButtons);
+const ObservedHeaderLeftButtons = observer(HeaderLeftButtons);
+export default ObservedHeaderLeftButtons;

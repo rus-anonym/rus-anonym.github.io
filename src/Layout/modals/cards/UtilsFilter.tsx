@@ -31,4 +31,5 @@ const UtilsFilter = ({ id }: { id: string }): JSX.Element => {
   );
 };
 
-export default observer(UtilsFilter);
+const ObservedUtilsFilter = observer(UtilsFilter);
+export default ObservedUtilsFilter;

@@ -286,4 +286,5 @@ const ArticlesView = (): JSX.Element => {
   );
 };
 
-export default observer(ArticlesView);
+const ObservedArticlesView = observer(ArticlesView);
+export default ObservedArticlesView;

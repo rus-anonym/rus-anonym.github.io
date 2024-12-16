@@ -158,4 +158,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
   );
 };
 
-export default observer(PrototypesRpChatCreateProfile);
+const ObservedPrototypesRpChatCreateProfile = observer(
+  PrototypesRpChatCreateProfile
+);
+export default ObservedPrototypesRpChatCreateProfile;
