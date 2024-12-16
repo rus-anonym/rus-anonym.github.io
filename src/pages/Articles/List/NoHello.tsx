@@ -28,13 +28,7 @@ const Message = ({
   time: string;
 }): JSX.Element => {
   return (
-    <RichCell
-      multiline
-      disabled
-      before={user.avatar}
-      subtitle={text}
-      after={time}
-    >
+    <RichCell multiline before={user.avatar} subtitle={text} after={time}>
       {user.name}
     </RichCell>
   );
