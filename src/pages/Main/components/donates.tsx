@@ -1,4 +1,4 @@
-import { Group, Link } from "@vkontakte/vkui";
+import { Group, Link, Spacing } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
@@ -48,6 +48,8 @@ const Donate = (): JSX.Element => {
             height={128}
           />
         </Link>
+
+        <Spacing size={20} />
 
         <Link href="https://yoomoney.ru/to/410018151299815" target="_blank">
           <img
