@@ -28,14 +28,11 @@ import { useTranslation } from "react-i18next";
 import Logo4PDA from "../../../PNG/socials/4PDA.png";
 import LogoDiscord from "../../../PNG/socials/Discord.png";
 import LogoICQ from "../../../PNG/socials/ICQ.png";
-import LogoLinkedIn from "../../../PNG/socials/LinkedIn.png";
 import LogoMLBB from "../../../PNG/socials/MLBB.png";
 import LogoPinterest from "../../../PNG/socials/Pinterest.png";
 import LogoPlayground from "../../../PNG/socials/Playground.png";
 import LogoReddit from "../../../PNG/socials/Reddit.png";
-import LogoSkype from "../../../PNG/socials/Skype.png";
 import LogoSteam from "../../../PNG/socials/Steam.png";
-import LogoTwitter from "../../../PNG/socials/Twitter.png";
 import LogoWakatime from "../../../PNG/socials/Wakatime.png";
 import LogoWhatsApp from "../../../PNG/socials/Whatsapp.png";
 import LogoWorldOfTanks from "../../../PNG/socials/WorldOfTanks.png";
@@ -421,12 +418,6 @@ const Socials = (): JSX.Element => {
           <SocialsList
             list={[
               {
-                name: "Twitter",
-                url: "https://twitter.com/rus_anonymchik",
-                logo: LogoTwitter,
-                method: "native",
-              },
-              {
                 name: "4PDA",
                 url: "https://4pda.to/forum/index.php?showuser=8270750",
                 logo: Logo4PDA,
@@ -438,18 +429,11 @@ const Socials = (): JSX.Element => {
                 logo: LogoDiscord,
                 method: "native",
               },
-
               {
                 name: "ICQ",
                 url: "https://icq.im/rus_anonym",
                 logo: LogoICQ,
                 method: "avatar",
-              },
-              {
-                name: "LinkedIn",
-                url: "https://www.linkedin.com/in/%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80-%D1%81%D0%B5%D0%BC%D0%B8%D0%BD-6bbb2b1b3/",
-                logo: LogoLinkedIn,
-                method: "native",
               },
               {
                 name: "Reddit",
@@ -468,12 +452,6 @@ const Socials = (): JSX.Element => {
                 url: "https://users.playground.ru/2444466/",
                 logo: LogoPlayground,
                 method: "avatar",
-              },
-              {
-                name: "Skype",
-                url: "skype:live:4b1f037147ec6fdb",
-                logo: LogoSkype,
-                method: "native",
               },
               {
                 name: "Steam",
