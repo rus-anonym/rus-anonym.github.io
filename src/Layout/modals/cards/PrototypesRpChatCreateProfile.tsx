@@ -61,7 +61,7 @@ const PrototypesRpChatCreateProfile = ({ id }: { id: string }): JSX.Element => {
       {(["orange", "yellow", "green", "l-blue", "blue", "violet"] as const).map(
         (color) => {
           return (
-            <Div>
+            <Div key={color}>
               <Radio
                 name="radio"
                 onClick={(): void => {

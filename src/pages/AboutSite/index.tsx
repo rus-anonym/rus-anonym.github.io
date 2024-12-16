@@ -45,6 +45,22 @@ const SiteInfoView = (): JSX.Element => {
 
   return (
     <Group>
+      <Link
+        target="_blank"
+        href="https://github.com/rus-anonym/rus-anonym.github.io"
+      >
+        <SimpleCell
+          before={
+            <Avatar
+              size={36}
+              src={session.theme === "dark" ? LogoGitHubLight : LogoGitHubDark}
+            />
+          }
+          after={<Icon28LinkOutline />}
+        >
+          {t("github")}
+        </SimpleCell>
+      </Link>
       {stats && (
         <div
           style={{
@@ -69,22 +85,6 @@ const SiteInfoView = (): JSX.Element => {
           <Cell after={<VscRepoForked size={24} />}>{stats.forks}</Cell>
         </div>
       )}
-      <Link
-        target="_blank"
-        href="https://github.com/rus-anonym/rus-anonym.github.io"
-      >
-        <SimpleCell
-          before={
-            <Avatar
-              size={36}
-              src={session.theme === "dark" ? LogoGitHubLight : LogoGitHubDark}
-            />
-          }
-          after={<Icon28LinkOutline />}
-        >
-          {t("github")}
-        </SimpleCell>
-      </Link>
     </Group>
   );
 };

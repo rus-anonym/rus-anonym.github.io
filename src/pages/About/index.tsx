@@ -60,7 +60,12 @@ const AboutView = (): JSX.Element => {
         </RichCell>
         <Cell
           before={
-            <IconButton onClick={() => redirect("geo:55.7522453,37.6204103")}>
+            <IconButton
+              onClick={() => redirect("geo:55.7522453,37.6204103")}
+              aria-label={t("place", {
+                context: "value",
+              })}
+            >
               <Icon28PlaceOutline />
             </IconButton>
           }
@@ -110,6 +115,7 @@ END:VCALENDAR`;
                 a.click();
                 URL.revokeObjectURL(url);
               }}
+              aria-label={t("birthday")}
             >
               <Icon28CalendarOutline />
             </IconButton>
@@ -123,7 +129,10 @@ END:VCALENDAR`;
         <Cell
           subtitle="+7 909 623-05-55"
           before={
-            <IconButton onClick={() => redirect("tel:+7.909.623.05.55")}>
+            <IconButton
+              onClick={() => redirect("tel:+7.909.623.05.55")}
+              aria-label={t("phone")}
+            >
               <Icon28PhoneOutline />
             </IconButton>
           }
@@ -139,6 +148,7 @@ END:VCALENDAR`;
                   "mailto:rus_cybersec@vk.com?body=Hello%20from%20your%20site%20%3A)"
                 )
               }
+              aria-label={t("email")}
             >
               <Icon28MailOutline />
             </IconButton>
