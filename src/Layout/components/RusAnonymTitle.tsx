@@ -58,11 +58,6 @@ const RusAnonym = (): JSX.Element => {
   return (
     <Cell before={<Avatar src={SelfAvatar} size={36} />}>
       <Title level="3">
-        {/* {title.split("").map((item, index) => (
-          <animated.span key={index} style={animate()}>
-            {item}
-          </animated.span>
-        ))} */}
         <AnimatedText text={title} />
       </Title>
     </Cell>

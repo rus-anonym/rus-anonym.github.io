@@ -23,7 +23,6 @@ import { observer } from "mobx-react";
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
 import HeaderLeftButtons from "./HeaderLeftButtons";
-import RusAnonymTitle from "./RusAnonymTitle";
 
 const NavigationCell = ({
   path,
@@ -69,9 +68,7 @@ const DesktopNavPanel = (): JSX.Element => {
 
   return (
     <SplitCol width={"20vw"} maxWidth={"20vw"}>
-      <PanelHeader delimiter="separator" before={<HeaderLeftButtons />}>
-        <RusAnonymTitle />
-      </PanelHeader>
+      <PanelHeader delimiter="separator" before={<HeaderLeftButtons />} />
 
       <Group>
         <ObserverNavigationCell

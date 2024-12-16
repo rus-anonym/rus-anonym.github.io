@@ -87,11 +87,17 @@ const Layout = (): JSX.Element => {
         justifyContent: "center",
       }}
       header={<PanelHeader delimiter="spacing" />}
-      popout={router.popout}
     >
       {isDesktop && <DesktopNavPanel />}
 
       <SplitCol stretchedOnMobile autoSpaced maxWidth={"45vw"}>
+        {isDesktop && (
+          <PanelHeader delimiter="separator" float={true}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <RusAnonymTitle />
+            </div>
+          </PanelHeader>
+        )}
         <Epic
           id="default"
           activeStory={router.activeView}
@@ -127,6 +133,7 @@ const Layout = (): JSX.Element => {
         </Epic>
       </SplitCol>
       <ModalRoot />
+      {router.popout}
     </SplitLayout>
   );
 };
