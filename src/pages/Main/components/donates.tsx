@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 
 import session from "../../../TS/store/session";
 
-import LogoQIWI from "../../../SVG/donate/QIWI.svg";
 import LogoTinkoffEn from "../../../SVG/donate/Tinkoff-en.svg";
 import LogoTinkoffRu from "../../../SVG/donate/Tinkoff-ru.svg";
 
@@ -48,13 +47,6 @@ const Donate = (): JSX.Element => {
             src={session.language === "en" ? LogoTinkoffEn : LogoTinkoffRu}
             height={128}
           />
-        </Link>
-
-        <Link
-          href="https://qiwi.com/n/ANONYMOUS&amp;blocked[0]=account"
-          target="_blank"
-        >
-          <img alt="" src={LogoQIWI} width={96} height={96} />
         </Link>
 
         <Link href="https://yoomoney.ru/to/410018151299815" target="_blank">
