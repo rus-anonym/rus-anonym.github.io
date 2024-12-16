@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrus_anonym=self.webpackChunkrus_anonym||[]).push([[128],{8270:(t,o,r)=>{function n(t){return"[object Object]"===Object.prototype.toString.call(t)}function e(t){var o,r;return!1!==n(t)&&(void 0===(o=t.constructor)||!1!==n(r=o.prototype)&&!1!==r.hasOwnProperty("isPrototypeOf"))}r.d(o,{a:()=>e})}}]);
