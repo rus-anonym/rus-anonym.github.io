@@ -1,61 +1,71 @@
-import { useAdaptivityWithJSMediaQueries } from "@vkontakte/vkui";
+import { Avatar, Cell, Title } from "@vkontakte/vkui";
 import { useEffect, useState } from "react";
 import { animated, useSpring } from "react-spring";
 
-import router from "../../TS/store/router";
+import SelfAvatar from "../../PNG/about/avatar.png";
 
 const titles = ["RusAnonym", "RusCybersec"] as const;
 
-const RusAnonym = (): JSX.Element => {
-  const { isDesktop } = useAdaptivityWithJSMediaQueries();
+const AnimatedText = ({ text }: { text: string }) => {
+  const [letters, setLetters] = useState<string[]>([]);
 
-  const [title, setTitle] = useState<string>("RusAnonym");
-  const [styles, api] = useSpring(() => ({
-    filter: "",
-  }));
+  useEffect(() => {
+    setLetters(text.split(""));
+  }, [text]);
 
-  const changeTitle = (title: string): void => {
-    api.start({
-      reset: true,
-      config: {
-        duration: 500,
-      },
-      to: async (next) => {
-        await next({
-          filter: "blur(3px)",
-        });
-        setTitle(title);
-        await next({
-          filter: "blur(0)",
-        });
-      },
+  const AnimatedLetter = ({
+    letter,
+    index,
+  }: {
+    letter: string;
+    index: number;
+  }): JSX.Element => {
+    const props = useSpring({
+      opacity: 1,
+      from: { opacity: 0 },
+      delay: Math.random() * 500,
     });
+
+    return (
+      <animated.span key={index} style={props}>
+        {letter}
+      </animated.span>
+    );
   };
+
+  return (
+    <div style={{ display: "flex" }}>
+      {letters.map((letter, index) => {
+        return <AnimatedLetter letter={letter} index={index} />;
+      })}
+    </div>
+  );
+};
+
+const RusAnonym = (): JSX.Element => {
+  const [title, setTitle] = useState<string>("RusAnonym");
 
   useEffect(() => {
     let currentTitleIndex = 0;
     const interval = setInterval(() => {
       currentTitleIndex =
         currentTitleIndex + 1 >= titles.length ? 0 : currentTitleIndex + 1;
-      changeTitle(titles[currentTitleIndex]);
+      setTitle(titles[currentTitleIndex]);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <animated.div
-      style={styles}
-      onClick={(): void => {
-        if (isDesktop) {
-          router.activeView = "";
-          router.activePanel = null;
-        } else {
-          changeTitle(title === "RusAnonym" ? "RusCybersec" : "RusAnonym");
-        }
-      }}
-    >
-      {title}
-    </animated.div>
+    <Cell before={<Avatar src={SelfAvatar} size={36} />}>
+      <Title level="3">
+        {/* {title.split("").map((item, index) => (
+          <animated.span key={index} style={animate()}>
+            {item}
+          </animated.span>
+        ))} */}
+        <AnimatedText text={title} />
+      </Title>
+    </Cell>
   );
 };
 
