@@ -11,6 +11,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "22"
-      - run: npm install yarn -g
-      - run: yarn
-      - run: yarn build
+      - run: npm install bun -g
+      - run: bun install
+      - run: bun run build
