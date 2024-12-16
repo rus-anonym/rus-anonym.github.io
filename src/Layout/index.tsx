@@ -44,7 +44,7 @@ const Page = ({
     } else {
       return <RusAnonymTitle />;
     }
-  }, []);
+  }, [isDesktop]);
 
   return (
     <View id={id} activePanel="default">
