@@ -1,5 +1,5 @@
 import { Avatar, Cell, Title } from "@vkontakte/vkui";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { animated, useSpring } from "react-spring";
 
 import SelfAvatar from "../../PNG/about/avatar.png";
@@ -36,7 +36,7 @@ const AnimatedText = ({ text }: { text: string }) => {
   return (
     <div style={{ display: "flex" }}>
       {letters.map((letter, index) => {
-        return <AnimatedLetter letter={letter} index={index} />;
+        return <AnimatedLetter letter={letter} key={index} index={index} />;
       })}
     </div>
   );
@@ -44,6 +44,9 @@ const AnimatedText = ({ text }: { text: string }) => {
 
 const RusAnonym = (): JSX.Element => {
   const [title, setTitle] = useState<string>("RusAnonym");
+  const rendered = useMemo<JSX.Element>(() => {
+    return <AnimatedText text={title} />;
+  }, [title]);
 
   useEffect(() => {
     let currentTitleIndex = 0;
@@ -57,9 +60,7 @@ const RusAnonym = (): JSX.Element => {
 
   return (
     <Cell before={<Avatar src={SelfAvatar} size={36} />}>
-      <Title level="3">
-        <AnimatedText text={title} />
-      </Title>
+      <Title level="3">{rendered}</Title>
     </Cell>
   );
 };
