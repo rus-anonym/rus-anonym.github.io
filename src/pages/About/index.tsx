@@ -64,7 +64,7 @@ const AboutView = (): JSX.Element => {
               onClick={() => redirect("geo:55.7522453,37.6204103")}
               aria-label={t("place", {
                 context: "value",
-              })}
+              }).toString()}
             >
               <Icon28PlaceOutline />
             </IconButton>
@@ -115,7 +115,7 @@ END:VCALENDAR`;
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              aria-label={t("birthday")}
+              aria-label={t("birthday").toString()}
             >
               <Icon28CalendarOutline />
             </IconButton>
@@ -131,7 +131,7 @@ END:VCALENDAR`;
           before={
             <IconButton
               onClick={() => redirect("tel:+7.909.623.05.55")}
-              aria-label={t("phone")}
+              aria-label={t("phone").toString()}
             >
               <Icon28PhoneOutline />
             </IconButton>
@@ -148,7 +148,7 @@ END:VCALENDAR`;
                   "mailto:rus_cybersec@vk.com?body=Hello%20from%20your%20site%20%3A)"
                 )
               }
-              aria-label={t("email")}
+              aria-label={t("email").toString()}
             >
               <Icon28MailOutline />
             </IconButton>
