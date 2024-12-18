@@ -159,18 +159,26 @@ const EbatMeta = (): JSX.Element => {
           </Header>
         }
       >
-        <Message text="Ебать" user={users.you} time="12:32:12" />
-        <Message text="Чё нахуй" user={users.brother} time="12:32:15" />
-        <Placeholder title="*Братуха ждёт, пока ты пизданёшь что-то*" />
         <Message
-          text="Я сейчас ебусь с тем-то и тем-то и хочу пиздануть то-то...."
+          text="Ебать"
           user={users.you}
           time={moment(now).format("HH:mm:ss")}
         />
         <Message
+          text="Чё нахуй"
+          user={users.brother}
+          time={moment(now + 3000).format("HH:mm:ss")}
+        />
+        <Placeholder title="*Братуха ждёт, пока ты пизданёшь что-то*" />
+        <Message
+          text="Я сейчас ебусь с тем-то и тем-то и хочу пиздануть то-то...."
+          user={users.you}
+          time={moment(now + 109000).format("HH:mm:ss")}
+        />
+        <Message
           text="Ага, можешь ебануть так-то...."
           user={users.brother}
-          time={moment(now + 80000).format("HH:mm:ss")}
+          time={moment(now + 189000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Потрачено">3 минуты и 9 секунд</InfoRow>

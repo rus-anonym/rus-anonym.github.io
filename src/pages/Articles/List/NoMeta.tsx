@@ -14,7 +14,8 @@ import {
   Spacing,
   Title,
 } from "@vkontakte/vkui";
-import { useState } from "react";
+import moment from "moment";
+import { useMemo, useState } from "react";
 
 interface IUser {
   name: string;
@@ -58,6 +59,8 @@ const users: {
 } as const;
 
 const NoMeta = (): JSX.Element => {
+  const now = useMemo(() => Date.now(), []);
+
   const description = (
     <>
       Inspired by{" "}
@@ -155,18 +158,26 @@ const NoMeta = (): JSX.Element => {
           </Header>
         }
       >
-        <Message text="Привет" user={users.you} time="12:32:12" />
-        <Message text="Привет" user={users.colleague} time="12:32:15" />
+        <Message
+          text="Привет"
+          user={users.you}
+          time={moment(now).format("HH:mm:ss")}
+        />
+        <Message
+          text="Привет"
+          user={users.colleague}
+          time={moment(now + 3000).format("HH:mm:ss")}
+        />
         <Placeholder title="*Ждёт, пока Вы формулируете вопрос*" />
         <Message
           text="Я сейчас работаю над тем-то и тем-то и хочу сделать то-то..."
           user={users.you}
-          time="12:34:01"
+          time={moment(now + 109000).format("HH:mm:ss")}
         />
         <Message
           text="Ага, можешь сделать так-то..."
           user={users.colleague}
-          time="12:35:21"
+          time={moment(now + 189000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Потрачено">3 минуты и 9 секунд</InfoRow>
@@ -186,12 +197,12 @@ const NoMeta = (): JSX.Element => {
         <Message
           text="Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то..."
           user={users.you}
-          time="12:32:12"
+          time={moment(now).format("HH:mm:ss")}
         />
         <Message
           text="Ага, можешь сделать так-то..."
           user={users.colleague}
-          time="12:33:32"
+          time={moment(now + 80000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Потрачено">1 минута и 20 секунд</InfoRow>

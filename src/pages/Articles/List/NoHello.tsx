@@ -12,6 +12,8 @@ import {
   Spacing,
   Title,
 } from "@vkontakte/vkui";
+import moment from "moment";
+import { useMemo } from "react";
 
 interface IUser {
   name: string;
@@ -49,6 +51,8 @@ const users: {
 } as const;
 
 const NoHello = (): JSX.Element => {
+  const now = useMemo(() => Date.now(), []);
+
   const description = (
     <>
       Inspired by{" "}
@@ -82,18 +86,26 @@ const NoHello = (): JSX.Element => {
           </Header>
         }
       >
-        <Message text="Hi" user={users.you} time="12:32:12" />
-        <Message text="Hello." user={users.coWorker} time="12:32:15" />
+        <Message
+          text="Hi"
+          user={users.you}
+          time={moment(now).format("HH:mm:ss")}
+        />
+        <Message
+          text="Hello."
+          user={users.coWorker}
+          time={moment(now + 3000).format("HH:mm:ss")}
+        />
         <Placeholder title="*CO-WORKER WAITS WHILE YOU PHRASE YOUR QUESTION*" />
         <Message
           text="I'm working on [something] and I'm trying to do [etc...]"
           user={users.you}
-          time="12:34:01"
+          time={moment(now + 109000).format("HH:mm:ss")}
         />
         <Message
           text="Oh, that's [answer...]"
           user={users.coWorker}
-          time="12:35:21"
+          time={moment(now + 189000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Spent">3 minutes и 9 seconds</InfoRow>
@@ -113,12 +125,12 @@ const NoHello = (): JSX.Element => {
         <Message
           text="Hi -- I'm working on [something] and I'm trying to do [etc...]"
           user={users.you}
-          time="12:32:12"
+          time={moment(now).format("HH:mm:ss")}
         />
         <Message
           text="[answers question]"
           user={users.coWorker}
-          time="12:33:32"
+          time={moment(now + 80000).format("HH:mm:ss")}
         />
         <SimpleCell hasActive={false} hasHover={false}>
           <InfoRow header="Spent">1 minute и 20 seconds</InfoRow>
