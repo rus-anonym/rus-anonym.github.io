@@ -259,9 +259,6 @@ const UtilsView = (): JSX.Element => {
   };
 
   return (
-    // EBANIY TYPESCRIPT SUKA YA HUI ZNAET V CHEM OSHIBKA BLYATB, but it's working right
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     <View activePanel={router.activePanel || "default"}>
       <Panel id="default">
         <Group

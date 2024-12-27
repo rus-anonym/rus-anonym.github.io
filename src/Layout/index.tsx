@@ -78,6 +78,8 @@ const Page = ({
   );
 };
 
+const ObservedPage = observer(Page);
+
 const Layout = (): JSX.Element => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
@@ -92,7 +94,7 @@ const Layout = (): JSX.Element => {
 
       <SplitCol stretchedOnMobile autoSpaced maxWidth={"45vw"}>
         {isDesktop && (
-          <PanelHeader delimiter="separator" float={true}>
+          <PanelHeader delimiter="separator" float>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <RusAnonymTitle />
             </div>
@@ -103,33 +105,33 @@ const Layout = (): JSX.Element => {
           activeStory={router.activeView}
           tabbar={!isDesktop && <MobileTabbar />}
         >
-          <Page id="utils">
+          <ObservedPage id="utils">
             <LazyLoadComponent callbacks={[() => import("../pages/Utils")]} />
-          </Page>
-          <Page id="">
+          </ObservedPage>
+          <ObservedPage id="">
             <MainPage />
-          </Page>
-          <Page id="about">
+          </ObservedPage>
+          <ObservedPage id="about">
             <LazyLoadComponent callbacks={[() => import("../pages/About")]} />
-          </Page>
-          <Page id="prototypes">
+          </ObservedPage>
+          <ObservedPage id="prototypes">
             <LazyLoadComponent
               callbacks={[() => import("../pages/Prototypes")]}
             />
-          </Page>
-          <Page id="articles">
+          </ObservedPage>
+          <ObservedPage id="articles">
             <LazyLoadComponent
               callbacks={[() => import("../pages/Articles")]}
             />
-          </Page>
-          <Page id="about-site">
+          </ObservedPage>
+          <ObservedPage id="about-site">
             <LazyLoadComponent
               callbacks={[() => import("../pages/AboutSite")]}
             />
-          </Page>
-          <Page id="team">
+          </ObservedPage>
+          <ObservedPage id="team">
             <LazyLoadComponent callbacks={[() => import("../pages/Team")]} />
-          </Page>
+          </ObservedPage>
         </Epic>
       </SplitCol>
       <ModalRoot />
