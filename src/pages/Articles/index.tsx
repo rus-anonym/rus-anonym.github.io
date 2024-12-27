@@ -37,6 +37,7 @@ interface IArticle {
   lang: typeof session.language;
   published: Date;
   isExplicit: boolean;
+  isPinned: boolean;
 }
 
 const ArticleFallback = ({ title }: { title: string }): JSX.Element => {
@@ -79,6 +80,7 @@ const articlesList: IArticle[] = [
     lang: "ru",
     published: new Date("2022-03-03T23:42:14"),
     isExplicit: true,
+    isPinned: false,
   },
   {
     id: "nometa",
@@ -94,6 +96,7 @@ const articlesList: IArticle[] = [
     lang: "ru",
     published: new Date("2022-03-07T00:14:54"),
     isExplicit: false,
+    isPinned: false,
   },
   {
     id: "nohello",
@@ -109,6 +112,7 @@ const articlesList: IArticle[] = [
     lang: "en",
     published: new Date("2022-03-07T00:23:27"),
     isExplicit: false,
+    isPinned: false,
   },
   {
     id: "howtocommunicateru",
@@ -124,6 +128,7 @@ const articlesList: IArticle[] = [
     lang: "ru",
     published: new Date("2022-03-07T02:11:44"),
     isExplicit: true,
+    isPinned: false,
   },
   {
     id: "information-security-concepts-for-humanitarians",
@@ -141,6 +146,7 @@ const articlesList: IArticle[] = [
     lang: "ru",
     published: new Date("2022-08-11T23:42:34"),
     isExplicit: false,
+    isPinned: false,
   },
   {
     id: "my-vk-permanent-ban",
@@ -158,6 +164,7 @@ const articlesList: IArticle[] = [
     lang: "ru",
     published: new Date("2022-10-19T02:35:45"),
     isExplicit: false,
+    isPinned: false,
   },
 ];
 

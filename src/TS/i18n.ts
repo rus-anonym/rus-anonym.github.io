@@ -7,12 +7,8 @@ import RU from "../JSON/locales/ru.json";
 const options: InitOptions = {
   fallbackLng: "en",
   resources: {
-    en: {
-      translation: EN as unknown as Record<string, string>,
-    },
-    ru: {
-      translation: RU as unknown as Record<string, string>,
-    },
+    en: EN as unknown as Record<string, string>,
+    ru: RU as unknown as Record<string, string>,
   },
   interpolation: {
     escapeValue: false,
