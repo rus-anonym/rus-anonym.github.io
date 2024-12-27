@@ -113,6 +113,10 @@
             "notFoundClipboardImage": "Image not found on the clipboard",
             "copiedToClipboard": "Demotivator copied to the clipboard",
             "savedOnDevice": "The demotivator is saved on the device"
+          },
+          "usefulResources": {
+            "title": "Useful resources",
+            "description": "List of useful resources"
           }
         }
       },

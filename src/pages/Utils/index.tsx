@@ -121,6 +121,19 @@ const UtilsView = (): JSX.Element => {
       ),
       languages: ["ru", "en"],
     },
+    {
+      id: "useful-resources",
+      title: t("list.usefulResources.title"),
+      description: t("list.usefulResources.description"),
+      isMobile: true,
+      isDesktop: true,
+      component: (
+        <LazyLoadComponent
+          callbacks={[() => import("./List/UsefulResources")]}
+        />
+      ),
+      languages: ["ru", "en"],
+    },
   ];
 
   const filter = (util: IUtil): boolean => {
