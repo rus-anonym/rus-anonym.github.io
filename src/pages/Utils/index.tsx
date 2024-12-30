@@ -134,6 +134,19 @@ const UtilsView = (): JSX.Element => {
       ),
       languages: ["ru", "en"],
     },
+    {
+      id: "favicon-generator",
+      title: "favicon generator",
+      description: "",
+      isMobile: true,
+      isDesktop: true,
+      component: (
+        <LazyLoadComponent
+          callbacks={[() => import("./List/FaviconGenerator")]}
+        />
+      ),
+      languages: ["en"],
+    },
   ];
 
   const filter = (util: IUtil): boolean => {
