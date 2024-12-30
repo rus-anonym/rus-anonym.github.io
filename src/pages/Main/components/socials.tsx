@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Div,
+  Flex,
   Group,
   Header,
   Link,
@@ -137,7 +138,7 @@ const SocialElement = ({
       <Tooltip
         shown={isDesktop ? undefined : isShowTooltip}
         enableInteractive
-        placement="bottom"
+        placement="auto"
         maxWidth={null}
         description={<TooltipContent />}
       >
@@ -245,17 +246,11 @@ const Socials = (): JSX.Element => {
                   ];
 
                   return (
-                    <div
-                      style={{
-                        flexDirection: "column",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
+                    <Flex direction="column" align="center">
                       {images.map((src) => (
                         <ImageLoader src={src} />
                       ))}
-                    </div>
+                    </Flex>
                   );
                 },
               },
@@ -266,7 +261,7 @@ const Socials = (): JSX.Element => {
                 method: "native",
                 tooltipContent: (): JSX.Element => {
                   return (
-                    <React.Fragment>
+                    <Flex direction="column">
                       <SimpleCell
                         hasActive={false}
                         hasHover={false}
@@ -423,7 +418,7 @@ const Socials = (): JSX.Element => {
                       >
                         @rus-anonym/commands-manager
                       </SimpleCell>
-                    </React.Fragment>
+                    </Flex>
                   );
                 },
               },
