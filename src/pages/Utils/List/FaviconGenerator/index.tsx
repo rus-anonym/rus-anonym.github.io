@@ -1,4 +1,4 @@
-import { Icon16Clear, Icon24Camera } from "@vkontakte/icons";
+import { Icon24Camera } from "@vkontakte/icons";
 import { copyTextToClipboard } from "@vkontakte/vkjs";
 import {
   Button,
@@ -7,8 +7,6 @@ import {
   File,
   FormItem,
   Group,
-  IconButton,
-  IconButtonProps,
   Placeholder,
   Progress,
   Snackbar,
@@ -180,19 +178,6 @@ const FaviconGenerator = () => {
     return URL.createObjectURL(archive);
   };
 
-  const ClearButton = ({ onClick, ...restProps }: IconButtonProps) => {
-    return (
-      <IconButton
-        hoverMode="opacity"
-        label="Clear field"
-        onClick={onClick}
-        {...restProps}
-      >
-        <Icon16Clear />
-      </IconButton>
-    );
-  };
-
   if (source === null) {
     return (
       <Group>
@@ -229,7 +214,6 @@ const FaviconGenerator = () => {
           <ChipsInput
             id="main-sizes"
             placeholder="Введите значения"
-            ClearButton={ClearButton}
             allowClearButton
             value={mainSizes.map((size) => {
               return {
@@ -270,7 +254,6 @@ const FaviconGenerator = () => {
         <FormItem top="Apple sizes">
           <ChipsInput
             id="apple-sizes"
-            ClearButton={ClearButton}
             allowClearButton
             value={appleSizes.map((size) => {
               return {
@@ -311,7 +294,6 @@ const FaviconGenerator = () => {
         <FormItem top="Android sizes">
           <ChipsInput
             id="android-sizes"
-            ClearButton={ClearButton}
             allowClearButton
             value={androidSizes.map((size) => {
               return {
@@ -352,7 +334,6 @@ const FaviconGenerator = () => {
         <FormItem top="Microsoft sizes">
           <ChipsInput
             id="ms-sizes"
-            ClearButton={ClearButton}
             allowClearButton
             value={msSizes.map((size) => {
               return {
