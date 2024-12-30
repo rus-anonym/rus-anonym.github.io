@@ -66,7 +66,7 @@ const FaviconGenerator = () => {
       `<link rel="manifest" href="/manifest.json">`,
       `<meta name="msapplication-TileColor" content="#ffffff">`,
       `<meta name="msapplication-TileImage" content="/icons/ms-icon-${msIconSize}x${msIconSize}.png">`,
-      `<meta name="theme-color" content="#ffffff"></meta>`
+      `<meta name="theme-color" content="#ffffff">`
     );
 
     return arr.join("\n");
