@@ -59,7 +59,11 @@ const RusAnonym = (): JSX.Element => {
   }, []);
 
   return (
-    <Cell before={<Avatar src={SelfAvatar} size={36} />}>
+    <Cell
+      before={
+        <Avatar src={SelfAvatar} size={42} withTransparentBackground noBorder />
+      }
+    >
       <Title level="3">{rendered}</Title>
     </Cell>
   );

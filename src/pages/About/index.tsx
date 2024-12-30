@@ -53,7 +53,15 @@ const AboutView = (): JSX.Element => {
     <Group>
       <Group mode="plain">
         <RichCell
-          before={<Avatar src={SelfAvatar} width={72} height={72} />}
+          before={
+            <Avatar
+              src={SelfAvatar}
+              width={72}
+              height={72}
+              withTransparentBackground
+              noBorder
+            />
+          }
           extraSubtitle={t("specialty")}
         >
           {t("fullName")}
