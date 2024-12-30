@@ -384,6 +384,45 @@ const Socials = (): JSX.Element => {
                       >
                         @rus-anonym/node-scheduler
                       </SimpleCell>
+                      <SimpleCell
+                        hasActive={false}
+                        hasHover={false}
+                        subtitle={t("npm.commandsManager")}
+                        after={
+                          <React.Fragment>
+                            <div style={{ margin: "5px" }} />
+                            <Link
+                              target="_blank"
+                              href="https://npmjs.com/package/@rus-anonym/commands-manager"
+                            >
+                              <img
+                                alt=""
+                                src={LogoNPM}
+                                width={36}
+                                height={36}
+                              />
+                            </Link>
+                            <div style={{ margin: "5px" }} />
+                            <Link
+                              target="_blank"
+                              href="https://github.com/rus-anonym/commands-manager"
+                            >
+                              <img
+                                alt=""
+                                src={
+                                  session.theme === "dark"
+                                    ? LogoGitHubLight
+                                    : LogoGitHubDark
+                                }
+                                width={36}
+                                height={36}
+                              />
+                            </Link>
+                          </React.Fragment>
+                        }
+                      >
+                        @rus-anonym/commands-manager
+                      </SimpleCell>
                     </React.Fragment>
                   );
                 },

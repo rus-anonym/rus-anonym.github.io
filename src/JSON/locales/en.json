@@ -15,7 +15,8 @@
         "socials": {
           "npm": {
             "utils": "Personal set of utilities from RusAnonym",
-            "scheduler": "Task scheduling package"
+            "scheduler": "Task scheduling package",
+            "commandsManager": "Commands manager package"
           },
           "contactMe": "Contact me",
           "alsoExist": "I also exist here",
