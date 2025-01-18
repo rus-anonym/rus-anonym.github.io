@@ -15,6 +15,10 @@ const RESOURCES: IResource[] = [
     title: "Telegram limits",
     url: `https://limits.tginfo.me/${session.language}`,
   },
+  {
+    title: "HateTG",
+    url: "https://hate.tg/",
+  },
 ] as const;
 
 const UsefulResources = () => {
