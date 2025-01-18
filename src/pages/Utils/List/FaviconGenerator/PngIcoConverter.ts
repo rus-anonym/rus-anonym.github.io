@@ -6,9 +6,9 @@ const ImageHeaderSize = 16;
 
 const IcoMime = "image/x-icon";
 
-export type BinaryLike = ArrayBuffer | Blob;
+type BinaryLike = ArrayBuffer | Blob;
 
-export interface IConvertInputItem {
+interface IConvertInputItem {
   png: BinaryLike;
 
   bpp?: number;
