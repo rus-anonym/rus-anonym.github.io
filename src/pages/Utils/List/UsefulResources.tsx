@@ -19,6 +19,10 @@ const RESOURCES: IResource[] = [
     title: "HateTG",
     url: "https://hate.tg/",
   },
+  {
+    title: "MAS",
+    url: "https://massgrave.dev/",
+  }
 ] as const;
 
 const UsefulResources = () => {
