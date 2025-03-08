@@ -90,29 +90,37 @@ const FaviconGenerator = () => {
     return arr.join("\n");
   }, [msSizes]);
 
+  const convertToSize = async (source: Blob, size: number): Promise<Blob> => {
+    const sourceContainer = await createImageBitmap(source);
+    const pic = pica();
+    const resize = pic.resize.bind(pic);
+    const toBlob = pic.toBlob.bind(pic);
+    const container = document.createElement("canvas");
+    container.width = size;
+    container.height = size;
+    const resized = await resize(sourceContainer, container);
+    return toBlob(resized, "image/png", 1);
+  };
+
   const getArchive = async (): Promise<string> => {
     if (source === null) {
       return "";
     }
 
+    setProgress(10);
     const converter = new PngIcoConverter();
     const ico = await converter.convertToBlobAsync([
       {
-        png: source,
+        png: await convertToSize(source, 32),
       },
     ]);
     setProgress(15);
+
     const zip = new JSZip();
     zip.file("favicon.ico", ico);
     zip.file("manifest.json", JSON.stringify(manifest, null, "\t"));
     zip.file("browserconfig.xml", xml);
-
     const icons = zip.folder("icons")!;
-    const pic = pica();
-    const resize = pic.resize.bind(pic);
-    const toBlob = pic.toBlob.bind(pic);
-
-    const sourceContainer = await createImageBitmap(source);
 
     setProgress(25);
 
@@ -125,49 +133,33 @@ const FaviconGenerator = () => {
         msSizes.length);
 
     for (const size of mainSizes) {
-      const container = document.createElement("canvas");
-      container.width = size;
-      container.height = size;
-      const resized = await resize(sourceContainer, container);
       icons.file(
         `favicon-${size}x${size}.png`,
-        await toBlob(resized, "image/png", 1)
+        await convertToSize(source, size)
       );
       setProgress((currentProgress += progressStep));
     }
 
     for (const size of appleSizes) {
-      const container = document.createElement("canvas");
-      container.width = size;
-      container.height = size;
-      const resized = await resize(sourceContainer, container);
       icons.file(
         `apple-icon-${size}x${size}.png`,
-        await toBlob(resized, "image/png", 1)
+        await convertToSize(source, size)
       );
       setProgress((currentProgress += progressStep));
     }
 
     for (const size of androidSizes) {
-      const container = document.createElement("canvas");
-      container.width = size;
-      container.height = size;
-      const resized = await resize(sourceContainer, container);
       icons.file(
         `android-icon-${size}x${size}.png`,
-        await toBlob(resized, "image/png", 1)
+        await convertToSize(source, size)
       );
       setProgress((currentProgress += progressStep));
     }
 
     for (const size of msSizes) {
-      const container = document.createElement("canvas");
-      container.width = size;
-      container.height = size;
-      const resized = await resize(sourceContainer, container);
       icons.file(
         `ms-icon-${size}x${size}.png`,
-        await toBlob(resized, "image/png", 1)
+        await convertToSize(source, size)
       );
       setProgress((currentProgress += progressStep));
     }
