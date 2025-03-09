@@ -3,10 +3,13 @@ import { copyTextToClipboard } from "@vkontakte/vkjs";
 import {
   Button,
   ButtonGroup,
+  CellButton,
   ChipsInput,
   File,
   FormItem,
+  FormLayoutGroup,
   Group,
+  Input,
   Placeholder,
   Progress,
   Snackbar,
@@ -21,6 +24,8 @@ import PngIcoConverter from "./PngIcoConverter";
 
 const FaviconGenerator = () => {
   const [source, setSource] = useState<Blob | null>(null);
+  const [prefixPath, setPrefixPath] = useState<string>("");
+  const [showPrefixPath, setShowPrefixPath] = useState(false);
   const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
 
   const [progress, setProgress] = useState<number>(0);
@@ -38,46 +43,58 @@ const FaviconGenerator = () => {
     return {
       sizes: androidSizes.map((x) => {
         return {
-          src: `/icons/android-icon-${x}-${x}.png`,
+          src:
+            (showPrefixPath ? prefixPath : "") +
+            `/icons/android-icon-${x}-${x}.png`,
           sizes: `${x}x${x}`,
           type: "image/png",
         };
       }),
     };
-  }, [androidSizes]);
+  }, [androidSizes, prefixPath, showPrefixPath]);
 
   const html = useMemo(() => {
     const arr: string[] = [];
 
     for (const size of appleSizes) {
       arr.push(
-        `<link rel="apple-touch-icon" sizes="${size}x${size}" href="/icons/apple-icon-${size}x${size}.png">`
+        `<link rel="apple-touch-icon" sizes="${size}x${size}" href="${
+          showPrefixPath ? prefixPath : ""
+        }/icons/apple-icon-${size}x${size}.png">`
       );
     }
 
     for (const size of mainSizes.reverse()) {
       arr.push(
-        `<link rel="icon" type="image/png" sizes="${size}x${size}" href="/icons/favicon-${size}x${size}.png">`
+        `<link rel="icon" type="image/png" sizes="${size}x${size}" href="${
+          showPrefixPath ? prefixPath : ""
+        }/icons/favicon-${size}x${size}.png">`
       );
     }
 
     const msIconSize = msSizes[Math.round((msSizes.length - 1) / 2)];
     arr.push(
-      `<link rel="manifest" href="/manifest.json">`,
+      `<link rel="manifest" href="${
+        showPrefixPath ? prefixPath : ""
+      }/manifest.json">`,
       `<meta name="msapplication-TileColor" content="#ffffff">`,
-      `<meta name="msapplication-TileImage" content="/icons/ms-icon-${msIconSize}x${msIconSize}.png">`,
+      `<meta name="msapplication-TileImage" content="${
+        showPrefixPath ? prefixPath : ""
+      }/icons/ms-icon-${msIconSize}x${msIconSize}.png">`,
       `<meta name="theme-color" content="#ffffff">`
     );
 
     return arr.join("\n");
-  }, [mainSizes, appleSizes, msSizes]);
+  }, [msSizes, showPrefixPath, prefixPath, appleSizes, mainSizes]);
 
   const xml = useMemo(() => {
     const arr = ["<browserconfig>", "\t<msapplication>", "\t\t<tile>"];
 
     for (const size of msSizes) {
       arr.push(
-        `\t\t\t<square${size}x${size}logo src="/ms-icon-${size}x${size}.png"/>`
+        `\t\t\t<square${size}x${size}logo src="${
+          showPrefixPath ? prefixPath : ""
+        }/ms-icon-${size}x${size}.png"/>`
       );
     }
     arr.push(
@@ -88,7 +105,7 @@ const FaviconGenerator = () => {
     );
 
     return arr.join("\n");
-  }, [msSizes]);
+  }, [prefixPath, msSizes, showPrefixPath]);
 
   const convertToSize = async (source: Blob, size: number): Promise<Blob> => {
     const sourceContainer = await createImageBitmap(source);
@@ -202,6 +219,24 @@ const FaviconGenerator = () => {
   return (
     <Group>
       <form>
+        {!showPrefixPath ? (
+          <CellButton onClick={() => setShowPrefixPath(true)}>
+            Set prefix path
+          </CellButton>
+        ) : (
+          <FormLayoutGroup
+            mode="horizontal"
+            removable
+            onRemove={() => setShowPrefixPath(false)}
+          >
+            <FormItem top="Prefix path" htmlFor="prefix-path">
+              <Input
+                id="prefix-path"
+                onChange={(event) => setPrefixPath(event.target.value)}
+              />
+            </FormItem>
+          </FormLayoutGroup>
+        )}
         <FormItem top="Main sizes">
           <ChipsInput
             id="main-sizes"
