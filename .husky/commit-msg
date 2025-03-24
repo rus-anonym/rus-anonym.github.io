@@ -1,0 +1,3 @@
+#!/bin/sh
+node ./.husky/scripts/add-emoji-commit.js $1
+npm run commitlint ${1}

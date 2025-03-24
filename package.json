@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@octokit/rest": "^21.1.1",
@@ -15,14 +17,14 @@
     "@types/crypto-js": "^4.2.2",
     "@vkontakte/vkui": "^7.1.3",
     "@zxing/library": "^0.21.3",
-    "axios": "^1.8.2",
+    "axios": "^1.8.4",
     "base64url": "^3.0.1",
     "copy-image-clipboard": "^2.1.2",
     "copy-to-clipboard": "^3.3.3",
     "crypto-js": "^4.2.0",
     "eventemitter3": "^5.0.1",
     "html-to-image": "^1.11.13",
-    "i18next": "^24.2.2",
+    "i18next": "^24.2.3",
     "jszip": "^3.10.1",
     "mobx-react": "^9.2.0",
     "moment": "^2.30.1",
@@ -37,22 +39,25 @@
     "react-qr-reader": "^3.0.0-beta-1",
     "react-spring": "^9.7.5",
     "react-syntax-highlighter": "^15.6.1",
-    "use-long-press": "^3.2.0"
+    "use-long-press": "^3.3.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.23.0",
     "@types/jszip": "^3.4.1",
     "@types/pica": "^9.0.5",
-    "@types/react": "^19.0.10",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@vitejs/plugin-react-swc": "^3.8.0",
-    "eslint": "^9.22.0",
+    "@vitejs/plugin-react-swc": "^3.8.1",
+    "eslint": "^9.23.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.26.0",
-    "vite": "^6.2.1"
+    "typescript-eslint": "^8.28.0",
+    "vite": "^6.2.3"
   }
 }
