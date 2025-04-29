@@ -1,6 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
+  Icon16Cloud,
+  Icon16CloudRain,
+  Icon16Fog,
+  Icon16Snowflake,
+  Icon16Sun,
   Icon20CalendarOutline,
   Icon20GlobeOutline,
   Icon20GovernmentOutline,
@@ -15,16 +20,19 @@ import {
 import {
   Avatar,
   Cell,
+  Div,
   Group,
   IconButton,
   MiniInfoCell,
   RichCell,
+  Tooltip,
 } from "@vkontakte/vkui";
 import { useTranslation } from "react-i18next";
 import router from "../../TS/store/router";
 
 import moment from "moment";
 
+import { fetchWeatherApi } from "openmeteo";
 import SelfAvatar from "../../PNG/about/avatar.png";
 
 const ageCount = moment().diff(
@@ -32,6 +40,52 @@ const ageCount = moment().diff(
   "years",
   false
 );
+
+interface IWeatherData {
+  temperature: number;
+  status: "sunny" | "cloudy" | "rain" | "snow" | "fog" | "unknown";
+}
+
+const getWeather = async (): Promise<IWeatherData> => {
+  const params = {
+    latitude: 55.751244,
+    longitude: 37.618423,
+    current: ["temperature_2m", "weather_code"],
+    timezone: "Europe/Moscow",
+  };
+  const url = "https://api.open-meteo.com/v1/forecast";
+  const responses = await fetchWeatherApi(url, params);
+  const response = responses[0];
+
+  const current = response.current();
+  const weatherCode = current!.variables(1)!.value();
+
+  const weatherStatus =
+    (
+      {
+        0: "sunny",
+        1: "sunny",
+        2: "cloudy",
+        3: "cloudy",
+        45: "fog",
+        48: "fog",
+        51: "rain",
+        53: "rain",
+        55: "rain",
+        61: "rain",
+        63: "rain",
+        65: "rain",
+        71: "snow",
+        73: "snow",
+        75: "snow",
+      } satisfies Record<number, "sunny" | "cloudy" | "rain" | "snow" | "fog">
+    )[weatherCode] || "unknown";
+
+  return {
+    temperature: current!.variables(0)!.value(),
+    status: weatherStatus,
+  };
+};
 
 const AboutView = (): JSX.Element => {
   const { t } = useTranslation("translation", {
@@ -45,9 +99,40 @@ const AboutView = (): JSX.Element => {
     element.click();
   };
 
+  const [weather, setWeather] = useState<null | IWeatherData>(null);
+  const weatherIcon = useMemo(() => {
+    if (weather === null) {
+      return null;
+    }
+
+    if (weather.status === "sunny") {
+      return <Icon16Sun />;
+    }
+
+    if (weather.status === "cloudy") {
+      return <Icon16Cloud />;
+    }
+
+    if (weather.status === "rain") {
+      return <Icon16CloudRain />;
+    }
+
+    if (weather.status === "snow") {
+      return <Icon16Snowflake />;
+    }
+
+    if (weather.status === "fog") {
+      return <Icon16Fog />;
+    }
+  }, [weather]);
+
   useEffect(() => {
     router.activePanel = null;
   });
+
+  useEffect(() => {
+    getWeather().then(setWeather);
+  }, []);
 
   return (
     <Group>
@@ -81,6 +166,15 @@ const AboutView = (): JSX.Element => {
             context: "value",
           })}
           indicator={t("relocation")}
+          after={
+            weather && (
+              <Div>
+                <Tooltip description={`${weather.temperature.toFixed(1)}°C`}>
+                  {weatherIcon!}
+                </Tooltip>
+              </Div>
+            )
+          }
         >
           {t("place")}
         </Cell>
