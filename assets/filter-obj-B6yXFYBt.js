@@ -1,0 +1,1 @@
+function f(n,t){const o={};if(Array.isArray(t))for(const e of t){const r=Object.getOwnPropertyDescriptor(n,e);r!=null&&r.enumerable&&Object.defineProperty(o,e,r)}else for(const e of Reflect.ownKeys(n)){const r=Object.getOwnPropertyDescriptor(n,e);if(r.enumerable){const s=n[e];t(e,s,n)&&Object.defineProperty(o,e,r)}}return o}export{f as i};
