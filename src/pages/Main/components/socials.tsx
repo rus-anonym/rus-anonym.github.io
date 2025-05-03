@@ -27,8 +27,6 @@ import LogoNPM from "../../../SVG/socials/NPM.svg";
 
 import { useTranslation } from "react-i18next";
 import Logo4PDA from "../../../PNG/socials/4PDA.png";
-import LogoDiscord from "../../../PNG/socials/Discord.png";
-import LogoICQ from "../../../PNG/socials/ICQ.png";
 import LogoMLBB from "../../../PNG/socials/MLBB.png";
 import LogoPinterest from "../../../PNG/socials/Pinterest.png";
 import LogoPlayground from "../../../PNG/socials/Playground.png";
@@ -456,18 +454,6 @@ const Socials = (): JSX.Element => {
                 url: "https://4pda.to/forum/index.php?showuser=8270750",
                 logo: Logo4PDA,
                 method: "native",
-              },
-              {
-                name: "Discord",
-                url: "https://discord.com/users/392598481681907713",
-                logo: LogoDiscord,
-                method: "native",
-              },
-              {
-                name: "ICQ",
-                url: "https://icq.im/rus_anonym",
-                logo: LogoICQ,
-                method: "avatar",
               },
               {
                 name: "Reddit",
