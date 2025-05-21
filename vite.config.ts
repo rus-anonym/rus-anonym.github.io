@@ -1,9 +1,16 @@
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
+import Sitemap from "vite-plugin-sitemap";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    Sitemap({
+      hostname: "https://rus-anonym.xyz",
+      dynamicRoutes: ["/#/", "/#/about", "/#/artucles", "/#/utils"],
+    }),
+  ],
   server: {
     host: "0.0.0.0",
   },

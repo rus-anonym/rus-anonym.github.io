@@ -40,7 +40,8 @@
     "react-qr-reader": "^3.0.0-beta-1",
     "react-spring": "^9.7.5",
     "react-syntax-highlighter": "^15.6.1",
-    "use-long-press": "^3.3.0"
+    "use-long-press": "^3.3.0",
+    "vite-plugin-sitemap": "^0.8.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
